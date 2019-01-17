@@ -21,6 +21,7 @@ $container['db'] = function ($c) {
    catch(\Exception $ex){
        return $ex->getMessage();
    }
+
 };
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
@@ -30,7 +31,53 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 
 // LIST BUDGET OPERATIONS
 
+$app->post('/budget', function ($request, $response) {
+
+    try {
+        $connection = $this->db;
+        $sql = "INSERT INTO `budget`(`id`,`date`, `name`, `type`, `reason`, `amount`) VALUES (:id,:date,:name,:type,:reason,:amount)";
+        $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $values = array(
+            ':id' => $request->getParam('id'),
+            ':date' => $request->getParam('date'),
+            ':name' => $request->getParam('name'),
+            ':type' => $request->getParam('type'),
+            ':reason' => $request->getParam('reason'),
+            ':amount' => $request->getParam('amount'));
+        $result = $pre->execute($values);
+        return $response->widthJson(array('status' => 'Line Created'),200);
+    }
+    catch(\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()),422);
+    }
+
+});
+
+$app->get('/budget/{id}', function ($request, $response) {
+
+    try {
+        $id = $request->getAttribute('id');
+        $connection = $this->db;
+        $sql = "SELECT * FROM budget WHERE id = :id";
+        $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $values = array(
+            ':id' => $id);
+        $pre->execute($values);
+        $result = $pre->fetch();
+        if($result) {
+            return $response->withJson(array('status' => 'true','result'=> $result),200);
+        } else {
+            return $response->withjson(array('status' => 'Line Not Found'), 422);
+        }
+    }
+    catch (\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()),422);
+    }
+
+});
+
 $app->get('/budget', function($request, $response) {
+
     try {
         $connection = $this->db;
         $sql = "SELECT * FROM budget";
@@ -46,12 +93,43 @@ $app->get('/budget', function($request, $response) {
             return $response->withJson(array('status' => 'Operations Not Found'), 422);
         }
 
-    } catch (\Exception $ex) {
+    }
+    catch (\Exception $ex) {
         return $response->withJson(array('error' => $ex->getMessage()), 422);
     }
+
+});
+
+$app->put('/budget/{id}', function ($request,$response) {
+
+    try {
+        $id = $request->getAttribute('id');
+        $connection = $this->db;
+        $sql = "UPDATE budget SET date=:date,name=:name,type=:type,reason=:reason,amount=:amount WHERE id = :id";
+        $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $values = array(
+            ':date' => $request->getParam('date'),
+            ':name' => $request->getParam('name'),
+            ':type' => $request->getParam('type'),
+            ':reason' => $request->getParam('reason'),
+            ':amount' => $request->getParam('amount'),
+            ':id' => $id
+        );
+        $result = $pre->execute($values);
+        if($result){
+            return $response->withJson(array('status' => 'User Updated'),200);
+        } else {
+            return $response->withJson(array('status' => 'User Not Found'),422);
+        }
+    }
+    catch(\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()),422);
+    }
+
 });
 
 $app->delete('/budget/{id}', function ($request, $response) {
+
     try {
         $id = $request->getAttribute('id');
         $connection = $this->db;
@@ -68,6 +146,7 @@ $app->delete('/budget/{id}', function ($request, $response) {
     catch(\Exception $ex) {
         return $response->withJson(array('error' => $ex->getMessage()),422);
     } 
+
 });
 
 // ALLOW CORS FOR DEVELOPMENT
