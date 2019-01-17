@@ -27,6 +27,49 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
 
+
+// LIST BUDGET OPERATIONS
+
+$app->get('/budget', function($request, $response) {
+    try {
+        $connection = $this->db;
+        $sql = "SELECT * FROM budget";
+        $result = null;
+
+        foreach ($connection->query($sql) as $row) {
+            $result[] = $row;
+        }
+
+        if ($result) {
+            return $response->withJson(array('status' => 'true','result'=>$result), 200);
+        } else{
+            return $response->withJson(array('status' => 'Operations Not Found'), 422);
+        }
+
+    } catch (\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()), 422);
+    }
+});
+
+$app->delete('/budget/{id}', function ($request, $response) {
+    try {
+        $id = $request->getAttribute('id');
+        $connection = $this->db;
+        $sql = "DELETE FROM budget WHERE id= :id";
+        $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $values = array(':id' => $id);
+            $result = $pre->execute($values);
+            if($result) {
+                return $response->withJson(array('status' => 'Operations Deleted'), 200);
+            } else {
+                return $response->withJson(array('status' => 'Operations Not found'), 422);
+            }
+    }
+    catch(\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()),422);
+    } 
+});
+
 // ALLOW CORS FOR DEVELOPMENT
 // TO DELETE AFTER DEVELOPMENT
 $app->add(function ($req, $res, $next) {
