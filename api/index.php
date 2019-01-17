@@ -35,17 +35,16 @@ $app->post('/budget', function ($request, $response) {
 
     try {
         $connection = $this->db;
-        $sql = "INSERT INTO `budget`(`id`,`date`, `name`, `type`, `reason`, `amount`) VALUES (:id,:date,:name,:type,:reason,:amount)";
+        $sql = "INSERT INTO `budget`(`date`, `name`, `type`, `reason`, `amount`) VALUES (:date,:name,:type,:reason,:amount)";
         $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $values = array(
-            ':id' => $request->getParam('id'),
             ':date' => $request->getParam('date'),
             ':name' => $request->getParam('name'),
             ':type' => $request->getParam('type'),
             ':reason' => $request->getParam('reason'),
             ':amount' => $request->getParam('amount'));
         $result = $pre->execute($values);
-        return $response->widthJson(array('status' => 'Line Created'),200);
+        return $response->withJson(array('status' => 'Line Created'),200);
     }
     catch(\Exception $ex) {
         return $response->withJson(array('error' => $ex->getMessage()),422);
