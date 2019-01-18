@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import IconButton from '@material-ui/core/IconButton';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -18,12 +19,14 @@ class LeftBar extends Component {
     render() {
         return (
             <Drawer
-                variant="persistent"
                 anchor="left"
                 open={this.props.open}
+                onClose={this.props.toggleSideBar}
              >
-                <div className={styles.drawerHeader} onClick={this.props.toggleSideBar}>
-                    <ChevronLeftIcon className={styles.chevron}/> 
+                <div className={styles.drawerHeader}>
+                <IconButton color="inherit" aria-label="Menu" onClick={this.props.toggleSideBar}>
+                    <ChevronLeftIcon/> 
+                </IconButton>
                 </div>
                 <Divider />
                 <List>
