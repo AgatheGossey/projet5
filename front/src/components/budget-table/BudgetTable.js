@@ -44,7 +44,7 @@ class BudgetTable extends Component {
                     </TableCell>
                     <TableCell component="th" scope="row">{operation.date}</TableCell>
                     <TableCell align="right">{operation.name}</TableCell>
-                    <TableCell align="right">{operation.type}</TableCell>
+                    <TableCell align="right">{operation.mode}</TableCell>
                     <TableCell align="right">{operation.reason}</TableCell>
                     { operation.amount < 0 ? <TableCell></TableCell> : <TableCell align="right">{operation.amount}</TableCell>}
                     { operation.amount < 0 ? <TableCell>{operation.amount}</TableCell> : <TableCell></TableCell>}
@@ -63,7 +63,7 @@ class BudgetTable extends Component {
                         <TableCell></TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell align='right'>Nom</TableCell>
-                            <TableCell align='right'>Type</TableCell>
+                            <TableCell align='right'>Mode</TableCell>
                             <TableCell align='right'>Motif</TableCell>
                             <TableCell align='right'>Recette</TableCell>
                             <TableCell align='right'>Dépense</TableCell>
