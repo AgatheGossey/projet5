@@ -162,6 +162,7 @@ $app->post('/user', function ($request, $response) {
             ':username' => $request->getParam('username'),
             ':password' => $request->getParam('password'),
             ':email' => $request->getParam('email'),
+        );
         $result = $pre->execute($values);
         return $response->withJson(array('status' => 'Line Created'),200);
     }
@@ -198,7 +199,7 @@ $app->delete('/user/{id}', function ($request, $response) {
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
-            ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+            ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 });
