@@ -29,19 +29,20 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 });
 
 
-// LIST BUDGET OPERATIONS
+// BUDGET OPERATIONS
 
 $app->post('/budget', function ($request, $response) {
 
     try {
         $connection = $this->db;
-        $sql = "INSERT INTO `budget`(`date`, `name`, `mode`, `reason`, `amount`) VALUES (:date,:name,:mode,:reason,:amount)";
+        $sql = "INSERT INTO `budget`(`date`, `name`, `mode`, `reason`, `type`, `amount`) VALUES (:date,:name,:mode,:reason,:type,:amount)";
         $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $values = array(
             ':date' => $request->getParam('date'),
             ':name' => $request->getParam('name'),
             ':mode' => $request->getParam('mode'),
             ':reason' => $request->getParam('reason'),
+            ':type' => $request->getParam('type'),
             ':amount' => $request->getParam('amount'));
         $result = $pre->execute($values);
         return $response->withJson(array('status' => 'Line Created'),200);
@@ -104,13 +105,14 @@ $app->put('/budget/{id}', function ($request,$response) {
     try {
         $id = $request->getAttribute('id');
         $connection = $this->db;
-        $sql = "UPDATE budget SET date=:date,name=:name,mode=:mode,reason=:reason,amount=:amount WHERE id = :id";
+        $sql = "UPDATE budget SET date=:date,name=:name,mode=:mode,reason=:reason,type=:type,amount=:amount WHERE id = :id";
         $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $values = array(
             ':date' => $request->getParam('date'),
             ':name' => $request->getParam('name'),
             ':mode' => $request->getParam('mode'),
             ':reason' => $request->getParam('reason'),
+            ':type' => $type->getParam('type'),
             ':amount' => $request->getParam('amount'),
             ':id' => $id
         );
@@ -147,6 +149,49 @@ $app->delete('/budget/{id}', function ($request, $response) {
     } 
 
 });
+
+// USERS OPERATIONS
+
+$app->post('/user', function ($request, $response) {
+
+    try {
+        $connection = $this->db;
+        $sql = "INSERT INTO `users`(`username`, `password`, `email`) VALUES (:username,:password,:email)";
+        $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $values = array(
+            ':username' => $request->getParam('username'),
+            ':password' => $request->getParam('password'),
+            ':email' => $request->getParam('email'),
+        $result = $pre->execute($values);
+        return $response->withJson(array('status' => 'Line Created'),200);
+    }
+    catch(\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()),422);
+    }
+
+});
+
+$app->delete('/user/{id}', function ($request, $response) {
+
+    try {
+        $id = $request->getAttribute('id');
+        $connection = $this->db;
+        $sql = "DELETE FROM users WHERE id= :id";
+        $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $values = array(':id' => $id);
+            $result = $pre->execute($values);
+            if($result) {
+                return $response->withJson(array('status' => 'Operations Deleted'), 200);
+            } else {
+                return $response->withJson(array('status' => 'Operations Not found'), 422);
+            }
+    }
+    catch(\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()),422);
+    } 
+
+});
+
 
 // ALLOW CORS FOR DEVELOPMENT
 // TO DELETE AFTER DEVELOPMENT
