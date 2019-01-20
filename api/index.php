@@ -35,12 +35,12 @@ $app->post('/budget', function ($request, $response) {
 
     try {
         $connection = $this->db;
-        $sql = "INSERT INTO `budget`(`date`, `name`, `type`, `reason`, `amount`) VALUES (:date,:name,:type,:reason,:amount)";
+        $sql = "INSERT INTO `budget`(`date`, `name`, `mode`, `reason`, `amount`) VALUES (:date,:name,:mode,:reason,:amount)";
         $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $values = array(
             ':date' => $request->getParam('date'),
             ':name' => $request->getParam('name'),
-            ':type' => $request->getParam('type'),
+            ':mode' => $request->getParam('mode'),
             ':reason' => $request->getParam('reason'),
             ':amount' => $request->getParam('amount'));
         $result = $pre->execute($values);
@@ -104,12 +104,12 @@ $app->put('/budget/{id}', function ($request,$response) {
     try {
         $id = $request->getAttribute('id');
         $connection = $this->db;
-        $sql = "UPDATE budget SET date=:date,name=:name,type=:type,reason=:reason,amount=:amount WHERE id = :id";
+        $sql = "UPDATE budget SET date=:date,name=:name,mode=:mode,reason=:reason,amount=:amount WHERE id = :id";
         $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $values = array(
             ':date' => $request->getParam('date'),
             ':name' => $request->getParam('name'),
-            ':type' => $request->getParam('type'),
+            ':mode' => $request->getParam('mode'),
             ':reason' => $request->getParam('reason'),
             ':amount' => $request->getParam('amount'),
             ':id' => $id

@@ -22,7 +22,7 @@ class BudgetTable extends Component {
         };
     }
 
-    getOperations() {
+    getOperations = () => {
         axios.get('http://localhost/my_manager/api/budget')
             .then(response => {
                 this.setState({
@@ -31,11 +31,11 @@ class BudgetTable extends Component {
             })
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.getOperations();
     }
 
-    displayOperations() {
+    displayOperations = () => {
         return this.state.operations.map(operation => {
             return (
                 <TableRow key={operation.id}>
@@ -48,7 +48,7 @@ class BudgetTable extends Component {
                     <TableCell align="right">{operation.reason}</TableCell>
                     { operation.amount < 0 ? <TableCell></TableCell> : <TableCell align="right">{operation.amount}</TableCell>}
                     { operation.amount < 0 ? <TableCell>{operation.amount}</TableCell> : <TableCell></TableCell>}
-                    <TableCell><DeleteRow operationId={operation.id} getOperations={this.getOperations.bind(this)} /></TableCell>
+                    <TableCell><DeleteRow operationId={operation.id} getOperations={this.getOperations} /></TableCell>
                 </TableRow>
             )
         })

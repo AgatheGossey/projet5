@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 // // STYLE
 import styles from './addrow.module.css';
@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // form
 import MenuItem from '@material-ui/core/MenuItem';
@@ -25,7 +24,7 @@ class AddRow extends Component {
         date:'',
         name:'',
         mode:'',
-        motif:'',
+        reason:'',
         type:'',
         amount:'',
     };
@@ -54,9 +53,9 @@ class AddRow extends Component {
         })
     }
 
-    handleMotifChange = (motif) => {
+    handleReasonChange = (reason) => {
         this.setState({
-            motif: motif,
+            reason: reason,
         })
     }
 
@@ -78,11 +77,21 @@ class AddRow extends Component {
         })
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const data = {
+            date: this.state.date,
+            name: this.state.name,
+            mode: this.state.mode,
+        };
+        axios.post('http://localhost/my_manager/api/budget/', { data })
+    }
+
     render() {
         const { fullScreen } = this.props;
 
         return (
-            <div>
+            <form onSubmit={this.handleSubmit}>
                 <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
                     Ajouter
                 </Button>
@@ -97,7 +106,7 @@ class AddRow extends Component {
                                     <MenuItem value="Chèque">Chèque</MenuItem>
                                     <MenuItem value="Espèce">Espèce</MenuItem>
                                 </TextField>
-                                <TextField variant="outlined" label="Motif :" onChange={e => this.handleMotifChange(e.target.value)}/>
+                                <TextField variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>
                                 <TextField select variant="outlined" label="Type :" value={this.state.type} onChange={e => this.handleTypeChange(e.target.value)}>
                                     <MenuItem value="Recette">Recette</MenuItem>
                                     <MenuItem value="Depense">Dépense</MenuItem>
@@ -113,12 +122,12 @@ class AddRow extends Component {
                             </div>    
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                        <Button type="submit" onClick={this.handleClose} color="primary" autoFocus>
                             Ajouter
                         </Button>
                     </DialogActions>
                 </Dialog>
-            </div>
+            </form>
         )
     }
 }
