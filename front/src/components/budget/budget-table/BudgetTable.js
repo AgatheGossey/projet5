@@ -1,18 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import MaterialTable from 'material-table'
 import axios from 'axios';
-import DeleteRow from '../delete-row/DeleteRow';
 
 // STYLE 
 import styles from './budgettable.module.css';
 
 // COMPONENTS
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 
 import AddRow from '../add-row/AddRow';
@@ -46,70 +39,53 @@ class BudgetTable extends Component {
 
   displayOperations = () => {
     return this.state.operations.map(operation => {
-
-      let amountColumns = (
-        <Fragment>
-          <TableCell align="right">{operation.amount}</TableCell>
-          <TableCell />
-        </Fragment>
-      )
-
-      if (operation.type === "Depense") {
-        amountColumns = (
-          <Fragment>
-            <TableCell />
-            <TableCell align="right">{operation.amount}</TableCell>
-          </Fragment>
-        )
-      }
-
-      return (
-        <TableRow key={operation.id}>
-          <TableCell padding="checkbox">
-            <Checkbox />
-          </TableCell>
-          <TableCell component="th" scope="row">{operation.date}</TableCell>
-          <TableCell align="right">{operation.name}</TableCell>
-          <TableCell align="right">{operation.mode}</TableCell>
-          <TableCell align="right">{operation.reason}</TableCell>
-          { amountColumns }
-          <TableCell><DeleteRow operationId={operation.id} getOperations={this.getOperations} /></TableCell>
-        </TableRow>
-      )
+      return { 
+        date: operation.date, 
+        nom: operation.name,
+        mode: operation.mode,
+        motif: operation.reason,
+        recette: operation.type === "Recette" ? operation.amount : "",
+        depense: operation.type === "Depense" ? operation.amount : "", 
+      };
     })
   }
 
   render() {
     return (
-      <Fragment>
-        <Paper className={styles.test}>
-          <Table>
-            <TableHead>
-              <TableRow>
-              <TableCell></TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell align='right'>Nom</TableCell>
-                <TableCell align='right'>Mode</TableCell>
-                <TableCell align='right'>Motif</TableCell>
-                <TableCell align='right'>Recette</TableCell>
-                <TableCell align='right'>Dépense</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.displayOperations()}
-            </TableBody>
-          </Table>
-        </Paper>
+      <div>
+        <MaterialTable className={styles.test}
+          columns={[
+            { title: 'Date', field: 'date', type: 'numeric'},
+            { title: 'Nom', field: 'nom'},
+            { title: 'Mode', field: 'mode'},
+            { title: 'Motif', field: 'motif'},
+            { title: 'Recette', field: 'recette', type: 'numeric'},
+            { title: 'Dépense', field: 'depense', type: 'numeric'},
+          ]}
+          data={this.displayOperations()}
+          title="Gérer le budget :"
+          actions={[
+            {
+              icon: 'done_all',
+              tooltip: 'Do',
+              onClick: (event, rows) => {
+              alert('You selected ' + rows.length + ' rows')
+              },
+            },
+          ]}
+          options={{
+            selection: true,
+          }}
+        />
         <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}>
           Ajouter
         </Button>
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
-      </Fragment>
-    )
-  }
+
+  </div>
+
+    )}
 
 }
-
 
 export default BudgetTable;
