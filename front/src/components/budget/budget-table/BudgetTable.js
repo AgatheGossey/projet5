@@ -27,7 +27,7 @@ class BudgetTable extends Component {
     axios.get('http://localhost/my_manager/api/budget')
       .then(response => {
         this.setState({
-          operations: response.data.result,
+          operations: response.data.result || [],
         });
       })
   }
@@ -93,6 +93,7 @@ class BudgetTable extends Component {
                 <TableCell align='right'>Motif</TableCell>
                 <TableCell align='right'>Recette</TableCell>
                 <TableCell align='right'>Dépense</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
