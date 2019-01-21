@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 
 // COMPONENTS
-import TopBar from './components/menu/top-bar/TopBar';
-import LeftBar from './components/menu/left-bar/LeftBar';
+import Home from './components/home/Home';
+import Menu from './components/menu/Menu';
 import BudgetTable from './components/budget/budget-table/BudgetTable';
+
+const AppRoute = ({ component : Component, layout: Layout, ...rest }) => (
+  <Route {...rest} render={props => (
+    <Layout>
+      <Component {...props} />
+    </Layout>
+  )} />
+)
 
 class App extends Component {
   state = {
@@ -19,12 +28,14 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <TopBar toggleSideBar={this.toggleSideBar} />
-        <LeftBar open={this.state.isSideBarOpen} toggleSideBar={this.toggleSideBar}  />
-        <BudgetTable />
-      </React.Fragment>
+      <div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={ Home } />
+          <AppRoute exact path="/budget" layout={ Menu } component={BudgetTable}  />
+        </Switch>
+      </Router>
+    </div>
     );
   }
 }
