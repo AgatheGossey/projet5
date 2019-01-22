@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 // STYLE 
@@ -17,13 +17,20 @@ class BudgetTable extends Component {
 
     operations: [],
     isAddRowOpen: false,
-    selectedDate: new Date(),
+    selectedStartDate: new Date(),
+    selectedEndDate: new Date(),
 
   }
 
-  handleDateChange = date => {
+  handleChangeOfStartDate = date => {
 
-    this.setState({ selectedDate: date });
+    this.setState({ selectedStartDate: date });
+
+  }
+
+  handleChangeOfEndDate = date => {
+
+    this.setState({ selectedEndDate: date });
 
   }
 
@@ -103,17 +110,27 @@ class BudgetTable extends Component {
 
   }
 
+  
   render() {
 
-    const { selectedDate } = this.state;
+    const { selectedStartDate } = this.state;
+    const { selectedEndDate } = this.state;
 
     return (
 
-      <div className={styles.test}>
-
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <DatePicker value={selectedDate} onChange={this.handleDateChange} />
-        </MuiPickersUtilsProvider>
+      <div className={styles.container}>
+        <div className={styles.selectedDateContainer}>
+        <p>
+          <span className={styles.selectedDate}>Du</span>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker value={selectedStartDate} onChange={this.handleChangeOfStartDate} />
+          </MuiPickersUtilsProvider>
+          <span className={styles.selectedDate}>au</span>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker value={selectedEndDate} onChange={this.handleChangeOfEndDate} />
+          </MuiPickersUtilsProvider>
+        </p>
+        </div>
 
         
         <MaterialTable
@@ -142,10 +159,7 @@ class BudgetTable extends Component {
           }}
         />
 
-        <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}>
-          Ajouter
-        </Button>
-        
+        <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}> Ajouter </Button>
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
         
   </div>
