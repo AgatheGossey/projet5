@@ -27,13 +27,12 @@ class BudgetTable extends Component {
 
   deleteOperations = async (operations) => {
     const operationsIds = operations.map(operation => operation.id);
-
-    operationsIds.forEach((operationId) => {
-      axios.delete(`http://localhost/my_manager/api/budget/${operationId}`);
+    const promises = [];
+    operationsIds.map((operationId) => {
+      return promises.push(axios.delete(`http://localhost/my_manager/api/budget/${operationId}`));
     }); 
-
+    await Promise.all(promises);
     this.getOperations();
-
   }
 
   calculateBalance = () => {
