@@ -36,13 +36,25 @@ class BudgetTable extends Component {
 
   }
 
+  calculateBalance = () => {
+    let solde = 0;
+    this.state.operations.forEach(element => {
+    if (element.type === "Recette") {
+      solde = solde + Number(element.amount);   
+    } else {
+      solde = solde - Number(element.amount);
+    }
+    });
+    return `Solde disponible : ${solde}€`;
+  }
+
   handleAddRowClick = () => {
     this.setState({ isAddRowOpen: true });
-  };
+  }
 
   handleAddRowClose = () => {
     this.setState({ isAddRowOpen: false });
-  };
+  }
 
   componentDidMount = () => {
     this.getOperations();
@@ -76,7 +88,7 @@ class BudgetTable extends Component {
             { title: 'Dépense', field: 'depense', type: 'numeric'},
           ]}
           data={this.displayOperations()}
-          title="Gérer le budget :"
+          title={this.calculateBalance()}
           actions={[
             {
               icon: 'delete',
@@ -94,10 +106,13 @@ class BudgetTable extends Component {
           Ajouter
         </Button>
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
-
+        
   </div>
 
+
     )}
+
+
 
 }
 
