@@ -1,42 +1,62 @@
-import React, { Component } from 'react';
-import MaterialTable from 'material-table'
+import React, { Component, useState } from 'react';
 import axios from 'axios';
 
 // STYLE 
 import styles from './budgettable.module.css';
 
 // COMPONENTS
+import MaterialTable from 'material-table'
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import Button from '@material-ui/core/Button';
-
 import AddRow from '../add-row/AddRow';
 
 class BudgetTable extends Component {
+
   state = {
+
     operations: [],
     isAddRowOpen: false,
+    selectedDate: new Date(),
+
+  }
+
+  handleDateChange = date => {
+
+    this.setState({ selectedDate: date });
+
   }
 
   getOperations = () => {
+
     axios.get('http://localhost/my_manager/api/budget')
+
       .then(response => {
         this.setState({
           operations: response.data.result || [],
         });
+
       })
   }
 
   deleteOperations = async (operations) => {
+
     const operationsIds = operations.map(operation => operation.id);
     const promises = [];
+
     operationsIds.map((operationId) => {
       return promises.push(axios.delete(`http://localhost/my_manager/api/budget/${operationId}`));
     }); 
     await Promise.all(promises);
+
     this.getOperations();
+
   }
 
   calculateBalance = () => {
+
     let solde = 0;
+
     this.state.operations.forEach(element => {
     if (element.type === "Recette") {
       solde = solde + Number(element.amount);   
@@ -44,22 +64,31 @@ class BudgetTable extends Component {
       solde = solde - Number(element.amount);
     }
     });
+
     return `Solde disponible : ${solde}€`;
+
   }
 
   handleAddRowClick = () => {
+
     this.setState({ isAddRowOpen: true });
+
   }
 
   handleAddRowClose = () => {
+
     this.setState({ isAddRowOpen: false });
+
   }
 
   componentDidMount = () => {
+
     this.getOperations();
+
   }
 
   displayOperations = () => {
+
     return this.state.operations.map(operation => {
       return { 
         id: operation.id,
@@ -71,11 +100,22 @@ class BudgetTable extends Component {
         depense: operation.type === "Depense" ? operation.amount : "", 
       };
     })
+
   }
 
   render() {
+
+    const { selectedDate } = this.state;
+
     return (
+
       <div className={styles.test}>
+
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <DatePicker value={selectedDate} onChange={this.handleDateChange} />
+        </MuiPickersUtilsProvider>
+
+        
         <MaterialTable
           columns={[
             { title: 'id', field: 'id', hidden: true},
@@ -101,17 +141,16 @@ class BudgetTable extends Component {
             selection: true,
           }}
         />
+
         <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}>
           Ajouter
         </Button>
+        
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
         
   </div>
 
-
     )}
-
-
 
 }
 
