@@ -25,6 +25,17 @@ class BudgetTable extends Component {
       })
   }
 
+  deleteOperations = async (operations) => {
+    const operationsIds = operations.map(operation => operation.id);
+
+    operationsIds.forEach((operationId) => {
+      axios.delete(`http://localhost/my_manager/api/budget/${operationId}`);
+    }); 
+
+    this.getOperations();
+
+  }
+
   handleAddRowClick = () => {
     this.setState({ isAddRowOpen: true });
   };
@@ -40,6 +51,7 @@ class BudgetTable extends Component {
   displayOperations = () => {
     return this.state.operations.map(operation => {
       return { 
+        id: operation.id,
         date: operation.date, 
         nom: operation.name,
         mode: operation.mode,
@@ -52,9 +64,10 @@ class BudgetTable extends Component {
 
   render() {
     return (
-      <div>
-        <MaterialTable className={styles.test}
+      <div className={styles.test}>
+        <MaterialTable
           columns={[
+            { title: 'id', field: 'id', hidden: true},
             { title: 'Date', field: 'date', type: 'numeric'},
             { title: 'Nom', field: 'nom'},
             { title: 'Mode', field: 'mode'},
@@ -66,10 +79,10 @@ class BudgetTable extends Component {
           title="Gérer le budget :"
           actions={[
             {
-              icon: 'done_all',
-              tooltip: 'Do',
+              icon: 'delete',
+              tooltip: 'Supprimer',
               onClick: (event, rows) => {
-              alert('You selected ' + rows.length + ' rows')
+                this.deleteOperations(rows);
               },
             },
           ]}
