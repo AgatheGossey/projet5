@@ -43,6 +43,7 @@ class BudgetTable extends Component {
         date_budget: operation.date_budget, 
         nom: operation.name,
         mode: operation.mode,
+        category: operation.category,
         motif: operation.reason,
         recette: operation.type === "Recette" ? operation.amount : "",
         depense: operation.type === "Depense" ? operation.amount : "", 
@@ -151,6 +152,7 @@ class BudgetTable extends Component {
             { title: 'Date', field: 'date_budget', type: 'numeric'},
             { title: 'Nom', field: 'nom'},
             { title: 'Mode', field: 'mode'},
+            { title: 'Catégorie', field: 'categorie'},
             { title: 'Motif', field: 'motif'},
             { title: 'Recette', field: 'recette', type: 'numeric'},
             { title: 'Dépense', field: 'depense', type: 'numeric'},
@@ -184,6 +186,7 @@ class BudgetTable extends Component {
 
 function FilterActivate(props) {
   return <h1>Filtre activé</h1>
+  
 }
 
 function FilterDesactivate(props) {
