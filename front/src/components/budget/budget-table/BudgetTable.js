@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table'
 // Filter 
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 class BudgetTable extends Component {
@@ -111,28 +110,17 @@ class BudgetTable extends Component {
   }
 
   // Filter 
-
-  handleFilterByDateActive = () => {
-    this.setState({isFilterByDate: true});
+  toggleFilterByDate = () => {
+    this.setState({
+      isFilterByDate: !this.state.isFilterByDate,
+    })
   }
 
-  handleFilterByDateDeactivate = () => {
-    this.setState({isFilterByDate: false});
-  }
-
-  render() {
-
-    let button;
-
+  filterText = () => {
     if (this.state.isFilterByDate) {
-      button = <NoFilterByDateButton onClick={this.handleFilterByDateDeactivate} />;
-    } else {
-      button = <FilterByDateButton onClick={this.handleFilterByDateActive} />;
-    }
-    return (
-
-      <div className={styles.container}>
-
+      return (
+        <div>
+          <div>Voir tout le tableau</div>
           Du
           <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_start} onChange={e => this.handleChangeStartDate(e.target.value)}/>   
           Au
@@ -140,10 +128,19 @@ class BudgetTable extends Component {
           <Button variant="outlined" color="primary" onClick={this.filterByDate()}>
             Ajouter
           </Button>
+        </div>
+      )
+    } else {
+      return <div>Filtrer par date</div>
+    }
+  }
 
+  render() {
+    return (
+      <div className={styles.container}>
           <div>
-            <FilterStatus isFilterByDate={this.state.isFilterByDate} />
-            {button}
+            <Switch value={this.state.isFilterByDate} onChange={this.toggleFilterByDate} />
+            {this.filterText()}
           </div>
 
         <MaterialTable
@@ -182,35 +179,6 @@ class BudgetTable extends Component {
 
     )}
 
-}
-
-function FilterActivate(props) {
-  return <h1>Filtre activé</h1>
-  
-}
-
-function FilterDesactivate(props) {
-  return <h1>Filtre désactivé</h1>
-}
-
-function FilterStatus(props) {
-  const isFilterByDate = props.isFilterByDate;
-  if (isFilterByDate) {
-    return <FilterActivate />;
-  } 
-  return <FilterDesactivate />;
-}
-
-function FilterByDateButton(props) {
-  return (
-    <FormControlLabel control={<Switch value="checkedC" />} label="Filtrer par date" />
-  );
-}
-
-function NoFilterByDateButton(props) {
-  return (
-    <FormControlLabel control={<Switch value="checkedC" />} label="Voir tout le tableau" />
-  )
 }
 
 export default BudgetTable;
