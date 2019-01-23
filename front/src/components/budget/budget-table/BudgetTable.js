@@ -17,10 +17,14 @@ import Switch from '@material-ui/core/Switch';
 class BudgetTable extends Component {
 
   state = {
+    // Operations
     operations: [],
+    // Add row dialog 
     isAddRowOpen: false,
+    // Filter the table
     date_budget_start:'',
     date_budget_end: '',
+    isFilterByDate: false, 
   }
 
   getOperations = () => {
@@ -105,8 +109,25 @@ class BudgetTable extends Component {
     })
   }
 
+  // Filter 
+
+  handleFilterByDateActive = () => {
+    this.setState({isFilterByDate: true});
+  }
+
+  handleFilterByDateDeactivate = () => {
+    this.setState({isFilterByDate: false});
+  }
+
   render() {
 
+    let button;
+
+    if (this.state.isFilterByDate) {
+      button = <NoFilterByDateButton onClick={this.handleFilterByDateDeactivate} />;
+    } else {
+      button = <FilterByDateButton onClick={this.handleFilterByDateActive} />;
+    }
     return (
 
       <div className={styles.container}>
@@ -118,7 +139,11 @@ class BudgetTable extends Component {
           <Button variant="outlined" color="primary" onClick={this.filterByDate()}>
             Ajouter
           </Button>
-          <FormControlLabel control={<Switch value="checkedC" />} label="Filtrer par date" />
+
+          <div>
+            <FilterStatus isFilterByDate={this.state.isFilterByDate} />
+            {button}
+          </div>
 
         <MaterialTable
           columns={[
@@ -155,6 +180,34 @@ class BudgetTable extends Component {
 
     )}
 
+}
+
+function FilterActivate(props) {
+  return <h1>Filtre activé</h1>
+}
+
+function FilterDesactivate(props) {
+  return <h1>Filtre désactivé</h1>
+}
+
+function FilterStatus(props) {
+  const isFilterByDate = props.isFilterByDate;
+  if (isFilterByDate) {
+    return <FilterActivate />;
+  } 
+  return <FilterDesactivate />;
+}
+
+function FilterByDateButton(props) {
+  return (
+    <FormControlLabel control={<Switch value="checkedC" />} label="Filtrer par date" />
+  );
+}
+
+function NoFilterByDateButton(props) {
+  return (
+    <FormControlLabel control={<Switch value="checkedC" />} label="Voir tout le tableau" />
+  )
 }
 
 export default BudgetTable;
