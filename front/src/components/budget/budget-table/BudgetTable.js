@@ -18,11 +18,12 @@ class BudgetTable extends Component {
   state = {
     // Operations
     operations: [],
+    filteredOperations: [],
     // Add row dialog 
     isAddRowOpen: false,
     // Filter the table
-    date_budget_start:'',
-    date_budget_end: '',
+    date_budget_start: "",
+    date_budget_end: "",
     isFilterByDate: false, 
   }
 
@@ -36,7 +37,8 @@ class BudgetTable extends Component {
   }
 
   displayOperations = () => {
-    return this.state.operations.map(operation => {
+    const operations = this.state.isFilterByDate ?  this.state.filteredOperations : this.state.operations;
+    return operations.map(operation => {
       return { 
         id: operation.id,
         date_budget: operation.date_budget, 
@@ -55,11 +57,15 @@ class BudgetTable extends Component {
   }
 
   filterByDate = () => {
+    const list = [];
     this.state.operations.forEach(element => {
       if (element.date_budget >= this.state.date_budget_start && element.date_budget <= this.state.date_budget_end) {
-        var getOperationsFilter = element;
-        console.log(getOperationsFilter);
+        list.push(element);
       } 
+    })
+
+    this.setState({
+      filteredOperations: list,
     })
   }
 
@@ -101,12 +107,14 @@ class BudgetTable extends Component {
     this.setState({
       date_budget_start: date_budget_start,
     })
+    this.filterByDate();
   }
 
   handleChangeEndDate = (date_budget_end) => {
     this.setState({
       date_budget_end: date_budget_end,
     })
+    this.filterByDate();
   }
 
   // Filter 
@@ -125,9 +133,6 @@ class BudgetTable extends Component {
           <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_start} onChange={e => this.handleChangeStartDate(e.target.value)}/>   
           Au
           <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_end} onChange={e => this.handleChangeEndDate(e.target.value)}/>   
-          <Button variant="outlined" color="primary" onClick={this.filterByDate()}>
-            Ajouter
-          </Button>
         </div>
       )
     } else {
