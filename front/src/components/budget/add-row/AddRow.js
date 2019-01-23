@@ -18,7 +18,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 class AddRow extends Component {
   state = {
-    date:'',
+    date_budget:'',
     name:'',
     mode:'',
     reason:'',
@@ -26,9 +26,9 @@ class AddRow extends Component {
     amount:'',
   };
 
-  handleDateChange = (date) => {
+  handleDateChange = (date_budget) => {
     this.setState({
-      date: date,
+      date_budget: date_budget,
     })
   }
 
@@ -64,7 +64,7 @@ class AddRow extends Component {
 
   handleSubmit = () => {
     const data = {
-      date: this.state.date,
+      date_budget: this.state.date_budget,
       name: this.state.name,
       mode: this.state.mode,
       reason: this.state.reason,
@@ -86,7 +86,7 @@ class AddRow extends Component {
           <DialogTitle id="responsive-dialog-title">{"Ajouter un élément dans le budget"}</DialogTitle>
           <DialogContent>
             <div className={styles.container}>
-              <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date} onChange={e => this.handleDateChange(e.target.value)}/>   
+              <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget} onChange={e => this.handleDateChange(e.target.value)}/>   
               <TextField variant="outlined" label="Nom :" onChange={e => this.handleNameChange(e.target.value)}/>
               <TextField select variant="outlined" label="Mode :" value={this.state.mode} onChange={e => this.handleModeChange(e.target.value)}>
                 <MenuItem value="Virement">Virement</MenuItem>

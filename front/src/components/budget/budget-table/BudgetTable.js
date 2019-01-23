@@ -5,101 +5,38 @@ import axios from 'axios';
 import styles from './budgettable.module.css';
 
 // COMPONENTS
-import MaterialTable from 'material-table'
-import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
-import Button from '@material-ui/core/Button';
 import AddRow from '../add-row/AddRow';
+import Button from '@material-ui/core/Button';
+// Table 
+import MaterialTable from 'material-table'
+// Filter 
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 class BudgetTable extends Component {
 
   state = {
-
     operations: [],
     isAddRowOpen: false,
-    selectedStartDate: new Date(),
-    selectedEndDate: new Date(),
-
-  }
-
-  handleChangeOfStartDate = date => {
-
-    this.setState({ selectedStartDate: date });
-
-  }
-
-  handleChangeOfEndDate = date => {
-
-    this.setState({ selectedEndDate: date });
-
+    date_budget_start:'',
+    date_budget_end: '',
   }
 
   getOperations = () => {
-
     axios.get('http://localhost/my_manager/api/budget')
-
       .then(response => {
         this.setState({
           operations: response.data.result || [],
         });
-
       })
   }
 
-  deleteOperations = async (operations) => {
-
-    const operationsIds = operations.map(operation => operation.id);
-    const promises = [];
-
-    operationsIds.map((operationId) => {
-      return promises.push(axios.delete(`http://localhost/my_manager/api/budget/${operationId}`));
-    }); 
-    await Promise.all(promises);
-
-    this.getOperations();
-
-  }
-
-  calculateBalance = () => {
-
-    let solde = 0;
-
-    this.state.operations.forEach(element => {
-    if (element.type === "Recette") {
-      solde = solde + Number(element.amount);   
-    } else {
-      solde = solde - Number(element.amount);
-    }
-    });
-
-    return `Solde disponible : ${solde}€`;
-
-  }
-
-  handleAddRowClick = () => {
-
-    this.setState({ isAddRowOpen: true });
-
-  }
-
-  handleAddRowClose = () => {
-
-    this.setState({ isAddRowOpen: false });
-
-  }
-
-  componentDidMount = () => {
-
-    this.getOperations();
-
-  }
-
   displayOperations = () => {
-
     return this.state.operations.map(operation => {
       return { 
         id: operation.id,
-        date: operation.date, 
+        date_budget: operation.date_budget, 
         nom: operation.name,
         mode: operation.mode,
         motif: operation.reason,
@@ -107,36 +44,86 @@ class BudgetTable extends Component {
         depense: operation.type === "Depense" ? operation.amount : "", 
       };
     })
-
   }
 
-  
-  render() {
+  componentDidMount = () => {
+    this.getOperations();
+  }
 
-    const { selectedStartDate } = this.state;
-    const { selectedEndDate } = this.state;
+  filterByDate = () => {
+    this.state.operations.forEach(element => {
+      if (element.date_budget >= this.state.date_budget_start && element.date_budget <= this.state.date_budget_end) {
+        var getOperationsFilter = element;
+        console.log(getOperationsFilter);
+      } 
+    })
+  }
+
+  calculateBalance = () => {
+    let solde = 0;
+    this.state.operations.forEach(element => {
+    if (element.type === "Recette") {
+      solde = solde + Number(element.amount);   
+    } else {
+      solde = solde - Number(element.amount);
+    }
+    });
+    return `Solde disponible : ${solde}€`;
+  }
+
+  deleteOperations = async (operations) => {
+    const operationsIds = operations.map(operation => operation.id);
+    const promises = [];
+    operationsIds.map((operationId) => {
+      return promises.push(axios.delete(`http://localhost/my_manager/api/budget/${operationId}`));
+    }); 
+    await Promise.all(promises);
+    this.getOperations();
+  }
+
+// Handle Dialog for add row to the budget
+
+  handleAddRowClick = () => {
+    this.setState({ isAddRowOpen: true });
+  }
+
+  handleAddRowClose = () => {
+    this.setState({ isAddRowOpen: false });
+  }
+
+// Handle state set to select dates to make a filter
+
+  handleChangeStartDate = (date_budget_start) => {
+    this.setState({
+      date_budget_start: date_budget_start,
+    })
+  }
+
+  handleChangeEndDate = (date_budget_end) => {
+    this.setState({
+      date_budget_end: date_budget_end,
+    })
+  }
+
+  render() {
 
     return (
 
       <div className={styles.container}>
-        <div className={styles.selectedDateContainer}>
-        <p>
-          <span className={styles.selectedDate}>Du</span>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DatePicker value={selectedStartDate} onChange={this.handleChangeOfStartDate} />
-          </MuiPickersUtilsProvider>
-          <span className={styles.selectedDate}>au</span>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DatePicker value={selectedEndDate} onChange={this.handleChangeOfEndDate} />
-          </MuiPickersUtilsProvider>
-        </p>
-        </div>
 
-        
+          Du
+          <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_start} onChange={e => this.handleChangeStartDate(e.target.value)}/>   
+          Au
+          <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_end} onChange={e => this.handleChangeEndDate(e.target.value)}/>   
+          <Button variant="outlined" color="primary" onClick={this.filterByDate()}>
+            Ajouter
+          </Button>
+          <FormControlLabel control={<Switch value="checkedC" />} label="Filtrer par date" />
+
         <MaterialTable
           columns={[
             { title: 'id', field: 'id', hidden: true},
-            { title: 'Date', field: 'date', type: 'numeric'},
+            { title: 'Date', field: 'date_budget', type: 'numeric'},
             { title: 'Nom', field: 'nom'},
             { title: 'Mode', field: 'mode'},
             { title: 'Motif', field: 'motif'},
@@ -158,10 +145,12 @@ class BudgetTable extends Component {
             selection: true,
           }}
         />
-
-        <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}> Ajouter </Button>
+      
+        <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}>
+          Ajouter
+        </Button>
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
-        
+    
   </div>
 
     )}
