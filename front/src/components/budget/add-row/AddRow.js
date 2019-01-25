@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from './addrow.module.css';
 
 // COMPONENTS 
-import AddCategory from '../add-category/AddCategory';
+import ManageCategory from '../manage-category/ManageCategory';
 import Button from '@material-ui/core/Button';
 // dialog
 import Dialog from '@material-ui/core/Dialog';
@@ -27,6 +27,8 @@ class AddRow extends Component {
     type:'',
     amount:'',
     categoriesOperations: [],
+    // Add category dialog
+    isAddCategoryOpen: false, 
   };
 
   componentDidMount() {
@@ -107,6 +109,14 @@ class AddRow extends Component {
     return this.state.categoriesOperations.map((categoryOperation) => 
       (<MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>) );
   }
+
+  handleAddCategoryClick = () => {
+    this.setState( { isAddCategoryOpen: true});
+  }
+
+  handleAddCategoryClose = () => {
+    this.setState({ isAddCategoryOpen: false});
+  }
   
 
   render() {
@@ -130,7 +140,10 @@ class AddRow extends Component {
 
               <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
                {this.displayCategory()}
-               <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategory={this.getCategory} />
+               <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
+                    Ajouter
+                </Button>
+               <ManageCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategory={this.getCategory} />
               </TextField>
 
               <TextField variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>

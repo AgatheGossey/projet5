@@ -21,6 +21,8 @@ class BudgetTable extends Component {
     filteredOperations: [],
     // Add row dialog 
     isAddRowOpen: false,
+    // Manage category dialog
+    isManageCategoryOpen: false,
     // Filter the table
     date_budget_start: "",
     date_budget_end: "",
@@ -102,6 +104,16 @@ class BudgetTable extends Component {
     this.setState({ isAddRowOpen: false });
   }
 
+// Handle Dialog for manager category 
+
+  handleManageCategoryClick = () => {
+    this.setState({ isManageCategoryOpen: true });
+  }
+
+  handleManageCategoryClose = () => {
+    this.setState( { isManageCategoryOpen: false })
+  }
+
 // Handle state set to select dates to make a filter
 
   handleChangeStartDate = async (date_budget_start) => {
@@ -142,10 +154,15 @@ class BudgetTable extends Component {
   render() {
     return (
       <div className={styles.container}>
-          <div>
-            <Switch value={this.state.isFilterByDate} onChange={this.toggleFilterByDate} />
-            {this.filterText()}
-          </div>
+
+        <div>
+          <Switch value={this.state.isFilterByDate} onChange={this.toggleFilterByDate} />
+          {this.filterText()}
+        </div>
+
+        <div>
+        <Button color='primary' onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
+        </div>
 
         <MaterialTable
           columns={[

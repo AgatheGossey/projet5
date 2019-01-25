@@ -14,18 +14,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // add category form
 import TextField from '@material-ui/core/TextField';
 
-class AddCategory extends Component {
+class ManageCategory extends Component {
     state = {
-        open: false,
-        name_category: '',
-    };
-
-    handleClickOpen = () => {
-      this.setState({ open: true });
-    };
-
-    handleClose = () => {
-      this.setState({ open: false });
+      name_category: '',
     };
 
     handleSubmit = () => {
@@ -49,10 +40,8 @@ class AddCategory extends Component {
     render() {
         return (
             <div>
-                <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-                    Ajouter
-                </Button>
-                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="responsive-dialog-title">
+
+                <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
                     <DialogTitle id="responsive-dialog-title">{"Ajouter une catégorie"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -70,4 +59,4 @@ class AddCategory extends Component {
     }
 }
 
-export default AddCategory;
+export default ManageCategory;
