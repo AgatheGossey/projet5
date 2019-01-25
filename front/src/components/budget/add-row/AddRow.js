@@ -26,16 +26,11 @@ class AddRow extends Component {
     reason:'',
     type:'',
     amount:'',
-    isAddCategoryOpen: false,
+    categoriesOperations: [],
   };
 
-  getCategory = () => {
-    axios.get('http://localhost/my_manager/api/budget')
-      .then(response => {
-        this.setState({
-          category: response.data.result || [],
-        });
-      })
+  componentDidMount() {
+    this.getCategory();
   }
 
   handleDateChange = (date_budget) => {
@@ -50,11 +45,6 @@ class AddRow extends Component {
     })
   }
 
-  handleReasonChange = (reason) => {
-    this.setState({
-      reason: reason,
-    })
-  }
 
   handleModeChange = (mode) => {
     this.setState({
@@ -65,6 +55,12 @@ class AddRow extends Component {
   handleCategoryChange = (category) => {
     this.setState({
       category: category,
+    })
+  }
+
+  handleReasonChange = (reason) => {
+    this.setState({
+      reason: reason,
     })
   }
 
@@ -85,7 +81,7 @@ class AddRow extends Component {
       date_budget: this.state.date_budget,
       name: this.state.name,
       mode: this.state.mode,
-      category: this.state.category,
+      category: this.state.category.id,
       reason: this.state.reason,
       type: this.state.type,
       amount: this.state.amount,
@@ -98,15 +94,20 @@ class AddRow extends Component {
         });
   }
 
-    // Handle Dialog for add category to the row
+  getCategory = () => {
+    axios.get('http://localhost/my_manager/api/category')
+    .then(response => {
+      this.setState({
+        categoriesOperations: response.data.result || [],
+      });
+    })
+  }
 
-    handleAddCategoryClick = () => {
-      this.setState({ isAddCategoryOpen: true });
-    }
-
-    handleAddCategoryClose = () => {
-      this.setState({ isAddCategoryOpen: false });
-    }
+  displayCategory = () => {
+    return this.state.categoriesOperations.map((categoryOperation) => 
+      (<MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>) );
+  }
+  
 
   render() {
     return (
@@ -127,8 +128,8 @@ class AddRow extends Component {
                 <MenuItem value="Espèce">Espèce</MenuItem>
               </TextField>
 
-              <TextField select variant="outlined" label="Catégorie :" value={this.state.mode} onChange={e => this.handleCategoryChange(e.target.value)}>
-                <MenuItem value="add"> </MenuItem>
+              <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
+               {this.displayCategory()}
                <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategory={this.getCategory} />
               </TextField>
 

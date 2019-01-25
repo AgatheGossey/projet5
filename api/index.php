@@ -41,7 +41,7 @@ $app->post('/budget', function ($request, $response) {
         ':date_budget' => $request->getParam('date_budget'),
         ':name' => $request->getParam('name'),
         ':mode' => $request->getParam('mode'),
-        ':category' => $request->getPäram('category'),
+        ':category' => $request->getParam('category'),
         ':reason' => $request->getParam('reason'),
         ':type' => $request->getParam('type'),
         ':amount' => $request->getParam('amount'));
@@ -81,7 +81,8 @@ $app->get('/budget', function($request, $response) {
 
   try {
     $connection = $this->db;
-    $sql = "SELECT * FROM budget";
+    $sql = "SELECT budget.*, category.name_category FROM budget  LEFT JOIN category ON budget.category = category.id";
+    // $sql = "SELECT * FROM budget";
     $result = null;
 
     foreach ($connection->query($sql) as $row) {
@@ -148,6 +149,48 @@ $app->delete('/budget/{id}', function ($request, $response) {
 
 });
 
+
+// CATEGORY 
+
+$app->get('/category', function($request, $response) {
+
+  try {
+    $connection = $this->db;
+    $sql = "SELECT * FROM category";
+    $result = null;
+
+    foreach ($connection->query($sql) as $row) {
+      $result[] = $row;
+    }
+    if ($result) {
+      return $response->withJson(array('status' => 'true','result'=>$result), 200);
+    }
+  }
+    catch (\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()), 422);
+    }
+
+});
+
+
+$app->post('/category', function ($request, $response) {
+
+  try {
+    $connection = $this->db;
+    $sql = "INSERT INTO `category`(`name_category`) VALUES (:name_category)";
+    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $values = array(
+        ':name_category' => $request->getParam('name_category'),
+    );
+    $result = $pre->execute($values);
+    return $response->withJson(array('status' => 'Line Created'),200);
+  }
+  catch(\Exception $ex) {
+    return $response->withJson(array('error' => $ex->getMessage()),422);
+  }
+
+});
+
 // USERS OPERATIONS
 
 $app->post('/user', function ($request, $response) {
@@ -190,7 +233,6 @@ $app->delete('/user/{id}', function ($request, $response) {
     } 
 
 });
-
 
 // ALLOW CORS FOR DEVELOPMENT
 // TO DELETE AFTER DEVELOPMENT

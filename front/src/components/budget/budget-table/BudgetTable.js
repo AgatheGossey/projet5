@@ -34,6 +34,7 @@ class BudgetTable extends Component {
           operations: response.data.result || [],
         });
       })
+    
   }
 
   displayOperations = () => {
@@ -44,7 +45,7 @@ class BudgetTable extends Component {
         date_budget: operation.date_budget, 
         nom: operation.name,
         mode: operation.mode,
-        category: operation.category,
+        category: operation.name_category,
         motif: operation.reason,
         recette: operation.type === "Recette" ? operation.amount : "",
         depense: operation.type === "Depense" ? operation.amount : "", 
@@ -103,15 +104,15 @@ class BudgetTable extends Component {
 
 // Handle state set to select dates to make a filter
 
-  handleChangeStartDate = (date_budget_start) => {
-    this.setState({
+  handleChangeStartDate = async (date_budget_start) => {
+    await this.setState({
       date_budget_start: date_budget_start,
     })
     this.filterByDate();
   }
 
-  handleChangeEndDate = (date_budget_end) => {
-    this.setState({
+  handleChangeEndDate = async (date_budget_end) => {
+    await this.setState({
       date_budget_end: date_budget_end,
     })
     this.filterByDate();
@@ -119,9 +120,7 @@ class BudgetTable extends Component {
 
   // Filter 
   toggleFilterByDate = () => {
-    this.setState({
-      isFilterByDate: !this.state.isFilterByDate,
-    })
+    this.setState((state) => ({ isFilterByDate: !state.isFilterByDate }));
   }
 
   filterText = () => {
@@ -154,7 +153,7 @@ class BudgetTable extends Component {
             { title: 'Date', field: 'date_budget', type: 'numeric'},
             { title: 'Nom', field: 'nom'},
             { title: 'Mode', field: 'mode'},
-            { title: 'Catégorie', field: 'categorie'},
+            { title: 'Catégorie', field: 'category'},
             { title: 'Motif', field: 'motif'},
             { title: 'Recette', field: 'recette', type: 'numeric'},
             { title: 'Dépense', field: 'depense', type: 'numeric'},

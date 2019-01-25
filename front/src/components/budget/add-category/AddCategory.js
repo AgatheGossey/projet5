@@ -17,48 +17,50 @@ import TextField from '@material-ui/core/TextField';
 class AddCategory extends Component {
     state = {
         open: false,
-        category: '',
+        name_category: '',
     };
 
     handleClickOpen = () => {
-        this.setState({ open: true });
+      this.setState({ open: true });
     };
 
     handleClose = () => {
-        this.setState({ open: false });
+      this.setState({ open: false });
     };
 
     handleSubmit = () => {
       const data = {
-        category: this.state.category,
+        name_category: this.state.name_category
       };
 
-      axios.post('http://localhost/my_manager/api/budget', data)
+      axios.post('http://localhost/my_manager/api/category', data)
         .then(() => {
-          this.props.getOperations();
-          this.props.handleClose();
-          });
-  }
+          this.props.getCategory();
+          this.handleClose();
+        })
+    }
 
-
-
+    handleTextChange = (name_category) => {
+      this.setState({
+        name_category: name_category,
+      })
+    }
+    
     render() {
-        const { fullScreen } = this.props;
-
         return (
             <div>
                 <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
                     Ajouter
                 </Button>
-                <Dialog fullScreen={fullScreen} open={this.state.open} onClose={this.handleClose} aria-labelledby="responsive-dialog-title">
+                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="responsive-dialog-title">
                     <DialogTitle id="responsive-dialog-title">{"Ajouter une catégorie"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                          <TextField label="Nom :"/>
+                          <TextField label="Nom :" value={this.state.name_category} onChange={e => this.handleTextChange(e.target.value)}/>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleSubmit} color="primary" autoFocus>
+                        <Button  color="primary" onClick={this.handleSubmit} autoFocus>
                             Ajouter
                         </Button>
                     </DialogActions>
