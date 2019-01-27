@@ -191,6 +191,27 @@ $app->post('/category', function ($request, $response) {
 
 });
 
+$app->delete('/category/{id}', function ($request, $response) {
+
+  try {
+    $id = $request->getAttribute('id');
+    $connection = $this->db;
+    $sql = "DELETE FROM category WHERE id= :id";
+    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $values = array(':id' => $id);
+    $result = $pre->execute($values);
+    if($result) {
+      return $response->withJson(array('status' => 'Operations Deleted'), 200);
+    } else {
+      return $response->withJson(array('status' => 'Operations Not found'), 422);
+    }
+  }
+  catch(\Exception $ex) {
+    return $response->withJson(array('error' => $ex->getMessage()),422);
+  } 
+
+});
+
 // USERS OPERATIONS
 
 $app->post('/user', function ($request, $response) {

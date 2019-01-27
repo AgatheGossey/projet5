@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import TabHome from './TabHome';
 
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-};
+class Home extends Component {
+  render () {
+    return (
+      <div> 
+        <TabHome />
+      </div>
+    )
+  }
+}
 
 export default Home;
+

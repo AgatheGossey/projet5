@@ -1,0 +1,10 @@
+.grid {
+  margin: 10em;
+  max-width: 40%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+}

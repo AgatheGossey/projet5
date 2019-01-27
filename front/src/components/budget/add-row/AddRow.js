@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from './addrow.module.css';
 
 // COMPONENTS 
-import ManageCategory from '../manage-category/ManageCategory';
+import AddCategory from '../manage-category/AddCategory';
 import Button from '@material-ui/core/Button';
 // dialog
 import Dialog from '@material-ui/core/Dialog';
@@ -32,7 +32,7 @@ class AddRow extends Component {
   };
 
   componentDidMount() {
-    this.getCategory();
+    this.getCategories();
   }
 
   handleDateChange = (date_budget) => {
@@ -96,7 +96,7 @@ class AddRow extends Component {
         });
   }
 
-  getCategory = () => {
+  getCategories = () => {
     axios.get('http://localhost/my_manager/api/category')
     .then(response => {
       this.setState({
@@ -128,7 +128,7 @@ class AddRow extends Component {
           <DialogContent>
             <div className={styles.container}>
 
-              <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget} onChange={e => this.handleDateChange(e.target.value)}/>   
+              <TextField variant='outlined' type='date' value={this.state.date_budget} onChange={e => this.handleDateChange(e.target.value)}/>   
               
               <TextField variant="outlined" label="Nom :" onChange={e => this.handleNameChange(e.target.value)}/>
               
@@ -139,12 +139,15 @@ class AddRow extends Component {
               </TextField>
 
               <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
-               {this.displayCategory()}
-               <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
+               {this.displayCategory()}              
+                <MenuItem value="">
+                  <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
                     Ajouter
-                </Button>
-               <ManageCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategory={this.getCategory} />
+                  </Button>
+                </MenuItem>
               </TextField>
+
+              <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories ={this.getCategories} />
 
               <TextField variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>
               

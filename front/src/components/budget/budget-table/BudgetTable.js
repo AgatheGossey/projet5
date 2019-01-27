@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './budgettable.module.css';
 
 // COMPONENTS
+import ManageCategory from '../manage-category/ManageCategory'
 import AddRow from '../add-row/AddRow';
 import Button from '@material-ui/core/Button';
 // Table 
@@ -47,7 +48,7 @@ class BudgetTable extends Component {
         date_budget: operation.date_budget, 
         nom: operation.name,
         mode: operation.mode,
-        category: operation.name_category,
+        category: operation.name_category || '',
         motif: operation.reason,
         recette: operation.type === "Recette" ? operation.amount : "",
         depense: operation.type === "Depense" ? operation.amount : "", 
@@ -162,6 +163,7 @@ class BudgetTable extends Component {
 
         <div>
         <Button color='primary' onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
+        <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} />
         </div>
 
         <MaterialTable
