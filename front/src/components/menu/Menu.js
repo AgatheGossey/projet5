@@ -41,16 +41,16 @@ class Menu extends Component {
       <div>
         <AppBar>
           <Toolbar>
-            <IconButton color="inherit" aria-label="Menu" onClick={this.toggleSideBar}>
+            <IconButton aria-label="Menu" color="inherit" onClick={this.toggleSideBar}>
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={styles.menuText}>
               My Manager
             </Typography>
             <IconButton
+              color="inherit"
               aria-owns='menu-appbar'
               aria-haspopup="true"
-              color="inherit"
             >
               <AccountCircle />
             </IconButton>
@@ -58,12 +58,13 @@ class Menu extends Component {
         </AppBar>
         {/* LEFT BAR */}
         <Drawer
+          color="primary"
           anchor="left"
           open={this.state.isSideBarOpen}
           onClose={this.toggleSideBar}
         >
           <div className={styles.drawerHeader}>
-            <IconButton color="inherit" aria-label="Menu" onClick={this.toggleSideBar}>
+            <IconButton aria-label="Menu" onClick={this.toggleSideBar}>
               <ChevronLeftIcon/> 
             </IconButton>
           </div>

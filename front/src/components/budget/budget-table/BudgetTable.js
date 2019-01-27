@@ -11,8 +11,7 @@ import Button from '@material-ui/core/Button';
 // Table 
 import MaterialTable from 'material-table'
 // Filter 
-import TextField from '@material-ui/core/TextField';
-import Switch from '@material-ui/core/Switch';
+import { Typography, TextField, Switch} from '@material-ui/core';
 
 class BudgetTable extends Component {
 
@@ -140,15 +139,15 @@ class BudgetTable extends Component {
     if (this.state.isFilterByDate) {
       return (
         <div>
-          <div>Voir tout le tableau</div>
-          Du
+          <Typography>Voir tout le tableau</Typography>
+          <Typography>Du</Typography>
           <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_start} onChange={e => this.handleChangeStartDate(e.target.value)}/>   
-          Au
+          <Typography>Au</Typography>
           <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_end} onChange={e => this.handleChangeEndDate(e.target.value)}/>   
         </div>
       )
     } else {
-      return <div>Filtrer par date</div>
+      return <Typography>Filtrer par date</Typography>
     }
   }
 
@@ -157,12 +156,12 @@ class BudgetTable extends Component {
       <div className={styles.container}>
 
         <div>
-          <Switch value={this.state.isFilterByDate} onChange={this.toggleFilterByDate} />
+          <Switch value={this.state.isFilterByDate} color="secondary" onChange={this.toggleFilterByDate} />
           {this.filterText()}
         </div>
 
         <div>
-        <Button color='primary' onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
+        <Button color="secondary" onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
         <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} />
         </div>
 
@@ -193,7 +192,7 @@ class BudgetTable extends Component {
           }}
         />
       
-        <Button variant="outlined" color="primary" onClick={this.handleAddRowClick}>
+        <Button variant="outlined" color="secondary" onClick={this.handleAddRowClick}>
           Ajouter
         </Button>
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
