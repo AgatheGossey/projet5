@@ -82,7 +82,6 @@ $app->get('/budget', function($request, $response) {
   try {
     $connection = $this->db;
     $sql = "SELECT budget.*, category.name_category FROM budget  LEFT JOIN category ON budget.category = category.id";
-    // $sql = "SELECT * FROM budget";
     $result = null;
 
     foreach ($connection->query($sql) as $row) {
@@ -222,11 +221,12 @@ $app->post('/user', function ($request, $response) {
     $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $values = array(
       ':username' => $request->getParam('username'),
-      ':password' => $request->getParam('password'),
       ':email' => $request->getParam('email'),
+      //Using hash for password encryption
+      'password' => password_hash($request->getParam('password'),PASSWORD_DEFAULT)
     );
     $result = $pre->execute($values);
-    return $response->withJson(array('status' => 'Line Created'),200);
+    return $response->withJson(array('status' => 'User Created'),200);
   }
   catch(\Exception $ex) {
     return $response->withJson(array('error' => $ex->getMessage()),422);

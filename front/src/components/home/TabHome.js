@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 // STYLE 
 import styles from './tabhome.module.css';
@@ -21,9 +22,10 @@ class TabHome extends Component {
     username_connection: '',
     password_connection: '', 
     // register
-    username_register: '',
-    password_register: '',
+    username: '',
+    password: '',
     password_register_repeat: '',
+    email: '',
   }
 
   // TABS
@@ -37,7 +39,7 @@ class TabHome extends Component {
       return (
         // Connection form 
         <form className={styles.form}>
-          <TextField label="Pseudo :" value={this.state.username_connection} onChange={e => this.handleUsernameConnectionChange(e.target.value)}/>
+          <TextField label="Nom :" value={this.state.username_connection} onChange={e => this.handleUsernameConnectionChange(e.target.value)}/>
           <TextField label="Mot de passe :" value={this.state.password_connection} onChange={e => this.handlePasswordConnectionChange(e.target.value)}/>
           <Button type="submit" onClick={this.handleSubmitConnection} color="primary">Se connecter</Button>
         </form>
@@ -46,10 +48,11 @@ class TabHome extends Component {
       return (
         // Register form 
         <form className={styles.form}>
-          <TextField label="Pseudo :" value={this.state.username_register} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
-          <TextField label="Mot de passe :" value={this.state.password_register} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
+          <TextField label="Nom :" value={this.state.username} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
+          <TextField label="Mot de passe :" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
           <TextField label="Répétez le mot de passe :" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
-          <Button type="submit" onClick={this.handleSubmitRegister} color="primary">S'inscrire</Button>
+          <TextField label="Email :" value={this.state.email} onChange={e => this.handleEmailRegisterChange(e.target.value)}/>
+          <Button type="submit" onClick={this.handleSubmitRegister()} color="primary">S'inscrire</Button>
         </form>
       )
     }
@@ -69,17 +72,21 @@ class TabHome extends Component {
     })
   }
 
+  handleSubmitConnection = () => {
+
+  }
+
   // register
 
-  handleUsernameRegisterChange = (username_register) => {
+  handleUsernameRegisterChange = (username) => {
     this.setState({
-      username_register: username_register,
+      username: username,
     })
   }
 
-  handlePasswordRegisterChange = (password_register) => {
+  handlePasswordRegisterChange = (password) => {
     this.setState({
-      password_register: password_register,
+      password: password,
     })
   }
 
@@ -89,6 +96,21 @@ class TabHome extends Component {
     })
   }
 
+  handleEmailRegisterChange = (email) => {
+    this.setState({
+      email: email,
+    })
+  }
+
+  handleSubmitRegister = () => {
+    const data = {
+      username: this.state.username,
+      password: this.state.password,
+      email: this.state.email,
+    };
+
+      axios.post('http://localhost/my_manager/api/user', data)
+  }
 
   render () {
     return (
@@ -101,10 +123,6 @@ class TabHome extends Component {
           </Tabs>
         </AppBar>
         {this.handleClickChange()}
-
-
-      
-    
       </div>
     )
   }
