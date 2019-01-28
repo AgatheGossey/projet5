@@ -52,7 +52,7 @@ class TabHome extends Component {
           <TextField label="Mot de passe :" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
           <TextField label="Répétez le mot de passe :" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
           <TextField label="Email :" value={this.state.email} onChange={e => this.handleEmailRegisterChange(e.target.value)}/>
-          <Button type="submit" onClick={this.handleSubmitRegister()} color="primary">S'inscrire</Button>
+          <Button onClick={this.handleSubmitRegister} color="primary">S'inscrire</Button>
         </form>
       )
     }
@@ -103,6 +103,7 @@ class TabHome extends Component {
   }
 
   handleSubmitRegister = () => {
+    console.log("hey")
     const data = {
       username: this.state.username,
       password: this.state.password,
