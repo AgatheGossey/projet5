@@ -12,21 +12,28 @@ import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table'
 // Filter 
 import { Typography, TextField, Switch} from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 class BudgetTable extends Component {
 
   state = {
     // Operations
     operations: [],
-    filteredOperations: [],
+    filteredDateOperations: [],
+    filteredCategoryOperations: [],
     // Add row dialog 
     isAddRowOpen: false,
     // Manage category dialog
     isManageCategoryOpen: false,
-    // Filter the table
-    date_budget_start: "",
-    date_budget_end: "",
+    // Filter the table by date
+    date_budget_start: '',
+    date_budget_end: '',
     isFilterByDate: false, 
+    // Filter the table by category
+    category: '',
+    isFilterByCategory: false,
+    categoriesOperations: [],
   }
 
   getOperations = () => {
@@ -40,7 +47,15 @@ class BudgetTable extends Component {
   }
 
   displayOperations = () => {
-    const operations = this.state.isFilterByDate ?  this.state.filteredOperations : this.state.operations;
+    let operations = [];
+    if (this.state.isFilterByDate) {
+      operations = this.state.filteredDateOperations
+    } else if (this.state.isFilterByCategory) {
+      operations = this.state.filteredCategoryOperations
+    } else {
+      operations = this.state.operations
+    }
+
     return operations.map(operation => {
       return { 
         id: operation.id,
@@ -57,19 +72,7 @@ class BudgetTable extends Component {
 
   componentDidMount = () => {
     this.getOperations();
-  }
-
-  filterByDate = () => {
-    const list = [];
-    this.state.operations.forEach(element => {
-      if (element.date_budget >= this.state.date_budget_start && element.date_budget <= this.state.date_budget_end) {
-        list.push(element);
-      } 
-    })
-
-    this.setState({
-      filteredOperations: list,
-    })
+    this.getCategories();
   }
 
   calculateBalance = () => {
@@ -114,7 +117,7 @@ class BudgetTable extends Component {
     this.setState( { isManageCategoryOpen: false })
   }
 
-// Handle state set to select dates to make a filter
+  // Filter by date
 
   handleChangeStartDate = async (date_budget_start) => {
     await this.setState({
@@ -130,12 +133,23 @@ class BudgetTable extends Component {
     this.filterByDate();
   }
 
-  // Filter 
   toggleFilterByDate = () => {
     this.setState((state) => ({ isFilterByDate: !state.isFilterByDate }));
   }
 
-  filterText = () => {
+  filterByDate = () => {
+    const list = [];
+    this.state.operations.forEach(element => {
+      if (element.date_budget >= this.state.date_budget_start && element.date_budget <= this.state.date_budget_end) {
+        list.push(element);
+      } 
+    })
+    this.setState({
+      filteredDateOperations: list,
+    })
+  }
+
+  filterByDateText = () => {
     if (this.state.isFilterByDate) {
       return (
         <div>
@@ -151,13 +165,70 @@ class BudgetTable extends Component {
     }
   }
 
+  // Filter by category
+
+  getCategories = () => {
+    axios.get('http://localhost/my_manager/api/category')
+    .then(response => {
+      this.setState({
+        categoriesOperations: response.data.result || [],
+      });
+    })
+  }
+
+  displayCategory = () => {
+    return this.state.categoriesOperations.map((categoryOperation) => 
+      (<MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>) );
+  }
+
+  handleCategoryChange = async (category) => {
+    await this.setState({
+      category: category,
+    })
+    this.filterByCategory();
+  }
+
+  toggleFilterByCategory = () => {
+    this.setState((state => ({ isFilterByCategory: !state.isFilterByCategory })));
+  }
+
+  filterByCategory = () => {
+    const list = [];
+    this.state.operations.forEach(element => {
+      if (element.category === this.state.category.id) {
+        list.push(element);
+      }
+    })
+    this.setState({
+      filteredCategoryOperations: list,
+    })
+  }
+
+  filterByCategoryText = () => {
+    if (this.state.isFilterByCategory) {
+      return (
+        <div>
+          <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
+            {this.displayCategory()}              
+          </TextField>
+        </div>
+      )
+    } else {
+      return <Typography>Filtrer par catégorie</Typography>
+    }
+  }
+
   render() {
     return (
       <div className={styles.container}>
 
         <div>
           <Switch value={this.state.isFilterByDate} color="secondary" onChange={this.toggleFilterByDate} />
-          {this.filterText()}
+          {this.filterByDateText()}
+        </div>
+        <div>
+          <Switch value={this.state.isFilterByCategory} color="secondary" onChange={this.toggleFilterByCategory} />
+          {this.filterByCategoryText()}
         </div>
 
         <div>
@@ -195,7 +266,7 @@ class BudgetTable extends Component {
         <Button variant="outlined" color="secondary" onClick={this.handleAddRowClick}>
           Ajouter
         </Button>
-        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} />
+        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} getCategories={this.getCategories} displayCategory={this.displayCategory} />
     
   </div>
 
