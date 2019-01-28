@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 // // STYLE
 
@@ -21,14 +20,12 @@ class EditCategory extends Component {
     handleTextChange = (name_category) => {
       this.setState({
         name_category: name_category,
-
       })
     }
 
     displayCategory = () => {
       this.props.category();
     }
-    
 
     render() {
       return (

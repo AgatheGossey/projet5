@@ -47,7 +47,6 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={ Home } />
-
             <AppRoute exact path="/budget" layout={ Menu } component={ BudgetTable }  />
             <AppRoute exact path="/parametres" layout={ Menu } component={ Parameters } isDarkThemeEnable={this.state.isDarkThemeEnable} toggleDarkTheme={this.toggleDarkTheme}/>
           </Switch>
