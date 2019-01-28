@@ -42,7 +42,7 @@ class AddCategory extends Component {
           <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">{"Ajouter une catégorie"}</DialogTitle>
             <DialogContent>
-              <TextField label="Nom :" value={this.state.category.name_category} onChange={e => this.handleTextChange(e.target.value)}/>
+              <TextField label="Nom :" value={this.state.name_category} onChange={e => this.handleTextChange(e.target.value)}/>
             </DialogContent>
             <DialogActions>
               <Button  color="primary" onClick={this.handleSubmit} autoFocus>

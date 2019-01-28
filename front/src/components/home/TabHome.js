@@ -14,6 +14,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 class TabHome extends Component {
+  
   state = {
     // tabs
     value: 0,
@@ -40,7 +41,7 @@ class TabHome extends Component {
         // Connection form 
         <form className={styles.form}>
           <TextField label="Nom :" value={this.state.username_connection} onChange={e => this.handleUsernameConnectionChange(e.target.value)}/>
-          <TextField label="Mot de passe :" value={this.state.password_connection} onChange={e => this.handlePasswordConnectionChange(e.target.value)}/>
+          <TextField label="Mot de passe :" type="password" value={this.state.password_connection} onChange={e => this.handlePasswordConnectionChange(e.target.value)}/>
           <Button type="submit" onClick={this.handleSubmitConnection} color="primary">Se connecter</Button>
         </form>
       )
@@ -49,8 +50,8 @@ class TabHome extends Component {
         // Register form 
         <form className={styles.form}>
           <TextField label="Nom :" value={this.state.username} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
-          <TextField label="Mot de passe :" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
-          <TextField label="Répétez le mot de passe :" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
+          <TextField label="Mot de passe :" type="password" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
+          <TextField label="Répétez le mot de passe :" type="password" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
           <TextField label="Email :" value={this.state.email} onChange={e => this.handleEmailRegisterChange(e.target.value)}/>
           <Button onClick={this.handleSubmitRegister} color="primary">S'inscrire</Button>
         </form>
@@ -103,7 +104,6 @@ class TabHome extends Component {
   }
 
   handleSubmitRegister = () => {
-    console.log("hey")
     const data = {
       username: this.state.username,
       password: this.state.password,
@@ -111,6 +111,9 @@ class TabHome extends Component {
     };
 
       axios.post('http://localhost/my_manager/api/user', data)
+        .then( () => {
+
+        })
   }
 
   render () {
