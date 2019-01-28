@@ -6,6 +6,7 @@ import axios from 'axios';
 
 // COMPONENTS 
 import AddCategory from '../manage-category/AddCategory';
+import EditCategory from '../manage-category/EditCategory'
 // dialog
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -26,9 +27,10 @@ class ManageCategory extends Component {
   state = {
     // dialog
     isAddCategoryOpen: false,
-    editingCategory: {},
+    isEditCategoryOpen: false,
     // get categories
     categoriesOperations: [],
+    category: [],
     // list
     secondary: false, 
   };
@@ -36,14 +38,25 @@ class ManageCategory extends Component {
   // dialog add category
 
   handleAddCategoryClick = () => {
-    this.setState( { isAddCategoryOpen: true});
+    this.setState({ isAddCategoryOpen: true });
   }
 
   handleAddCategoryClose = () => {
-    this.setState({ isAddCategoryOpen: false});
+    this.setState({ isAddCategoryOpen: false });
+  }
+
+  // dialog edit category 
+
+  handleEditCategoryClick = () => {
+    this.setState({ isEditCategoryOpen: true });
+  }
+
+  handleEditCategoryClose = () => {
+    this.setState({ isCategoryOpen: false })
   }
   
   //  categories
+
   getCategories = () => {
     axios.get('http://localhost/my_manager/api/category')
     .then(response => {
@@ -69,13 +82,27 @@ class ManageCategory extends Component {
             <IconButton aria-label="Clear" onClick={() => this.deleteCategory(categoryOperation)}>
               <Clear />
             </IconButton>
-            <IconButton aria-label="Edit" onClick={() => this.editCategory(categoryOperation)}>
+            <IconButton aria-label="Edit" color="primary" onClick={() => this.getCategory(categoryOperation)} category={this.state.category.name_category}>
               <Edit />
             </IconButton>
+            <EditCategory open={this.state.isEditCategoryOpen} handleClose={this.handleEditCategoryClose} />
           </ListItemSecondaryAction>
         </ListItem>
       </List>));
   }
+
+  getCategory = (category) => {
+    axios.get(`http://localhost/my_manager/api/category/${category.id}`)
+    .then((response) => {
+        this.setState({
+          category: response.data.result
+        })
+      console.log(this.state.category.name_category);
+      this.handleEditCategoryClick();
+    })
+  }
+
+
 
   deleteCategory = (category) => {
     axios.delete(`http://localhost/my_manager/api/category/${category.id}`)
@@ -84,12 +111,6 @@ class ManageCategory extends Component {
       })
   }
 
-  editCategory = (category) => {
-    this.setState({
-      editingCategory: category,
-      isAddCategoryOpen: true,
-    })
-  }
 
   render() {
     return (
@@ -100,7 +121,7 @@ class ManageCategory extends Component {
           <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
               Ajouter
           </Button>    
-          <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories={this.getCategories} category={this.state.editingCategory}/>
+          <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories={this.getCategories} />
         </DialogContent>
       </Dialog>
       )

@@ -171,6 +171,28 @@ $app->get('/category', function($request, $response) {
 
 });
 
+$app->get('/category/{id}', function ($request, $response) {
+
+  try {
+    $id = $request->getAttribute('id');
+    $connection = $this->db;
+    $sql = "SELECT * FROM category WHERE id = :id";
+    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $values = array(
+        ':id' => $id);
+    $pre->execute($values);
+    $result = $pre->fetch();
+    if($result) {
+        return $response->withJson(array('status' => 'true','result'=> $result),200);
+    } else {
+        return $response->withjson(array('status' => 'Line Not Found'), 422);
+    }
+  }
+  catch (\Exception $ex) {
+    return $response->withJson(array('error' => $ex->getMessage()),422);
+  }
+
+});
 
 $app->post('/category', function ($request, $response) {
 

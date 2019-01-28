@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -47,6 +47,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={ Home } />
+
             <AppRoute exact path="/budget" layout={ Menu } component={ BudgetTable }  />
             <AppRoute exact path="/parametres" layout={ Menu } component={ Parameters } isDarkThemeEnable={this.state.isDarkThemeEnable} toggleDarkTheme={this.toggleDarkTheme}/>
           </Switch>
@@ -58,18 +59,4 @@ class App extends Component {
 
 export default App;
 
-function OldSchoolMenuLink({ label, to, activeOnlyWhenExact }) {
-  return (
-    <Route
-      path={to}
-      exact={activeOnlyWhenExact}
-      children={({ match }) => (
-        <div className={match ? "active" : ""}>
-          {match ? "> " : ""}
-          <Link to={to}>{label}</Link>
-        </div>
-      )}
-    />
-  );
-}
 
