@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 // // STYLE
 
@@ -14,29 +15,43 @@ import TextField from '@material-ui/core/TextField';
 
 class EditCategory extends Component {
     state = {
-      name_category: ['']
+      category: {},
     };
 
-    handleTextChange = (name_category) => {
-      this.setState({
-        name_category: name_category,
-      })
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.category !== this.props.category) {
+        this.setState({
+          category: nextProps.category,
+        })
+      }
     }
 
-    displayCategory = () => {
-      this.props.category();
+    handleTextChange = (name_category) => {
+      this.setState((state) => ({ category: { ...state.category, name_category:name_category }}));
+    }
+
+    handleSubmit = () => {
+      const data = {
+        name_category: this.state.category.name_category,
+      };
+
+      axios.put(`http://localhost/my_manager/api/category/${this.state.category.id}`, data)
+        .then(() => {
+          this.props.getCategories();
+          this.props.handleClose();
+        })
     }
 
     render() {
       return (
         <div>
-          <Dialog category={this.props.category} open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">{"Modifier la catégorie"}</DialogTitle>
+          <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">Modifier la catégorie</DialogTitle>
             <DialogContent>
-              <TextField label={this.displayCategory} value={this.state.name_category} onChange={e => this.handleTextChange(e.target.value)} />
+              <TextField label="Nom" value={this.state.category.name_category} onChange={e => this.handleTextChange(e.target.value)} />
             </DialogContent>
             <DialogActions>
-              <Button  color="primary" autoFocus>
+              <Button  color="primary" autoFocus onClick={this.handleSubmit}>
                 Ajouter
               </Button>
             </DialogActions>

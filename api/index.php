@@ -212,6 +212,29 @@ $app->post('/category', function ($request, $response) {
 
 });
 
+$app->put('/category/{id}', function ($request,$response) {
+  try {
+    $id = $request->getAttribute('id');
+    $connection = $this->db;
+    $sql = "UPDATE category SET name_category=:name_category WHERE id = :id";
+    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $values = array(
+      ':name_category' => $request->getParam('name_category'),
+      ':id' => $id
+    );
+    $result = $pre->execute($values);
+    if($result){
+      return $response->withJson(array('status' => 'Category Updated'),200);
+    } else {
+      return $response->withJson(array('status' => 'Category Not Found'),422);
+    }
+  }
+  catch(\Exception $ex) {
+      return $response->withJson(array('error' => $ex->getMessage()),422);
+  }
+
+});
+
 $app->delete('/category/{id}', function ($request, $response) {
 
   try {

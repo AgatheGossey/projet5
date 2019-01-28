@@ -60,6 +60,7 @@ class TabHome extends Component {
   }
 
   // FORM 
+
   // connection
   handleUsernameConnectionChange = (username_connection) => {
     this.setState({
@@ -112,7 +113,7 @@ class TabHome extends Component {
 
       axios.post('http://localhost/my_manager/api/user', data)
         .then( () => {
-
+          
         })
   }
 

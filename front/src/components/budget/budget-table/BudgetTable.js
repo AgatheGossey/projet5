@@ -71,8 +71,8 @@ class BudgetTable extends Component {
   }
 
   componentDidMount = () => {
-    this.getOperations();
     this.getCategories();
+    this.getOperations();
   }
 
   calculateBalance = () => {
@@ -109,11 +109,13 @@ class BudgetTable extends Component {
 
 // Handle Dialog for manager category 
 
-  handleManageCategoryClick = () => {
+  handleManageCategoryClick = async () => {
+    await this.getCategories();
     this.setState({ isManageCategoryOpen: true });
   }
 
-  handleManageCategoryClose = () => {
+  handleManageCategoryClose = async () => {
+    await this.getOperations();
     this.setState( { isManageCategoryOpen: false })
   }
 
@@ -233,7 +235,7 @@ class BudgetTable extends Component {
 
         <div>
         <Button color="secondary" onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
-        <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} />
+        <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} getCategories={this.getCategories} categoriesOperations={this.state.categoriesOperations}/>
         </div>
 
         <MaterialTable
@@ -266,8 +268,7 @@ class BudgetTable extends Component {
         <Button variant="outlined" color="secondary" onClick={this.handleAddRowClick}>
           Ajouter
         </Button>
-        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} getCategories={this.getCategories} displayCategory={this.displayCategory} />
-    
+        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} categoriesOperations={this.state.categoriesOperations} displayCategory={this.displayCategory} />
   </div>
 
     )}

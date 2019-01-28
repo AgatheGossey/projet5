@@ -26,14 +26,9 @@ class AddRow extends Component {
     reason:'',
     type:'',
     amount:'',
-    categoriesOperations: [],
     // Add category dialog
     isAddCategoryOpen: false, 
   };
-
-  componentDidMount() {
-    this.getCategories();
-  }
 
   handleDateChange = (date_budget) => {
     this.setState({
@@ -96,20 +91,6 @@ class AddRow extends Component {
         });
   }
 
-  getCategories = () => {
-    axios.get('http://localhost/my_manager/api/category')
-    .then(response => {
-      this.setState({
-        categoriesOperations: response.data.result || [],
-      });
-    })
-  }
-
-  displayCategory = () => {
-    return this.state.categoriesOperations.map((categoryOperation) => 
-      (<MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>) );
-  }
-
   handleAddCategoryClick = () => {
     this.setState( { isAddCategoryOpen: true});
   }
@@ -139,7 +120,7 @@ class AddRow extends Component {
               </TextField>
 
               <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
-               {this.displayCategory()}              
+               {this.props.displayCategory()}              
                 <MenuItem value="">
                   <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
                     Ajouter
