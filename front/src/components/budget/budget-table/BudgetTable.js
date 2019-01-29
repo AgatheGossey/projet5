@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 // STYLE 
 import styles from './budgettable.module.css';
@@ -273,23 +274,10 @@ class BudgetTable extends Component {
   }
 
   render() {
-    return (
-      <div className={styles.container}>
+    let operations;
 
-        <div>
-          <Switch value={this.state.isFilterByDate} color="secondary" onChange={this.toggleFilterByDate} />
-          {this.filterByDateText()}
-        </div>
-        <div>
-          <Switch value={this.state.isFilterByCategory} color="secondary" onChange={this.toggleFilterByCategory} />
-          {this.filterByCategoryText()}
-        </div>
-
-        <div>
-        <Button color="secondary" onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
-        <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} getCategories={this.getCategories} categoriesOperations={this.state.categoriesOperations}/>
-        </div>
-
+    if (isWidthUp('md', this.props.width)) {
+      operations = (
         <MaterialTable
           columns={[
             { title: 'id', field: 'id', hidden: true},
@@ -316,10 +304,33 @@ class BudgetTable extends Component {
             selection: true,
           }}
         />
-    
-        <br></br>
-        {this.calculateBalance()}
-        {this.displayMobileOperations()}
+      )
+    } else {
+      operations = (
+        <div>
+          {this.calculateBalance()}
+          {this.displayMobileOperations()}
+        </div>
+      )
+    }
+    return (
+      <div className={styles.container}>
+
+        <div>
+          <Switch value={this.state.isFilterByDate} color="secondary" onChange={this.toggleFilterByDate} />
+          {this.filterByDateText()}
+        </div>
+        <div>
+          <Switch value={this.state.isFilterByCategory} color="secondary" onChange={this.toggleFilterByCategory} />
+          {this.filterByCategoryText()}
+        </div>
+
+        <div>
+        <Button color="secondary" onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
+        <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} getCategories={this.getCategories} categoriesOperations={this.state.categoriesOperations}/>
+        </div>
+
+        <div>{operations}</div>
         
         <Button variant="outlined" color="secondary" onClick={this.handleAddRowClick}>
           Ajouter
@@ -327,11 +338,8 @@ class BudgetTable extends Component {
         
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} categoriesOperations={this.state.categoriesOperations} getCategories={this.getCategories} displayCategory={this.displayCategory} />
   </div>
-
-          
-
     )}
 
 }
 
-export default BudgetTable;
+export default withWidth()(BudgetTable);
