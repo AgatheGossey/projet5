@@ -1,29 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import intersection from 'lodash/intersection';
+import MaterialTable from 'material-table';
+import { Card, CardContent, IconButton, Button, Typography, TextField, Switch, MenuItem } from '@material-ui/core';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import Clear from '@material-ui/icons/Clear';
 
 // STYLE 
 import styles from './budgettable.module.css';
 
+// CONSTANTS
+import { API_HOST, BUDGET_TABLE_COLUMNS } from '../../../constants';
+
 // COMPONENTS
 import ManageCategory from '../manage-category/ManageCategory'
 import AddRow from '../add-row/AddRow';
-import Button from '@material-ui/core/Button';
-// Table 
-import MaterialTable from 'material-table'
-// Card (mobile)
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import Clear from '@material-ui/icons/Clear';
-
-// Filter 
-import { Typography, TextField, Switch} from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
 
 
 class BudgetTable extends Component {
-
   state = {
     // Operations
     operations: [],
@@ -43,125 +37,143 @@ class BudgetTable extends Component {
     categoriesOperations: [],
   }
 
-  getOperations = () => {
-    axios.get('http://localhost/my_manager/api/budget')
-      .then(response => {
-        this.setState({
-          operations: response.data.result || [],
-        });
-      })
-  }
-
-  displayOperations = () => {
-    let operations = [];
-    if (this.state.isFilterByDate) {
-      operations = this.state.filteredDateOperations
-    } else if (this.state.isFilterByCategory) {
-      operations = this.state.filteredCategoryOperations
-    } else {
-      operations = this.state.operations
-    }
-
-    return operations.map(operation => {
-      return { 
-        id: operation.id,
-        date_budget: operation.date_budget, 
-        nom: operation.name,
-        mode: operation.mode,
-        category: operation.name_category || '',
-        motif: operation.reason,
-        recette: operation.type === "Recette" ? operation.amount : "",
-        depense: operation.type === "Depense" ? operation.amount : "", 
-      };
-    })
-  }
-
-  displayMobileOperations = () => {
-    let operations = [];
-    if (this.state.isFilterByDate) {
-      operations = this.state.filteredDateOperations
-    } else if (this.state.isFilterByCategory) {
-      operations = this.state.filteredCategoryOperations
-    } else {
-      operations = this.state.operations
-    }
-
-    return operations.map(operation => {
-
-      let operationType;
-      if (operation.type === "Recette" ) {
-        operationType = <Typography>Recette : {operation.amount}</Typography>
-      } else {
-        operationType = <Typography>Dépense : {operation.amount}</Typography>
-      }
-
-      return (
-        <div>
-          <Card>
-            <CardContent className={styles.cardContent} >
-              <IconButton aria-label="Clear" onClick={() => this.deleteOperation(operation)} >  
-                <Clear />
-              </IconButton>
-              <Typography>Date : {operation.date_budget}</Typography>
-              <Typography>Nom : {operation.name}</Typography>
-              <Typography>Mode : {operation.mode}</Typography>
-              <Typography>Categorie : {operation.name_category}</Typography>
-              <Typography>Motif : {operation.reason}</Typography>
-              {operationType} 
-            </CardContent>
-          </Card> 
-          <br></br>
-        </div>
-      ) 
-    })
-  }
-
   componentDidMount = () => {
     this.getCategories();
     this.getOperations();
   }
 
+  getOperations = async () => {
+    const response = await axios.get(`${API_HOST}/budget`);
+    this.setState({ operations: response.data.result || [] });
+  }
+
+  getOperationsList = () => {
+    const { operations, isFilterByDate, isFilterByCategory, filteredDateOperations, filteredCategoryOperations } = this.state;
+
+    if (isFilterByCategory && isFilterByDate) {
+      return intersection(filteredCategoryOperations, filteredDateOperations);
+    }
+
+    if (isFilterByCategory) {
+      return filteredCategoryOperations;
+    }
+
+    if (isFilterByDate) {
+      return filteredDateOperations;
+    }
+
+    return operations;
+  }
+
+  displayOperations = () => {
+    const operations = this.getOperationsList();
+
+    // If on large screens, display a Table. If not, display Cards 
+    if (isWidthUp('md', this.props.width)) {
+      // Prepare table data
+      const tableData = operations.map(operation => {
+        const { id, date_budget, name, mode, name_category, reason, type, amount } = operation;
+        return { 
+          id,
+          date_budget, 
+          nom: name,
+          mode,
+          category: name_category || '',
+          motif: reason,
+          recette: type === "Recette" ? amount : "",
+          depense: type === "Depense" ? amount : "", 
+        };
+      })
+
+      return (
+        <MaterialTable
+          columns={ BUDGET_TABLE_COLUMNS }
+          data={ tableData }
+          title={ `Solde: ${this.calculateBalance()}€` }
+          actions={[
+            {
+              icon: 'delete',
+              tooltip: 'Supprimer',
+              onClick: (event, rows) => {
+                this.deleteOperations(rows);
+              },
+            },
+          ]}
+          options={ { selection: true } }
+        />
+      )
+    } else {
+      // Generate a Card for each operation
+      const operationsCards = operations.map(operation => {
+        const { id, date_budget, name, mode, name_category, reason, type, amount } = operation;
+        let operationType;
+
+        if (type === 'Recette') {
+          operationType = <Typography>Recette : { amount }€</Typography>
+        } else {
+          operationType = <Typography>Dépense : { amount }€</Typography>
+        }
+  
+        return (
+          <Fragment key={ id }>
+            <Card className={ styles.card }>
+              <CardContent className={ styles.cardContent } >
+                <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => this.deleteOperation(operation) } >  
+                  <Clear />
+                </IconButton>
+                <Typography>Date : { date_budget }</Typography>
+                <Typography>Nom : { name }</Typography>
+                <Typography>Mode : { mode }</Typography>
+                <Typography>Categorie : { name_category }</Typography>
+                <Typography>Motif : { reason }</Typography>
+                { operationType } 
+              </CardContent>
+            </Card> 
+          </Fragment>
+        ) 
+      })
+      return (
+        <Fragment>
+          <div>Solde: { this.calculateBalance() }€</div>
+          { operationsCards }
+        </Fragment>
+      )
+    }   
+  }
+
   calculateBalance = () => {
     let solde = 0;
     this.state.operations.forEach(element => {
-    if (element.type === "Recette") {
-      solde = solde + Number(element.amount);   
-    } else {
-      solde = solde - Number(element.amount);
-    }
+      if (element.type === 'Recette') {
+        solde += Number(element.amount);   
+      } else {
+        solde -= Number(element.amount);
+      }
     });
-    return `Solde disponible : ${solde}€`;
+    return solde;
   }
 
   deleteOperations = async (operations) => {
     const operationsIds = operations.map(operation => operation.id);
     const promises = [];
     operationsIds.map((operationId) => {
-      return promises.push(axios.delete(`http://localhost/my_manager/api/budget/${operationId}`));
+      return promises.push(axios.delete(`${API_HOST}/budget/${operationId}`));
     }); 
     await Promise.all(promises);
     this.getOperations();
   }
 
-  deleteOperation = (budget) => {
-    axios.delete(`http://localhost/my_manager/api/budget/${budget.id}`)
-      .then(() => {
-        this.getOperations();
-      })
+  deleteOperation = async (budget) => {
+    await axios.delete(`${API_HOST}/budget/${budget.id}`);
+    this.getOperations();
   }
 
-// Handle Dialog for add row to the budget
-
-  handleAddRowClick = () => {
-    this.setState({ isAddRowOpen: true });
+  // Handle Dialog for add row to the budget
+  toggleAddRow = () => {
+    this.setState(state => ({ isAddRowOpen: !state.isAddRowOpen }));
   }
 
-  handleAddRowClose = () => {
-    this.setState({ isAddRowOpen: false });
-  }
-
-// Handle Dialog for manager category 
-
+  // Handle Dialog for manager category 
   handleManageCategoryClick = async () => {
     await this.getCategories();
     this.setState({ isManageCategoryOpen: true });
@@ -173,18 +185,13 @@ class BudgetTable extends Component {
   }
 
   // Filter by date
-
   handleChangeStartDate = async (date_budget_start) => {
-    await this.setState({
-      date_budget_start: date_budget_start,
-    })
+    await this.setState({ date_budget_start })
     this.filterByDate();
   }
 
   handleChangeEndDate = async (date_budget_end) => {
-    await this.setState({
-      date_budget_end: date_budget_end,
-    })
+    await this.setState({ date_budget_end })
     this.filterByDate();
   }
 
@@ -199,21 +206,19 @@ class BudgetTable extends Component {
         list.push(element);
       } 
     })
-    this.setState({
-      filteredDateOperations: list,
-    })
+    this.setState({ filteredDateOperations: list })
   }
 
   filterByDateText = () => {
     if (this.state.isFilterByDate) {
       return (
-        <div>
+        <Fragment>
           <Typography>Voir tout le tableau</Typography>
           <Typography>Du</Typography>
-          <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_start} onChange={e => this.handleChangeStartDate(e.target.value)}/>   
+          <TextField variant='outlined' type='date' value={ this.state.date_budget_start } onChange={ e => this.handleChangeStartDate(e.target.value) }/>   
           <Typography>Au</Typography>
-          <TextField className={styles.textField} variant='outlined' type='date' value={this.state.date_budget_end} onChange={e => this.handleChangeEndDate(e.target.value)}/>   
-        </div>
+          <TextField variant='outlined' type='date' value={ this.state.date_budget_end } onChange={ e => this.handleChangeEndDate(e.target.value) }/>   
+        </Fragment>
       )
     } else {
       return <Typography>Filtrer par date</Typography>
@@ -221,25 +226,19 @@ class BudgetTable extends Component {
   }
 
   // Filter by category
-
-  getCategories = () => {
-    axios.get('http://localhost/my_manager/api/category')
-    .then(response => {
-      this.setState({
-        categoriesOperations: response.data.result || [],
-      });
-    })
+  getCategories = async () => {
+    const response = await axios.get(`${API_HOST}/category`);
+    this.setState({ categoriesOperations: response.data.result || [] });
   }
 
   displayCategory = () => {
-    return this.state.categoriesOperations.map((categoryOperation) => 
-      (<MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>) );
+    return this.state.categoriesOperations.map((categoryOperation) => {
+      return <MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>
+    });
   }
 
   handleCategoryChange = async (category) => {
-    await this.setState({
-      category: category,
-    })
+    await this.setState({ category });
     this.filterByCategory();
   }
 
@@ -254,19 +253,15 @@ class BudgetTable extends Component {
         list.push(element);
       }
     })
-    this.setState({
-      filteredCategoryOperations: list,
-    })
+    this.setState({ filteredCategoryOperations: list });
   }
 
   filterByCategoryText = () => {
     if (this.state.isFilterByCategory) {
       return (
-        <div>
-          <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
-            {this.displayCategory()}              
-          </TextField>
-        </div>
+        <TextField select variant="outlined" label="Catégorie :" value={ this.state.category } onChange={ e => this.handleCategoryChange(e.target.value) }>
+          { this.displayCategory() }              
+        </TextField>
       )
     } else {
       return <Typography>Filtrer par catégorie</Typography>
@@ -274,70 +269,34 @@ class BudgetTable extends Component {
   }
 
   render() {
-    let operations;
-
-    if (isWidthUp('md', this.props.width)) {
-      operations = (
-        <MaterialTable
-          columns={[
-            { title: 'id', field: 'id', hidden: true},
-            { title: 'Date', field: 'date_budget', type: 'numeric'},
-            { title: 'Nom', field: 'nom'},
-            { title: 'Mode', field: 'mode'},
-            { title: 'Catégorie', field: 'category'},
-            { title: 'Motif', field: 'motif'},
-            { title: 'Recette', field: 'recette', type: 'numeric'},
-            { title: 'Dépense', field: 'depense', type: 'numeric'},
-          ]}
-          data={this.displayOperations()}
-          title={this.calculateBalance()}
-          actions={[
-            {
-              icon: 'delete',
-              tooltip: 'Supprimer',
-              onClick: (event, rows) => {
-                this.deleteOperations(rows);
-              },
-            },
-          ]}
-          options={{
-            selection: true,
-          }}
-        />
-      )
-    } else {
-      operations = (
-        <div>
-          {this.calculateBalance()}
-          {this.displayMobileOperations()}
-        </div>
-      )
-    }
     return (
-      <div className={styles.container}>
+      <div className={ styles.container }>
+        <Switch value={ this.state.isFilterByDate } color="secondary" onChange={ this.toggleFilterByDate } />
+        { this.filterByDateText() }
+        <Switch value={ this.state.isFilterByCategory } color="secondary" onChange={ this.toggleFilterByCategory } />
+        { this.filterByCategoryText() }
 
-        <div>
-          <Switch value={this.state.isFilterByDate} color="secondary" onChange={this.toggleFilterByDate} />
-          {this.filterByDateText()}
-        </div>
-        <div>
-          <Switch value={this.state.isFilterByCategory} color="secondary" onChange={this.toggleFilterByCategory} />
-          {this.filterByCategoryText()}
-        </div>
+        <Button color="secondary" onClick={ this.handleManageCategoryClick }>Gérer les catégories</Button>
+        <ManageCategory 
+          open={ this.state.isManageCategoryOpen }
+          handleClose={ this.handleManageCategoryClose }
+          getCategories={ this.getCategories }
+          categoriesOperations={ this.state.categoriesOperations }
+        />
 
-        <div>
-        <Button color="secondary" onClick={this.handleManageCategoryClick}>Gérer les catégories</Button>
-        <ManageCategory open={this.state.isManageCategoryOpen} handleClose={this.handleManageCategoryClose} getCategories={this.getCategories} categoriesOperations={this.state.categoriesOperations}/>
-        </div>
-
-        <div>{operations}</div>
+        <div>{ this.displayOperations() }</div>
         
-        <Button variant="outlined" color="secondary" onClick={this.handleAddRowClick}>
-          Ajouter
-        </Button>
+        <Button variant="outlined" color="secondary" onClick={ this.toggleAddRow }>Ajouter</Button>
         
-        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} categoriesOperations={this.state.categoriesOperations} getCategories={this.getCategories} displayCategory={this.displayCategory} />
-  </div>
+        <AddRow 
+          open={ this.state.isAddRowOpen }
+          handleClose={ this.toggleAddRow }
+          getOperations={ this.getOperations }
+          categoriesOperations={ this.state.categoriesOperations }
+          getCategories={ this.getCategories }
+          displayCategory={ this.displayCategory }
+        />
+      </div>
     )}
 
 }
