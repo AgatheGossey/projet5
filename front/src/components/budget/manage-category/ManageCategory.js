@@ -84,7 +84,7 @@ class ManageCategory extends Component {
   deleteCategory = (category) => {
     axios.delete(`http://localhost/my_manager/api/category/${category.id}`)
       .then(() => {
-        this.getCategories();
+        this.props.getCategories();
       })
   }
 

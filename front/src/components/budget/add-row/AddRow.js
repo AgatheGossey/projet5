@@ -128,7 +128,7 @@ class AddRow extends Component {
                 </MenuItem>
               </TextField>
 
-              <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories ={this.getCategories} />
+              <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories ={this.props.getCategories} />
 
               <TextField variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>
               

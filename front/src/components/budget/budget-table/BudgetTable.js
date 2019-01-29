@@ -325,7 +325,7 @@ class BudgetTable extends Component {
           Ajouter
         </Button>
         
-        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} categoriesOperations={this.state.categoriesOperations} displayCategory={this.displayCategory} />
+        <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} categoriesOperations={this.state.categoriesOperations} getCategories={this.getCategories} displayCategory={this.displayCategory} />
   </div>
 
           
