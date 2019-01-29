@@ -10,6 +10,12 @@ import AddRow from '../add-row/AddRow';
 import Button from '@material-ui/core/Button';
 // Table 
 import MaterialTable from 'material-table'
+// Card (mobile)
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import IconButton from '@material-ui/core/IconButton';
+import Clear from '@material-ui/icons/Clear';
+
 // Filter 
 import { Typography, TextField, Switch} from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -43,7 +49,6 @@ class BudgetTable extends Component {
           operations: response.data.result || [],
         });
       })
-    
   }
 
   displayOperations = () => {
@@ -67,6 +72,46 @@ class BudgetTable extends Component {
         recette: operation.type === "Recette" ? operation.amount : "",
         depense: operation.type === "Depense" ? operation.amount : "", 
       };
+    })
+  }
+
+  displayMobileOperations = () => {
+    let operations = [];
+    if (this.state.isFilterByDate) {
+      operations = this.state.filteredDateOperations
+    } else if (this.state.isFilterByCategory) {
+      operations = this.state.filteredCategoryOperations
+    } else {
+      operations = this.state.operations
+    }
+
+    return operations.map(operation => {
+
+      let operationType;
+      if (operation.type === "Recette" ) {
+        operationType = <Typography>Recette : {operation.amount}</Typography>
+      } else {
+        operationType = <Typography>Dépense : {operation.amount}</Typography>
+      }
+
+      return (
+        <div>
+          <Card>
+            <CardContent className={styles.cardContent} >
+              <IconButton aria-label="Clear" onClick={() => this.deleteOperation(operation)} >  
+                <Clear />
+              </IconButton>
+              <Typography>Date : {operation.date_budget}</Typography>
+              <Typography>Nom : {operation.name}</Typography>
+              <Typography>Mode : {operation.mode}</Typography>
+              <Typography>Categorie : {operation.name_category}</Typography>
+              <Typography>Motif : {operation.reason}</Typography>
+              {operationType} 
+            </CardContent>
+          </Card> 
+          <br></br>
+        </div>
+      ) 
     })
   }
 
@@ -95,6 +140,13 @@ class BudgetTable extends Component {
     }); 
     await Promise.all(promises);
     this.getOperations();
+  }
+
+  deleteOperation = (budget) => {
+    axios.delete(`http://localhost/my_manager/api/budget/${budget.id}`)
+      .then(() => {
+        this.getOperations();
+      })
   }
 
 // Handle Dialog for add row to the budget
@@ -264,12 +316,19 @@ class BudgetTable extends Component {
             selection: true,
           }}
         />
-      
+    
+        <br></br>
+        {this.calculateBalance()}
+        {this.displayMobileOperations()}
+        
         <Button variant="outlined" color="secondary" onClick={this.handleAddRowClick}>
           Ajouter
         </Button>
+        
         <AddRow open={this.state.isAddRowOpen} handleClose={this.handleAddRowClose} getOperations={this.getOperations} categoriesOperations={this.state.categoriesOperations} displayCategory={this.displayCategory} />
   </div>
+
+          
 
     )}
 

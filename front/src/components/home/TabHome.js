@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // form
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -39,21 +40,26 @@ class TabHome extends Component {
     if (this.state.value === 0) {
       return (
         // Connection form 
-        <form className={styles.form}>
-          <TextField label="Nom :" value={this.state.username_connection} onChange={e => this.handleUsernameConnectionChange(e.target.value)}/>
-          <TextField label="Mot de passe :" type="password" value={this.state.password_connection} onChange={e => this.handlePasswordConnectionChange(e.target.value)}/>
-          <Button type="submit" onClick={this.handleSubmitConnection} color="primary">Se connecter</Button>
-        </form>
+          <form className={styles.formConnection}>        
+            <Grid container direction="column" justify="center" alignItems="center">
+              <TextField label="Nom :" value={this.state.username_connection} onChange={e => this.handleUsernameConnectionChange(e.target.value)}/>
+              <TextField label="Mot de passe :" type="password" value={this.state.password_connection} onChange={e => this.handlePasswordConnectionChange(e.target.value)}/>
+              <Button type="submit" onClick={this.handleSubmitConnection} color="secondary">Se connecter</Button>
+            </Grid> 
+          </form>
+   
       )
     } else {
       return (
         // Register form 
-        <form className={styles.form}>
-          <TextField label="Nom :" value={this.state.username} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
-          <TextField label="Mot de passe :" type="password" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
-          <TextField label="Répétez le mot de passe :" type="password" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
-          <TextField label="Email :" value={this.state.email} onChange={e => this.handleEmailRegisterChange(e.target.value)}/>
-          <Button onClick={this.handleSubmitRegister} color="primary">S'inscrire</Button>
+        <form className={styles.formRegister}>
+          <Grid container direction="column" justify="center" alignItems="center">
+            <TextField required label="Nom :" value={this.state.username} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
+            <TextField required label="Mot de passe :" type="password" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
+            <TextField required label="Répétez le mot de passe :" type="password" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
+            <TextField required label="Email :" value={this.state.email} onChange={e => this.handleEmailRegisterChange(e.target.value)}/>
+            <Button onClick={this.handleSubmitRegister} color="secondary">S'inscrire</Button>
+          </Grid>
         </form>
       )
     }
@@ -118,19 +124,23 @@ class TabHome extends Component {
   }
 
   render () {
-    return (
-      <div className={styles.grid}>
-  
-        <AppBar position="static">
-          <Tabs value={this.state.value} onChange={this.handleChange}>
-            <Tab label="Connexion" />
-            <Tab label="S'inscrire" />
-          </Tabs>
-        </AppBar>
-        {this.handleClickChange()}
+    return ( 
+      <div className={styles.test}>
+      <Grid container direction="row" justify="center" >
+        <div className={styles.container}>
+          <AppBar position="static">
+            <Tabs  indicatorColor="secondary" value={this.state.value} onChange={this.handleChange}>
+              <Tab  label="Connexion" />
+              <Tab label="S'inscrire" />
+            </Tabs>
+          </AppBar>
+          {this.handleClickChange()}
+        </div>
+      </Grid>
       </div>
-    )
+     )
   }
+
 }
 
 export default TabHome;

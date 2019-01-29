@@ -15,11 +15,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Edit from '@material-ui/icons/Edit'
 import Clear from '@material-ui/icons/Clear';
 import { ListItemSecondaryAction } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 
 class ManageCategory extends Component {
