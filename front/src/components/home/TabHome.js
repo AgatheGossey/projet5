@@ -25,6 +25,8 @@ class TabHome extends Component {
     password_connection: '', 
     // register
     username: '',
+    first_name: '',
+    last_name: '',
     password: '',
     password_register_repeat: '',
     email: '',
@@ -54,7 +56,9 @@ class TabHome extends Component {
         // Register form 
         <form className={styles.formRegister}>
           <Grid container direction="column" justify="center" alignItems="center">
-            <TextField required label="Nom :" value={this.state.username} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
+            <TextField required label="Pseudo :" value={this.state.username} onChange={e => this.handleUsernameRegisterChange(e.target.value)}/>
+            <TextField required label="Prénom :" value={this.state.first_name} onChange={e => this.handleFirstNameRegisterChange(e.target.value)}/>
+            <TextField required label="Nom :" value={this.state.last_name} onChange={e => this.handleLastNameRegisterChange(e.target.value)}/>
             <TextField required label="Mot de passe :" type="password" value={this.state.password} onChange={e => this.handlePasswordRegisterChange(e.target.value)}/>
             <TextField required label="Répétez le mot de passe :" type="password" value={this.state.password_register_repeat} onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}/>
             <TextField required label="Email :" value={this.state.email} onChange={e => this.handleEmailRegisterChange(e.target.value)}/>
@@ -92,6 +96,18 @@ class TabHome extends Component {
     })
   }
 
+  handleFirstNameRegisterChange = (first_name) => {
+    this.setState({
+      first_name: first_name,
+    })
+  }
+
+  handleLastNameRegisterChange = (last_name) => {
+    this.setState({
+      last_name: last_name,
+    })
+  }
+
   handlePasswordRegisterChange = (password) => {
     this.setState({
       password: password,
@@ -113,14 +129,14 @@ class TabHome extends Component {
   handleSubmitRegister = () => {
     const data = {
       username: this.state.username,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
       password: this.state.password,
       email: this.state.email,
     };
-
-      axios.post('http://localhost/my_manager/api/user', data)
-        .then( () => {
-          
-        })
+    
+      axios.post('http://localhost/my_manager/api/users', data)
+  
   }
 
   render () {

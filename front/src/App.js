@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // COMPONENTS
 import Home from './components/home/Home';
 import Menu from './components/menu/Menu';
+import Admin from './components/admin/Admin';
 import BudgetTable from './components/budget/budget-table/BudgetTable';
 import Parameters from './components/parameters/Parameters';
 
@@ -49,6 +50,7 @@ class App extends Component {
             <Route exact path="/" component={ Home } />
             <AppRoute exact path="/budget" layout={ Menu } component={ BudgetTable }  />
             <AppRoute exact path="/parametres" layout={ Menu } component={ Parameters } isDarkThemeEnable={this.state.isDarkThemeEnable} toggleDarkTheme={this.toggleDarkTheme}/>
+            <AppRoute exact path="/admin" layout={ Menu } component={ Admin }  />
           </Switch>
         </Router>
       </MuiThemeProvider>

@@ -245,9 +245,9 @@ $app->delete('/category/{id}', function ($request, $response) {
     $values = array(':id' => $id);
     $result = $pre->execute($values);
     if($result) {
-      return $response->withJson(array('status' => 'Operations Deleted'), 200);
+      return $response->withJson(array('status' => 'Category Deleted'), 200);
     } else {
-      return $response->withJson(array('status' => 'Operations Not found'), 422);
+      return $response->withJson(array('status' => 'Category Not found'), 422);
     }
   }
   catch(\Exception $ex) {
@@ -258,14 +258,36 @@ $app->delete('/category/{id}', function ($request, $response) {
 
 // USERS OPERATIONS
 
-$app->post('/user', function ($request, $response) {
+$app->get('/users', function($request, $response) {
 
   try {
     $connection = $this->db;
-    $sql = "INSERT INTO `users`(`username`, `password`, `email`) VALUES (:username,:password,:email)";
+    $sql = "SELECT * FROM users WHERE approved = 0";
+    $result = null;
+
+    foreach ($connection->query($sql) as $row) {
+      $result[] = $row;
+    }
+    if ($result) {
+      return $response->withJson(array('status' => 'true','result'=>$result), 200);
+    }
+  }
+    catch (\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()), 422);
+    }
+
+});
+
+$app->post('/users', function ($request, $response) {
+
+  try {
+    $connection = $this->db;
+    $sql = "INSERT INTO `users`(`username`, `first_name`, `last_name`, `password`, `email`) VALUES (:username,:first_name,:last_name,:password,:email)";
     $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $values = array(
       ':username' => $request->getParam('username'),
+      ':first_name' => $request->getParam('first_name'),
+      ':last_name' => $request->getParam('last_name'),
       ':email' => $request->getParam('email'),
       //Using hash for password encryption
       'password' => password_hash($request->getParam('password'),PASSWORD_DEFAULT)
@@ -279,24 +301,47 @@ $app->post('/user', function ($request, $response) {
 
 });
 
-$app->delete('/user/{id}', function ($request, $response) {
-
-    try {
-      $id = $request->getAttribute('id');
-      $connection = $this->db;
-      $sql = "DELETE FROM users WHERE id= :id";
-      $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-      $values = array(':id' => $id);
-        $result = $pre->execute($values);
-        if($result) {
-          return $response->withJson(array('status' => 'Operations Deleted'), 200);
-        } else {
-          return $response->withJson(array('status' => 'Operations Not found'), 422);
-        }
+$app->put('/users/check/{id}', function ($request,$response) {
+  
+  try {
+    $id = $request->getAttribute('id');
+    $connection = $this->db;
+    $sql = "UPDATE users SET approved=1 WHERE id = :id";
+    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $values = array(
+      ':id' => $id
+    );
+    $result = $pre->execute($values);
+    if($result){
+      return $response->withJson(array('status' => 'User Approved'),200);
+    } else {
+      return $response->withJson(array('status' => 'User Not Found'),422);
     }
-    catch(\Exception $ex) {
+  }
+  catch(\Exception $ex) {
       return $response->withJson(array('error' => $ex->getMessage()),422);
-    } 
+  }
+
+});
+
+$app->delete('/users/{id}', function ($request, $response) {
+
+  try {
+    $id = $request->getAttribute('id');
+    $connection = $this->db;
+    $sql = "DELETE FROM users WHERE id= :id";
+    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $values = array(':id' => $id);
+    $result = $pre->execute($values);
+    if($result) {
+      return $response->withJson(array('status' => 'User Deleted'), 200);
+    } else {
+      return $response->withJson(array('status' => 'User Not found'), 422);
+    }
+  }
+  catch(\Exception $ex) {
+    return $response->withJson(array('error' => $ex->getMessage()),422);
+  } 
 
 });
 
