@@ -114,7 +114,6 @@ class Admin extends Component {
 
   getUsers = async () => {
     const response = await axios.get(`${API_HOST}/users`);
-    console.log(response);
     this.setState({ users: response.data.result || [] });
   }
 

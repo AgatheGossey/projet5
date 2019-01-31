@@ -23,6 +23,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import EditIcon from '@material-ui/icons/Edit';
 import SettingsIcon from '@material-ui/icons/Settings';
+import PeopleIcon from '@material-ui/icons/People';
 
 class Menu extends Component {
 
@@ -88,6 +89,12 @@ class Menu extends Component {
                 <SettingsIcon></SettingsIcon>
               </ListItemIcon>
               <OldSchoolMenuLink to="/parametres" label="Paramètres" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon></PeopleIcon>
+              </ListItemIcon>
+              <OldSchoolMenuLink to="/admin" label="Utilisateurs" />
             </ListItem>
           </List>
         </Drawer>
