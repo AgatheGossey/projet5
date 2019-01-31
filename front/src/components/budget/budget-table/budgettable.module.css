@@ -16,3 +16,22 @@
 .cardContent {
  text-align: center;
 }
+
+/* FILTER */
+
+.switch {
+  display: flex;
+}
+
+/* by date */
+.filterByDate {
+  display: flex;
+  flex-direction: row;
+  margin-left: 3em;
+}
+
+.dateIntervalText {
+  margin: 1em;
+}
+
+/* by category */
