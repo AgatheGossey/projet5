@@ -258,7 +258,8 @@ $app->delete('/category/{id}', function ($request, $response) {
 
 // USERS OPERATIONS
 
-$app->get('/users', function($request, $response) {
+// request for get users who are not approved
+$app->get('/users/approve', function($request, $response) {
 
   try {
     $connection = $this->db;
@@ -277,6 +278,28 @@ $app->get('/users', function($request, $response) {
     }
 
 });
+
+// request for get all users
+$app->get('/users', function($request, $response) {
+
+  try {
+    $connection = $this->db;
+    $sql = "SELECT * FROM users";
+    $result = null;
+
+    foreach ($connection->query($sql) as $row) {
+      $result[] = $row;
+    }
+    if ($result) {
+      return $response->withJson(array('status' => 'true','result'=>$result), 200);
+    }
+  }
+    catch (\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()), 422);
+    }
+
+});
+
 
 $app->post('/users', function ($request, $response) {
 

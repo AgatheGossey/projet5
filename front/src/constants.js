@@ -11,11 +11,18 @@ export const BUDGET_TABLE_COLUMNS = [
   { title: 'Dépense', field: 'depense', type: 'numeric'},
 ];
 
-export const ADMIN_TABLE_COLUMNS = [
+export const USERS_TABLE_COLUMNS_WAITING = [
   { title: 'id', field: 'id', hidden: true},
   { title: 'Pseudo', field: 'pseudo'},
   { title: 'Prénom', field: 'prenom'},
   { title: 'Nom', field: 'nom'},
   { title: '', field: 'approuver'},
   { title: '', field: 'supprimer'},
+];
+
+export const USERS_TABLE_COLUMNS = [
+  { title: 'id', field: 'id', hidden: true},
+  { title: 'Pseudo', field: 'pseudo'},
+  { title: 'Prénom', field: 'prenom'},
+  { title: 'Nom', field: 'nom'},
 ];

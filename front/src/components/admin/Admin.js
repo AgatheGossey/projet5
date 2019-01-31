@@ -11,29 +11,33 @@ import Clear from '@material-ui/icons/Clear';
 import styles from './admin.module.css';
 
 // CONSTANTS
-import { API_HOST, ADMIN_TABLE_COLUMNS } from '../../constants';
+import { API_HOST, USERS_TABLE_COLUMNS_WAITING, USERS_TABLE_COLUMNS } from '../../constants';
 
 class Admin extends Component {
   state = {
+    usersWaiting: [],
     users: [],
   }
 
   componentDidMount = () => {
+    this.getUsersWaiting();
     this.getUsers();
   }
 
-  getUsers = async () => {
-    const response = await axios.get(`${API_HOST}/users`);
-    this.setState({ users: response.data.result || [] });
+  // PENDING REGISTRATIONS 
+
+  getUsersWaiting = async () => {
+    const response = await axios.get(`${API_HOST}/users/approve`);
+    this.setState({ usersWaiting: response.data.result || [] });
   }
 
-  displayUsers = () => {
-    const users = this.state.users;
+  displayUsersWaiting = () => {
+    const usersWaiting = this.state.usersWaiting;
 
     // If on large screens, display a Table. If not, display Cards 
     if (isWidthUp('md', this.props.width)) {
       // Prepare table data
-      const tableData = users.map(user => {
+      const tableData = usersWaiting.map(user => {
         const { id, username, first_name, last_name } = user;
         return {
           id,
@@ -56,7 +60,7 @@ class Admin extends Component {
       return (
         <div className={ styles.materialTable }>
           <MaterialTable 
-            columns = { ADMIN_TABLE_COLUMNS }
+            columns = { USERS_TABLE_COLUMNS_WAITING }
             data = { tableData }
             options={{
               toolbar: false,
@@ -71,7 +75,7 @@ class Admin extends Component {
         </div>
       ) 
     } else {
-      const userCards = users.map(user => {
+      const userCards = usersWaiting.map(user => {
         const { id, username, first_name, last_name} = user;
 
         return (
@@ -102,19 +106,86 @@ class Admin extends Component {
 
   checkUser = async (user) => {
     await axios.put(`${API_HOST}/users/check/${user.id}`);
-    this.getUsers();
-    this.displayUsers();
+    this.getUsersWaiting();
+    this.displayUsersWaiting();
+  }
+
+  // ALL USERS
+
+  getUsers = async () => {
+    const response = await axios.get(`${API_HOST}/users`);
+    console.log(response);
+    this.setState({ users: response.data.result || [] });
+  }
+
+
+  displayUsers = () => {
+    const users = this.state.users;
+
+    // If on large screens, display a Table. If not, display Cards 
+    if (isWidthUp('md', this.props.width)) {
+      // Prepare table data
+      const tableData = users.map(user => {
+        const { id, username, first_name, last_name } = user;
+        return {
+          id,
+          pseudo: username,
+          prenom: first_name,
+          nom: last_name,
+        };
+      })
+
+      return (
+        <div className={ styles.materialTable }>
+          <MaterialTable 
+            columns = { USERS_TABLE_COLUMNS }
+            data = { tableData }
+            options={{
+              toolbar: false,
+              paging: false,
+            }}
+            localization={{
+              body: {
+              emptyDataSourceMessage: 'Aucun utilisateur',
+              },
+            }}
+          />
+        </div>
+      ) 
+    } else {
+      const userCards = users.map(user => {
+        const { id, username, first_name, last_name} = user;
+
+        return (
+          <Fragment key={id}>
+            <Card>
+              <CardContent>
+                <Typography>Pseudo : { username }</Typography>
+                <Typography>Prénom : { first_name }</Typography>
+                <Typography>Nom : { last_name }</Typography> 
+              </CardContent>
+            </Card>
+          </Fragment>
+        ) 
+      })
+      return (
+        <Fragment>
+          { userCards }
+        </Fragment>
+      )
+    }
   }
 
   deleteUser = async (user) => {
     await axios.delete(`${API_HOST}/users/${user.id}`)
-    this.getUsers()
+    this.getUsersWaiting()
   }
 
   render () {
     return (
       <div className={styles.container}>
-        Inscriptions en attente : { this.displayUsers() }
+        Inscriptions en attente : { this.displayUsersWaiting() }
+        Utilisateurs : { this.displayUsers() }
       </div>       
     )
   }
