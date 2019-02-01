@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
-// // STYLE
+// STYLE
 import styles from './addrow.module.css';
+
+// CONSTANTS
+import { API_HOST } from '../../../constants';
 
 // COMPONENTS 
 import AddCategory from '../manage-category/AddCategory';
-import Button from '@material-ui/core/Button';
-// dialog
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-// form
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 class AddRow extends Component {
   state = {
@@ -31,46 +26,32 @@ class AddRow extends Component {
   };
 
   handleDateChange = (date_budget) => {
-    this.setState({
-      date_budget: date_budget,
-    })
+    this.setState({ date_budget: date_budget })
   }
 
   handleNameChange = (name) => {
-    this.setState({
-      name: name,
-    })
+    this.setState ({ name: name })
   }
 
 
   handleModeChange = (mode) => {
-    this.setState({
-      mode: mode,
-    })
+    this.setState({ mode: mode })
   }
 
   handleCategoryChange = (category) => {
-    this.setState({
-      category: category,
-    })
+    this.setState ({ category: category })
   }
 
   handleReasonChange = (reason) => {
-    this.setState({
-      reason: reason,
-    })
+    this.setState({ reason: reason })
   }
 
   handleTypeChange = (type) => {
-    this.setState({
-      type: type,
-    })
+    this.setState({ type: type })
   }
 
   handleAmountChange = (amount) => {
-    this.setState({
-      amount: amount,
-    })
+    this.setState({ amount: amount })
   }
 
   handleSubmit = () => {
@@ -84,7 +65,7 @@ class AddRow extends Component {
       amount: this.state.amount,
    };
 
-    axios.post('http://localhost/my_manager/api/budget', data)
+    axios.post(`${API_HOST}/budget`, data)
       .then(() => {
         this.props.getOperations();
         this.props.handleClose();
@@ -103,41 +84,72 @@ class AddRow extends Component {
   render() {
     return (
       <form>
-      
-        <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title" maxWidth="xl">
-          <DialogTitle id="responsive-dialog-title">{"Ajouter un élément dans le budget"}</DialogTitle>
+        <Dialog 
+          open={ this.props.open }
+          onClose={ this.props.handleClose }
+          aria-labelledby="responsive-dialog-title" 
+          maxWidth="xl"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            {"Ajouter un élément dans le budget :"}
+          </DialogTitle>
           <DialogContent>
-            <div className={styles.container}>
-
-              <TextField variant='outlined' type='date' value={this.state.date_budget} onChange={e => this.handleDateChange(e.target.value)}/>   
-              
-              <TextField variant="outlined" label="Nom :" onChange={e => this.handleNameChange(e.target.value)}/>
-              
-              <TextField select variant="outlined" label="Mode :" value={this.state.mode} onChange={e => this.handleModeChange(e.target.value)}>
+            <div className={ styles.container }>
+              <TextField 
+                className={ styles.addRowTextField }
+                variant='outlined'
+                type='date'
+                value={ this.state.date_budget }
+                onChange={ e => this.handleDateChange(e.target.value) }
+              />   
+              <TextField 
+                className={ styles.addRowTextField }
+                variant="outlined"
+                label="Nom :"
+                onChange={ e => this.handleNameChange(e.target.value) }
+              />
+              <TextField 
+                className={ styles.addRowTextField }
+                select 
+                variant="outlined"
+                label="Mode :"
+                value={ this.state.mode }
+                onChange={ e => this.handleModeChange(e.target.value) }
+              >
                 <MenuItem value="Virement">Virement</MenuItem>
                 <MenuItem value="Chèque">Chèque</MenuItem>
                 <MenuItem value="Espèce">Espèce</MenuItem>
               </TextField>
-
-              <TextField select variant="outlined" label="Catégorie :" value={this.state.category} onChange={e => this.handleCategoryChange(e.target.value)}>
-               {this.props.displayCategory()}              
-                <MenuItem value="">
-                  <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
-                    Ajouter
-                  </Button>
-                </MenuItem>
+              <TextField 
+                className={ styles.addRowTextField }
+                select
+                variant="outlined"
+                label="Catégorie :"
+                value={ this.state.category }
+                onChange={ e => this.handleCategoryChange(e.target.value) }
+              >
+                { this.props.displayCategory() }
+                <div value="">
+                  <Fab 
+                    className={ styles.addButton }
+                    size="small"
+                    color="secondary"
+                    aria-label="Add"
+                    onClick={this.handleAddCategoryClick}>
+                    <AddIcon />
+                  </Fab>
+                </div> 
               </TextField>
-
               <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories ={this.props.getCategories} />
 
-              <TextField variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>
+              <TextField required className={styles.addRowTextField} variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>
               
-              <TextField select variant="outlined" label="Type :" value={this.state.type} onChange={e => this.handleTypeChange(e.target.value)}>
+              <TextField className={styles.addRowTextField} select variant="outlined" label="Type :" value={this.state.type} onChange={e => this.handleTypeChange(e.target.value)}>
                 <MenuItem value="Recette">Recette</MenuItem>
                 <MenuItem value="Depense">Dépense</MenuItem>
-              </TextField>
-              
+              </TextField> 
               <TextField 
+                className={styles.addRowTextField}
                 variant="outlined"
                 label="Montant"
                 onChange={e => this.handleAmountChange(e.target.value)}
@@ -145,11 +157,15 @@ class AddRow extends Component {
                     startAdornment: <InputAdornment position="start">€</InputAdornment>,
                 }}>
               </TextField>
-
             </div>    
           </DialogContent>
           <DialogActions>
-            <Button type="submit" onClick={this.handleSubmit} color="primary" autoFocus>
+            <Button 
+              type="submit"
+              onClick={ this.handleSubmit }
+              color="primary" 
+              autoFocus
+            >
               Ajouter
             </Button>
           </DialogActions>

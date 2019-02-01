@@ -89,7 +89,7 @@ class BudgetTable extends Component {
         <MaterialTable
           columns={ BUDGET_TABLE_COLUMNS }
           data={ tableData }
-          title={ `Solde: ${this.calculateBalance()}€` }
+          title={ `Solde disponible : ${this.calculateBalance()}€` }
           actions={[
             {
               icon: 'delete',
@@ -134,7 +134,9 @@ class BudgetTable extends Component {
       })
       return (
         <Fragment>
-          <div>Solde: { this.calculateBalance() }€</div>
+          <div className={ styles.balanceText }>
+            Solde total : <span>{ this.calculateBalance() }€</span>
+          </div>
           { operationsCards }
         </Fragment>
       )
@@ -202,6 +204,13 @@ class BudgetTable extends Component {
   filterByDate = () => {
     const list = [];
     this.state.operations.forEach(element => {
+
+      const date_budget_end = this.state.date_budget_end;
+      (date_budget_end.toLocaleString());
+      
+      const date_budget_start = this.state.date_budget_start;
+      (date_budget_start.toLocaleString());
+      console.log(date_budget_end);
       if (element.date_budget >= this.state.date_budget_start && element.date_budget <= this.state.date_budget_end) {
         list.push(element);
       } 
@@ -262,7 +271,7 @@ class BudgetTable extends Component {
   filterByCategoryText = () => {
     if (this.state.isFilterByCategory) {
       return (
-        <TextField select variant="outlined" label="Catégorie :" value={ this.state.category } onChange={ e => this.handleCategoryChange(e.target.value) }>
+        <TextField className={styles.textFieldCategory} select variant="outlined" label="Catégorie :" value={ this.state.category } onChange={ e => this.handleCategoryChange(e.target.value) }>
           { this.displayCategory() }              
         </TextField>
       )
@@ -277,21 +286,21 @@ class BudgetTable extends Component {
         <div className={styles.switch}>
           <Switch value={ this.state.isFilterByDate } color="secondary" onChange={ this.toggleFilterByDate } />
           { this.filterByDateText() }
-          <Switch value={ this.state.isFilterByCategory } color="secondary" onChange={ this.toggleFilterByCategory } />
+          <Switch className={ styles.switchCategory } value={ this.state.isFilterByCategory } color="secondary" onChange={ this.toggleFilterByCategory } />
           { this.filterByCategoryText() }
         </div>
-        <Button color="secondary" onClick={ this.handleManageCategoryClick }>Gérer les catégories</Button>
+        <Button className={ styles.buttonManageCategory } variant="outlined"  color="secondary" onClick={ this.handleManageCategoryClick }>Gérer les catégories</Button>
         <ManageCategory 
           open={ this.state.isManageCategoryOpen }
           handleClose={ this.handleManageCategoryClose }
           getCategories={ this.getCategories }
           categoriesOperations={ this.state.categoriesOperations }
         />
-
         <div>{ this.displayOperations() }</div>
-        
-        <Button variant="outlined" color="secondary" onClick={ this.toggleAddRow }>Ajouter</Button>
-        
+        <Button variant="contained" color="secondary" onClick={ this.toggleAddRow }>
+          Ajouter
+        </Button>
+
         <AddRow 
           open={ this.state.isAddRowOpen }
           handleClose={ this.toggleAddRow }

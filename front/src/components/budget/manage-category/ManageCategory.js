@@ -1,29 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Dialog, DialogContent, DialogTitle, List, Fab, ListItem, ListItemText, IconButton, ListItemSecondaryAction } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import { Edit, Clear } from '@material-ui/icons';
 
-// // STYLE
-// import styles from './addrow.module.css';
+// STYLE
+import styles from './managecategory.module.css';
+
+// CONSTANTS
+import { API_HOST } from '../../../constants';
 
 // COMPONENTS 
 import AddCategory from '../manage-category/AddCategory';
-import EditCategory from '../manage-category/EditCategory'
-// dialog
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-// list
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Edit from '@material-ui/icons/Edit'
-import Clear from '@material-ui/icons/Clear';
-import { ListItemSecondaryAction } from '@material-ui/core';
-
+import EditCategory from '../manage-category/EditCategory';
 
 class ManageCategory extends Component {
-
   state = {
     // dialog
     isAddCategoryOpen: false,
@@ -70,10 +61,15 @@ class ManageCategory extends Component {
             secondary={this.state.secondary ? 'Secondary text' : null}
           />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Clear" onClick={() => this.deleteCategory(categoryOperation)}>
+            <IconButton
+              aria-label="Clear"
+              onClick={() => this.deleteCategory(categoryOperation)}>
               <Clear />
             </IconButton>
-            <IconButton aria-label="Edit" color="primary" onClick={() => this.handleEditCategoryClick(categoryOperation)} >
+            <IconButton
+              aria-label="Edit"
+              color="primary"
+              onClick={() => this.handleEditCategoryClick(categoryOperation)} >
               <Edit />
             </IconButton> 
           </ListItemSecondaryAction>
@@ -82,7 +78,7 @@ class ManageCategory extends Component {
   }
 
   deleteCategory = (category) => {
-    axios.delete(`http://localhost/my_manager/api/category/${category.id}`)
+    axios.delete(`${API_HOST}/category/${category.id}`)
       .then(() => {
         this.props.getCategories();
       })
@@ -90,15 +86,35 @@ class ManageCategory extends Component {
 
   render() {
     return (
-      <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
-        <DialogTitle id="responsive-dialog-title">Gérer les catégories :</DialogTitle>
+      <Dialog 
+        open={this.props.open}
+        onClose={this.props.handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          Gérer les catégories :
+        </DialogTitle>
         <DialogContent>
           {this.displayCategory()}
-          <Button variant="outlined" color="primary" onClick={this.handleAddCategoryClick}>
-              Ajouter
-          </Button>    
-          <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories={this.props.getCategories} />
-          <EditCategory open={this.state.isEditCategoryOpen} handleClose={this.handleEditCategoryClose} category={this.state.category} getCategories={this.props.getCategories}/>
+          <Fab 
+          className={ styles.addButton }
+                    size="small"
+                    color="secondary"
+                    aria-label="Add"
+                    onClick={this.handleAddCategoryClick}>
+                    <AddIcon />
+                  </Fab>
+          <AddCategory 
+            open={this.state.isAddCategoryOpen}
+            handleClose={this.handleAddCategoryClose}
+            getCategories={this.props.getCategories}
+          />
+          <EditCategory 
+            open={this.state.isEditCategoryOpen}
+            handleClose={this.handleEditCategoryClose}
+            category={this.state.category}
+            getCategories={this.props.getCategories}
+          />
         </DialogContent>
       </Dialog>
       )
