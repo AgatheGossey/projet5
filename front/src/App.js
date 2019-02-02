@@ -5,9 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // COMPONENTS
 import Home from './components/home/Home';
-import Menu from './components/menu/Menu';
+import Menu from './containers/menu/Menu';
 import Admin from './components/admin/Admin';
-import BudgetTable from './components/budget/budget-table/BudgetTable';
+import BudgetTable from './containers/budget-table/BudgetTable';
 import Parameters from './components/parameters/Parameters';
 
 // THEME
@@ -25,14 +25,7 @@ const AppRoute = ({ component : Component, layout: Layout, ...rest }) => {
 
 class App extends Component {
   state = {
-    isSideBarOpen: false,
     isDarkThemeEnable: false,
-  }
-
-  toggleSideBar = () => {
-    this.setState({
-      isSideBarOpen: !this.state.isSideBarOpen,
-    })
   }
 
   toggleDarkTheme = () => {

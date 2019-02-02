@@ -1,21 +1,11 @@
-import { createStore } from "redux";
+import { combineReducers } from 'redux';
 
-const reducer = (state = { open: false }, action) => {
-  switch (action.type) {
-    case 'OPEN_SIDE_BAR':
-      state = state + action.value;
-      break;
-    default:
-    return state; 
-  }
-}
+// REDUCERS
+import sidebarReducer from './menu-reducer'; 
+import budgetReducer from './budget-reducer';
 
-const store = createStore(reducer);
-
-store.subscribe(() => {
-  console.log("Store updated", store.getState());
+export default combineReducers({
+  sidebar: sidebarReducer,
+  budget: budgetReducer,
 })
-store.dispatch({ 
-  type: "OPEN_SIDE_BAR"
-});
 
