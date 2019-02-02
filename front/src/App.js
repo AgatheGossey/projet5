@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // COMPONENTS
 import Home from './components/home/Home';
 import Menu from './containers/menu/Menu';
-import Admin from './components/admin/Admin';
+import Admin from './containers/admin/Admin';
 import BudgetTable from './containers/budget-table/BudgetTable';
 import Parameters from './components/parameters/Parameters';
 

@@ -10,6 +10,7 @@ import Clear from '@material-ui/icons/Clear';
 // ACTIONS
 import { getOperations } from 'actions/budget-actions';
 import { getCategories } from 'actions/budget-actions';
+import { deleteOperation } from 'actions/budget-actions';
 
 // STYLE 
 import styles from './budgettable.module.css';
@@ -116,7 +117,7 @@ class BudgetTable extends Component {
           <Fragment key={ id }>
             <Card className={ styles.card }>
               <CardContent className={ styles.cardContent } >
-                <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => this.deleteOperation(operation) } >  
+                <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => this.props.deleteOperation(id) } >  
                   <Clear />
                 </IconButton>
                 <Typography>Date : { date_budget }</Typography>
@@ -160,11 +161,6 @@ class BudgetTable extends Component {
       return promises.push(axios.delete(`${API_HOST}/budget/${operationId}`));
     }); 
     await Promise.all(promises);
-    this.props.getOperations();
-  }
-
-  deleteOperation = async (budget) => {
-    await axios.delete(`${API_HOST}/budget/${budget.id}`);
     this.props.getOperations();
   }
 
@@ -316,7 +312,9 @@ const mapDispatchToProps = (dispatch) => {
     getCategories: () => {
       dispatch(getCategories())
     },
-
+    deleteOperation: (operationId) => {
+      dispatch(deleteOperation(operationId));
+    },
   
   }
 }
