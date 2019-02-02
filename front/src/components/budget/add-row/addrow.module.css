@@ -3,3 +3,14 @@
     flex-wrap: wrap;
     margin: 1em;
 }
+
+.addRowTextField {
+  width: 10em;
+  margin: 0.5em 0.5em!important;
+}
+
+.addButton {
+  position: absolute;
+  bottom: 1.5em;
+  margin-left: 7em!important;
+}

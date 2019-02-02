@@ -141,19 +141,17 @@ class TabHome extends Component {
 
   render () {
     return ( 
-      <div className={styles.test}>
-      <Grid container direction="row" justify="center" >
-        <div className={styles.container}>
-          <AppBar position="static">
-            <Tabs  indicatorColor="secondary" value={this.state.value} onChange={this.handleChange}>
-              <Tab  label="Connexion" />
-              <Tab label="S'inscrire" />
-            </Tabs>
-          </AppBar>
-          {this.handleClickChange()}
-        </div>
-      </Grid>
-      </div>
+        <Grid className={styles.container} container direction="row" justify="center" alignItems="center" >
+          <div className={styles.test} >
+            <AppBar position="static">
+              <Tabs  indicatorColor="secondary" value={this.state.value} onChange={this.handleChange}>
+                <Tab  label="Connexion" />
+                <Tab label="S'inscrire" />
+              </Tabs>
+            </AppBar>
+            {this.handleClickChange()}
+          </div>
+        </Grid>  
      )
   }
 

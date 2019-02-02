@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 
-// // STYLE
-
-// COMPONENTS 
-// dialog
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-// add category form
-import TextField from '@material-ui/core/TextField';
+// CONSTANTS
+import { API_HOST } from '../../../constants';
 
 class EditCategory extends Component {
     state = {
@@ -20,9 +12,7 @@ class EditCategory extends Component {
 
     componentWillReceiveProps(nextProps) {
       if (nextProps.category !== this.props.category) {
-        this.setState({
-          category: nextProps.category,
-        })
+        this.setState({ category: nextProps.category })
       }
     }
 
@@ -35,7 +25,7 @@ class EditCategory extends Component {
         name_category: this.state.category.name_category,
       };
 
-      axios.put(`http://localhost/my_manager/api/category/${this.state.category.id}`, data)
+      axios.put(`${API_HOST}/category/${this.state.category.id}`, data)
         .then(() => {
           this.props.getCategories();
           this.props.handleClose();
@@ -45,13 +35,25 @@ class EditCategory extends Component {
     render() {
       return (
         <div>
-          <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
+          <Dialog 
+            open={ this.props.open }
+            onClose={ this.props.handleClose }
+            aria-labelledby="responsive-dialog-title"
+          >
             <DialogTitle id="responsive-dialog-title">Modifier la catégorie</DialogTitle>
             <DialogContent>
-              <TextField label="Nom" value={this.state.category.name_category} onChange={e => this.handleTextChange(e.target.value)} />
+              <TextField 
+                label="Nom"
+                value={ this.state.category.name_category }
+                onChange={ e => this.handleTextChange(e.target.value) }
+              />
             </DialogContent>
             <DialogActions>
-              <Button  color="primary" autoFocus onClick={this.handleSubmit}>
+              <Button 
+                color="primary"
+                autoFocus
+                onClick={this.handleSubmit}
+              >
                 Ajouter
               </Button>
             </DialogActions>

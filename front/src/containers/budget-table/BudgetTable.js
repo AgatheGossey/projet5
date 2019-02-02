@@ -87,7 +87,7 @@ class BudgetTable extends Component {
         <MaterialTable
           columns={ BUDGET_TABLE_COLUMNS }
           data={ tableData }
-          title={ `Solde: ${this.calculateBalance()}€` }
+          title={ `Solde disponible : ${this.calculateBalance()}€` }
           actions={[
             {
               icon: 'delete',
@@ -132,7 +132,9 @@ class BudgetTable extends Component {
       })
       return (
         <Fragment>
-          <div>Solde: { this.calculateBalance() }€</div>
+          <div className={ styles.balanceText }>
+            Solde total : <span>{ this.calculateBalance() }€</span>
+          </div>
           { operationsCards }
         </Fragment>
       )
@@ -210,16 +212,19 @@ class BudgetTable extends Component {
   filterByDateText = () => {
     if (this.state.isFilterByDate) {
       return (
-        <Fragment>
-          <Typography>Voir tout le tableau</Typography>
-          <Typography>Du</Typography>
-          <TextField variant='outlined' type='date' value={ this.state.date_budget_start } onChange={ e => this.handleChangeStartDate(e.target.value) }/>   
-          <Typography>Au</Typography>
-          <TextField variant='outlined' type='date' value={ this.state.date_budget_end } onChange={ e => this.handleChangeEndDate(e.target.value) }/>   
+        <Fragment>           
+          <p>Voir tout le tableau</p>
+          <div className={styles.filterByDate}>          
+            <p className={styles.dateIntervalText}>Du</p>
+            <TextField  variant='outlined' type='date' value={ this.state.date_budget_start } onChange={ e => this.handleChangeStartDate(e.target.value) }/>   
+            <p className={styles.dateIntervalText} >Au</p>
+            <TextField variant='outlined' type='date' value={ this.state.date_budget_end } onChange={ e => this.handleChangeEndDate(e.target.value) }/>  
+          </div>
+
         </Fragment>
       )
     } else {
-      return <Typography>Filtrer par date</Typography>
+      return <p>Filtrer par date</p>
     }
   }
 
@@ -253,35 +258,36 @@ class BudgetTable extends Component {
   filterByCategoryText = () => {
     if (this.state.isFilterByCategory) {
       return (
-        <TextField select variant="outlined" label="Catégorie :" value={ this.state.category } onChange={ e => this.handleCategoryChange(e.target.value) }>
+        <TextField className={styles.textFieldCategory} select variant="outlined" label="Catégorie :" value={ this.state.category } onChange={ e => this.handleCategoryChange(e.target.value) }>
           { this.displayCategory() }              
         </TextField>
       )
     } else {
-      return <Typography>Filtrer par catégorie</Typography>
+      return <p>Filtrer par catégorie</p>
     }
   }
 
   render() {
     return (
       <div className={ styles.container }>
-        <Switch value={ this.state.isFilterByDate } color="secondary" onChange={ this.toggleFilterByDate } />
-        { this.filterByDateText() }
-        <Switch value={ this.state.isFilterByCategory } color="secondary" onChange={ this.toggleFilterByCategory } />
-        { this.filterByCategoryText() }
-
-        <Button color="secondary" onClick={ this.handleManageCategoryClick }>Gérer les catégories</Button>
+        <div className={styles.switch}>
+          <Switch value={ this.state.isFilterByDate } color="secondary" onChange={ this.toggleFilterByDate } />
+          { this.filterByDateText() }
+          <Switch className={ styles.switchCategory } value={ this.state.isFilterByCategory } color="secondary" onChange={ this.toggleFilterByCategory } />
+          { this.filterByCategoryText() }
+        </div>
+        <Button className={ styles.buttonManageCategory } variant="outlined"  color="secondary" onClick={ this.handleManageCategoryClick }>Gérer les catégories</Button>
         <ManageCategory 
           open={ this.state.isManageCategoryOpen }
           handleClose={ this.handleManageCategoryClose }
           getCategories={ this.props.getCategories }
           categories={ this.props.categories }
         />
-
         <div>{ this.displayOperations() }</div>
-        
-        <Button variant="outlined" color="secondary" onClick={ this.toggleAddRow }>Ajouter</Button>
-        
+        <Button variant="contained" color="secondary" onClick={ this.toggleAddRow }>
+          Ajouter
+        </Button>
+
         <AddRow 
           open={ this.state.isAddRowOpen }
           handleClose={ this.toggleAddRow }
@@ -290,6 +296,7 @@ class BudgetTable extends Component {
           getCategories={ this.props.getCategories }
           displayCategory={ this.displayCategory }
         />
+
       </div>
     )}
 }

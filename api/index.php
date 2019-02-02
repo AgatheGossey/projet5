@@ -81,7 +81,7 @@ $app->get('/budget', function($request, $response) {
 
   try {
     $connection = $this->db;
-    $sql = "SELECT budget.*, category.name_category FROM budget  LEFT JOIN category ON budget.category = category.id";
+    $sql = "SELECT budget.*, DATE_FORMAT(date_budget, '%d/%m/%Y') AS date_budget, category.name_category FROM budget  LEFT JOIN category ON budget.category = category.id";
     $result = null;
 
     foreach ($connection->query($sql) as $row) {

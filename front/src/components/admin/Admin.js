@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import MaterialTable from 'material-table';
 import axios from 'axios';
+import MaterialTable from 'material-table';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import IconButton from '@material-ui/core/IconButton';
@@ -40,12 +40,16 @@ class Admin extends Component {
           prenom: first_name,
           nom: last_name,
           approuver: (
-            <IconButton aria-label="Check" onClick={() => this.checkUser(user)}>
+            <IconButton 
+              aria-label="Check"
+              onClick={ () => this.checkUser(user) }>
               <Check />
             </IconButton>
           ),
           supprimer: (
-            <IconButton aria-label="Clear" onClick={() => this.deleteUser(user)}>
+            <IconButton 
+              aria-label="Clear"
+              onClick={ () => this.deleteUser(user) }>
               <Clear />
             </IconButton>
           )
@@ -74,7 +78,7 @@ class Admin extends Component {
         const { id, username, first_name, last_name} = user;
 
         return (
-          <Fragment key={id}>
+          <Fragment key={ id }>
             <Card>
               <CardContent>
                 <Typography>Pseudo : { username }</Typography>
@@ -83,7 +87,9 @@ class Admin extends Component {
                 <IconButton aria-label="Check">
                   <Check />
                 </IconButton>
-                <IconButton aria-label="Clear" onClick={() => this.deleteUser(user)}>
+                <IconButton 
+                  aria-label="Clear" 
+                  onClick={ () => this.deleteUser(user) }>
                   <Clear />
                 </IconButton>
               </CardContent>
@@ -176,7 +182,7 @@ class Admin extends Component {
 
   render () {
     return (
-      <div className={styles.container}>
+      <div className={ styles.container }>
         Inscriptions en attente : { this.displayUsersWaiting() }
         Utilisateurs : { this.displayUsers() }
       </div>       

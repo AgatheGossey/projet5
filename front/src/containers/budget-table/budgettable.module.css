@@ -1,10 +1,29 @@
 .container {
-    margin: 10em 2em;
+    margin: 5em 2em;
+}
+
+.switch {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  text-align: center;
+}
+
+.buttonManageCategory {
+  position: absolute;
+}
+
+.dateIntervalText {
+  margin: 1em;
 }
 
 .card {
   margin-bottom: 1em;
   position: relative;
+}
+
+.cardContent {
+ text-align: center;
 }
 
 .clearButton {
@@ -13,6 +32,41 @@
   top: 0;
 }
 
-.cardContent {
- text-align: center;
+.balanceText {
+  margin: 1em;
+  font-size: 2em;
+}
+
+.balanceText span {
+  font-weight: bold;
+
+}
+
+
+@media all and (min-width: 700px) {
+
+/* FILTER */
+
+.switch {
+  flex-direction: row;
+  margin-left: 3em;
+}
+
+/* by date */
+.filterByDate {
+  display: flex;
+  flex-direction: row;
+  margin-left: 3em;
+}
+
+/* by category */
+
+.textFieldCategory {
+  width: 10em;
+}
+
+.buttonManageCategory {
+  
+}
+
 }

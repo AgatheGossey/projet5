@@ -1,10 +1,11 @@
 .container {
-  border: 2px solid black;
-  height: 100%;
+  background-image: url("./fond.jpg");
+  height: 100vh;
 }
 
 .test {
-  background-color:white;
+  border: 1px solid black;
+ background-color: white;
 }
 
 .formRegister {
