@@ -53,7 +53,7 @@ class ManageCategory extends Component {
   
   //  categories
   displayCategory = () => {
-    return this.props.categoriesOperations.map((categoryOperation) => 
+    return this.props.categories.map((categoryOperation) => 
       (<List key={categoryOperation.id}>
         <ListItem button onClick={this.handleClickList}>
           <ListItemText 

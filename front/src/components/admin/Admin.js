@@ -14,10 +14,6 @@ import styles from './admin.module.css';
 import { API_HOST, USERS_TABLE_COLUMNS_WAITING, USERS_TABLE_COLUMNS } from '../../constants';
 
 class Admin extends Component {
-  state = {
-    usersWaiting: [],
-    users: [],
-  }
 
   componentDidMount = () => {
     this.getUsersWaiting();
@@ -27,12 +23,11 @@ class Admin extends Component {
   // PENDING REGISTRATIONS 
 
   getUsersWaiting = async () => {
-    const response = await axios.get(`${API_HOST}/users/approve`);
-    this.setState({ usersWaiting: response.data.result || [] });
+ 
   }
 
   displayUsersWaiting = () => {
-    const usersWaiting = this.state.usersWaiting;
+    const usersWaiting = this.props.usersWaiting;
 
     // If on large screens, display a Table. If not, display Cards 
     if (isWidthUp('md', this.props.width)) {
@@ -119,13 +114,12 @@ class Admin extends Component {
   // ALL USERS
 
   getUsers = async () => {
-    const response = await axios.get(`${API_HOST}/users`);
-    this.setState({ users: response.data.result || [] });
+
   }
 
 
   displayUsers = () => {
-    const users = this.state.users;
+    const users = this.props.users;
 
     // If on large screens, display a Table. If not, display Cards 
     if (isWidthUp('md', this.props.width)) {
