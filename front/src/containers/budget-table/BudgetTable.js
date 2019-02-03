@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
 import intersection from 'lodash/intersection';
 import MaterialTable from 'material-table';
 import { Card, CardContent, IconButton, Button, Typography, TextField, Switch, MenuItem } from '@material-ui/core';
@@ -33,8 +34,8 @@ class BudgetTable extends Component {
     // Manage category dialog
     isManageCategoryOpen: false,
     // Filter the table by date
-    date_budget_start: '',
-    date_budget_end: '',
+    date_budget_start: moment(),
+    date_budget_end: moment(),
     isFilterByDate: false, 
     // Filter the table by category
     category: '',
@@ -74,7 +75,7 @@ class BudgetTable extends Component {
         const { id, date_budget, name, mode, name_category, reason, type, amount } = operation;
         return { 
           id,
-          date_budget, 
+          date_budget: moment(date_budget).format('DD/MM/YYYY'), 
           nom: name,
           mode,
           category: name_category || '',
@@ -182,12 +183,14 @@ class BudgetTable extends Component {
 
   // Filter by date
   handleChangeStartDate = async (date_budget_start) => {
-    await this.setState({ date_budget_start })
+    const date = moment(date_budget_start);
+    await this.setState({ date_budget_start: date });
     this.filterByDate();
   }
 
   handleChangeEndDate = async (date_budget_end) => {
-    await this.setState({ date_budget_end })
+    const date = moment(date_budget_end);
+    await this.setState({ date_budget_end: date });
     this.filterByDate();
   }
 
@@ -198,7 +201,7 @@ class BudgetTable extends Component {
   filterByDate = () => {
     const list = [];
     this.props.operations.forEach(element => {
-      if (element.date_budget >= this.state.date_budget_start && element.date_budget <= this.state.date_budget_end) {
+      if (moment(element.date_budget).isBetween(this.state.date_budget_start, this.state.date_budget_end)) {
         list.push(element);
       } 
     })
@@ -212,9 +215,9 @@ class BudgetTable extends Component {
           <p>Voir tout le tableau</p>
           <div className={styles.filterByDate}>          
             <p className={styles.dateIntervalText}>Du</p>
-            <TextField  variant='outlined' type='date' value={ this.state.date_budget_start } onChange={ e => this.handleChangeStartDate(e.target.value) }/>   
+            <TextField  variant='outlined' type='date' value={ this.state.date_budget_start.format('YYYY-MM-DD') } onChange={ e => this.handleChangeStartDate(e.target.value) }/>   
             <p className={styles.dateIntervalText} >Au</p>
-            <TextField variant='outlined' type='date' value={ this.state.date_budget_end } onChange={ e => this.handleChangeEndDate(e.target.value) }/>  
+            <TextField variant='outlined' type='date' value={ this.state.date_budget_end.format('YYYY-MM-DD') } onChange={ e => this.handleChangeEndDate(e.target.value) }/>  
           </div>
 
         </Fragment>

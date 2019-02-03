@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import moment from 'moment';
 
 // STYLE
 import styles from './addrow.module.css';
@@ -26,7 +27,8 @@ class AddRow extends Component {
   };
 
   handleDateChange = (date_budget) => {
-    this.setState({ date_budget: date_budget })
+    const date = moment.utc(date_budget).toDate();
+    this.setState({ date_budget: date })
   }
 
   handleNameChange = (name) => {
@@ -99,7 +101,7 @@ class AddRow extends Component {
                 className={ styles.addRowTextField }
                 variant='outlined'
                 type='date'
-                value={ this.state.date_budget }
+                value={ moment(this.state.date_budget).format('YYYY-MM-DD') }
                 onChange={ e => this.handleDateChange(e.target.value) }
               />   
               <TextField 
