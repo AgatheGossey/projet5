@@ -1,29 +1,40 @@
 <?php
-$app->post('/budget', function ($request, $response) {
 
+use Respect\Validation\Validator as v;
+
+$textBudgetValidator = v::length(1, 50);
+$reasonValidator = v::length(1, 500);
+$amountValidator = v::numeric();
+
+$addRowValidator = array(
+  'name' => $textBudgetValidator,
+  'mode' => $textBudgetValidator,
+  'category' => $textBudgetValidator,
+  'reason' => $reasonValidator,
+  'type' => $textBudgetValidator,
+  'amount' => $amountValidator,
+);
+
+// GET BUDGET
+$app->get('/budget', function($request, $response) {
   try {
     $connection = $this->db;
-    $sql = "INSERT INTO `budget`(`date_budget`, `name`, `mode`, `category`, `reason`, `type`, `amount`) VALUES (:date_budget,:name,:mode,:category,:reason,:type,:amount)";
-    $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-    $values = array(
-        ':date_budget' => $request->getParam('date_budget'),
-        ':name' => $request->getParam('name'),
-        ':mode' => $request->getParam('mode'),
-        ':category' => $request->getParam('category'),
-        ':reason' => $request->getParam('reason'),
-        ':type' => $request->getParam('type'),
-        ':amount' => $request->getParam('amount'));
-    $result = $pre->execute($values);
-    return $response->withJson(array('status' => 'Line Created'),200);
-  }
-  catch(\Exception $ex) {
-    return $response->withJson(array('error' => $ex->getMessage()),422);
-  }
+    $sql = "SELECT budget.*, category.name_category FROM budget LEFT JOIN category ON budget.category = category.id";
+    $result = null;
 
+    foreach ($connection->query($sql) as $row) {
+      $result[] = $row;
+    }
+    if ($result) {
+      return $response->withJson(array('status' => 'true','result'=>$result), 200);
+    }
+  }
+    catch (\Exception $ex) {
+        return $response->withJson(array('error' => $ex->getMessage()), 422);
+    }
 });
 
 $app->get('/budget/{id}', function ($request, $response) {
-
   try {
     $id = $request->getAttribute('id');
     $connection = $this->db;
@@ -42,31 +53,40 @@ $app->get('/budget/{id}', function ($request, $response) {
   catch (\Exception $ex) {
     return $response->withJson(array('error' => $ex->getMessage()),422);
   }
-
 });
 
-$app->get('/budget', function($request, $response) {
+// POST BUDGET
 
-  try {
-    $connection = $this->db;
-    $sql = "SELECT budget.*, category.name_category FROM budget LEFT JOIN category ON budget.category = category.id";
-    $result = null;
+$app->post('/budget', function ($request, $response) {
+  if ($request->getAttribute('has_errors')) {
+    $errors = $request->getAttribute('errors');
 
-    foreach ($connection->query($sql) as $row) {
-      $result[] = $row;
+    return $response->withJSON(array('errors' => $errors), 400);
+  } else {
+    try {
+      $connection = $this->db;
+      $sql = "INSERT INTO `budget`(`date_budget`, `name`, `mode`, `category`, `reason`, `type`, `amount`) VALUES (:date_budget,:name,:mode,:category,:reason,:type,:amount)";
+      $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+      $values = array(
+          ':date_budget' => $request->getParam('date_budget'),
+          ':name' => $request->getParam('name'),
+          ':mode' => $request->getParam('mode'),
+          ':category' => $request->getParam('category'),
+          ':reason' => $request->getParam('reason'),
+          ':type' => $request->getParam('type'),
+          ':amount' => $request->getParam('amount'));
+      $result = $pre->execute($values);
+      return $response->withJson(array('status' => 'Line Created'),200);
     }
-    if ($result) {
-      return $response->withJson(array('status' => 'true','result'=>$result), 200);
+    catch(\Exception $ex) {
+      return $response->withJson(array('error' => $ex->getMessage()),422);
     }
   }
-    catch (\Exception $ex) {
-        return $response->withJson(array('error' => $ex->getMessage()), 422);
-    }
+})->add(new \DavidePastore\Slim\Validation\Validation($addRowValidator));
 
-});
+// PUT BUDGET
 
 $app->put('/budget/{id}', function ($request,$response) {
-
   try {
     $id = $request->getAttribute('id');
     $connection = $this->db;
@@ -92,11 +112,11 @@ $app->put('/budget/{id}', function ($request,$response) {
   catch(\Exception $ex) {
       return $response->withJson(array('error' => $ex->getMessage()),422);
   }
-
 });
 
-$app->delete('/budget/{id}', function ($request, $response) {
+// DELETE BUDGET
 
+$app->delete('/budget/{id}', function ($request, $response) {
   try {
     $id = $request->getAttribute('id');
     $connection = $this->db;
@@ -113,5 +133,4 @@ $app->delete('/budget/{id}', function ($request, $response) {
   catch(\Exception $ex) {
     return $response->withJson(array('error' => $ex->getMessage()),422);
   } 
-
 });
