@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 
-// // STYLE
+// CONSTANTS
+import { API_HOST } from 'constants.js';
 
-// COMPONENTS 
-// dialog
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-// add category form
-import TextField from '@material-ui/core/TextField';
 
 class AddCategory extends Component {
     state = {
@@ -23,11 +16,11 @@ class AddCategory extends Component {
         name_category: this.state.name_category
       };
 
-      axios.post('http://localhost/my_manager/api/category', data)
+      axios.post(`${API_HOST}/category`, data)
         .then(() => {
           this.props.getCategories();
           this.props.handleClose();
-        })
+        });
     }
 
     handleTextChange = (name_category) => {

@@ -1,0 +1,14 @@
+.card {
+  margin-bottom: 1em;
+  position: relative;
+}
+
+.cardContent {
+ text-align: center;
+}
+
+.clearButton {
+  position: absolute!important;
+  right: 0;
+  top: 0;
+}

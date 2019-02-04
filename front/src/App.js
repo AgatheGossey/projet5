@@ -4,14 +4,14 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // COMPONENTS
-import Home from './components/home/Home';
-import Menu from './containers/menu/Menu';
-import Admin from './containers/admin/Admin';
-import BudgetTable from './containers/budget-table/BudgetTable';
-import Parameters from './components/parameters/Parameters';
+import Home from 'components/home/Home';
+import Menu from 'containers/menu/Menu';
+import Admin from 'containers/admin/Admin';
+import Budget from 'containers/budget/Budget';
+import Parameters from 'components/parameters/Parameters';
 
 // THEME
-import { lightTheme, darkTheme } from './theme';
+import { lightTheme, darkTheme } from 'theme';
 
 const AppRoute = ({ component : Component, layout: Layout, ...rest }) => {
   return (
@@ -41,7 +41,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={ Home } />
-            <AppRoute exact path="/budget" layout={ Menu } component={ BudgetTable }  />
+            <AppRoute exact path="/budget" layout={ Menu } component={ Budget }  />
             <AppRoute exact path="/parametres" layout={ Menu } component={ Parameters } isDarkThemeEnable={this.state.isDarkThemeEnable} toggleDarkTheme={this.toggleDarkTheme}/>
             <AppRoute exact path="/admin" layout={ Menu } component={ Admin }  />
           </Switch>

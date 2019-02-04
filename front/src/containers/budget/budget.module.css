@@ -17,32 +17,6 @@
   margin: 1em;
 }
 
-.card {
-  margin-bottom: 1em;
-  position: relative;
-}
-
-.cardContent {
- text-align: center;
-}
-
-.clearButton {
-  position: absolute!important;
-  right: 0;
-  top: 0;
-}
-
-.balanceText {
-  margin: 1em;
-  font-size: 2em;
-}
-
-.balanceText span {
-  font-weight: bold;
-
-}
-
-
 @media all and (min-width: 700px) {
 
 /* FILTER */

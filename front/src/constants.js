@@ -1,5 +1,20 @@
 export const API_HOST = 'http://localhost/my_manager/api';
 
+export const BUDGET_ACTIONS = {
+  // OPERATIONS
+  getOperations: 'BUDGET_GET_OPERATIONS',
+  // CATEGORIES
+  getCategories: 'BUDGET_GET_CATEGORIES',
+  toggleFilterByCategory: 'CATEGORY_FILTER_TOGGLE',
+  toggleAddCategory: 'ADD_CATEGORY_TOGGLE',
+  openManageCategories: 'OPEN_MANAGE_CATEGORIES',
+  closeManageCategories: 'CLOSE_MANAGE_CATEGORIES',
+  // DATE
+  toggleFilterByDate: 'DATE_FILTER_TOGGLE',
+  // ROW
+  toggleAddRow: 'ADD_ROW_TOGGLE',
+}
+
 export const BUDGET_TABLE_COLUMNS = [
   { title: 'id', field: 'id', hidden: true},
   { title: 'Date', field: 'date_budget', type: 'numeric'},

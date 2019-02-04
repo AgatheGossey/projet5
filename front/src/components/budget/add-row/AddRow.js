@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import moment from 'moment';
+
+// ACTIONS
+import { toggleAddCategory } from 'actions/budget-actions';
 
 // STYLE
 import styles from './addrow.module.css';
@@ -22,8 +26,6 @@ class AddRow extends Component {
     reason:'',
     type:'',
     amount:'',
-    // Add category dialog
-    isAddCategoryOpen: false, 
   };
 
   handleDateChange = (date_budget) => {
@@ -34,7 +36,6 @@ class AddRow extends Component {
   handleNameChange = (name) => {
     this.setState ({ name: name })
   }
-
 
   handleModeChange = (mode) => {
     this.setState({ mode: mode })
@@ -74,18 +75,10 @@ class AddRow extends Component {
         });
   }
 
-  handleAddCategoryClick = () => {
-    this.setState( { isAddCategoryOpen: true});
-  }
-
-  handleAddCategoryClose = () => {
-    this.setState({ isAddCategoryOpen: false});
-  }
-  
-
   render() {
     return (
       <form>
+
         <Dialog 
           open={ this.props.open }
           onClose={ this.props.handleClose }
@@ -95,8 +88,10 @@ class AddRow extends Component {
           <DialogTitle id="responsive-dialog-title">
             {"Ajouter un élément dans le budget :"}
           </DialogTitle>
+
           <DialogContent>
             <div className={ styles.container }>
+
               <TextField 
                 className={ styles.addRowTextField }
                 variant='outlined'
@@ -104,12 +99,14 @@ class AddRow extends Component {
                 value={ moment(this.state.date_budget).format('YYYY-MM-DD') }
                 onChange={ e => this.handleDateChange(e.target.value) }
               />   
+
               <TextField 
                 className={ styles.addRowTextField }
                 variant="outlined"
                 label="Nom :"
                 onChange={ e => this.handleNameChange(e.target.value) }
               />
+
               <TextField 
                 className={ styles.addRowTextField }
                 select 
@@ -122,6 +119,7 @@ class AddRow extends Component {
                 <MenuItem value="Chèque">Chèque</MenuItem>
                 <MenuItem value="Espèce">Espèce</MenuItem>
               </TextField>
+
               <TextField 
                 className={ styles.addRowTextField }
                 select
@@ -130,37 +128,59 @@ class AddRow extends Component {
                 value={ this.state.category }
                 onChange={ e => this.handleCategoryChange(e.target.value) }
               >
-                { this.props.displayCategory() }
+                {this.props.categories.map((categoryOperation) => {
+                  return <MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>
+                })}
                 <div value="">
                   <Fab 
                     className={ styles.addButton }
                     size="small"
                     color="secondary"
                     aria-label="Add"
-                    onClick={this.handleAddCategoryClick}>
+                    onClick={ this.props.toggleAddCategory }>
                     <AddIcon />
                   </Fab>
                 </div> 
               </TextField>
-              <AddCategory open={this.state.isAddCategoryOpen} handleClose={this.handleAddCategoryClose} getCategories ={this.props.getCategories} />
 
-              <TextField required className={styles.addRowTextField} variant="outlined" label="Motif :" onChange={e => this.handleReasonChange(e.target.value)}/>
+              <AddCategory
+                open={ this.props.isAddCategory }
+                handleClose={ this.props.toggleAddCategory }
+                getCategories ={ this.props.getCategories }
+              />
+
+              <TextField 
+                required
+                className={ styles.addRowTextField }
+                variant="outlined"
+                label="Motif :"
+                onChange={ e => this.handleReasonChange(e.target.value) }
+              />
               
-              <TextField className={styles.addRowTextField} select variant="outlined" label="Type :" value={this.state.type} onChange={e => this.handleTypeChange(e.target.value)}>
+              <TextField
+                className={ styles.addRowTextField }
+                select variant="outlined"
+                label="Type :"
+                value={ this.state.type }
+                onChange={ e => this.handleTypeChange(e.target.value) }
+              >
                 <MenuItem value="Recette">Recette</MenuItem>
                 <MenuItem value="Depense">Dépense</MenuItem>
               </TextField> 
+
               <TextField 
-                className={styles.addRowTextField}
+                className={ styles.addRowTextField }
                 variant="outlined"
                 label="Montant"
-                onChange={e => this.handleAmountChange(e.target.value)}
+                onChange={ e => this.handleAmountChange(e.target.value) }
                 InputProps={{
                     startAdornment: <InputAdornment position="start">€</InputAdornment>,
                 }}>
               </TextField>
+
             </div>    
           </DialogContent>
+
           <DialogActions>
             <Button 
               type="submit"
@@ -172,9 +192,25 @@ class AddRow extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+
       </form>
     )
   }
 }
 
-export default AddRow;
+const mapStateToProps = (state) => {
+  return {
+    categories: state.budget.categories,
+    isAddCategory: state.budget.isAddCategory
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleAddCategory: () => {
+      dispatch(toggleAddCategory());
+    }
+  }
+}
+
+export default (connect(mapStateToProps, mapDispatchToProps)(AddRow));
