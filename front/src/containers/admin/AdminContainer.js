@@ -7,15 +7,10 @@ import { getUsers } from 'actions/admin-actions';
 import { deleteUser } from 'actions/admin-actions';
 import { checkUser } from 'actions/admin-actions';
 
-// COMPONENTS 
-import UsersWaiting from 'components/admin/UsersWaiting';
-import Users from 'components/admin/Users';
+// COMPONENTS
+import Admin from 'components/admin/Admin';
 
-// STYLE 
-import styles from './admin.module.css';
-
-class Admin extends Component {
-
+class AdminContainer extends Component {
   componentDidMount = () => {
     this.props.getUsersWaiting();
     this.props.getUsers();
@@ -23,12 +18,7 @@ class Admin extends Component {
 
   render () {
     return (
-      <div className={styles.container}>
-        Inscriptions en attente : 
-        <UsersWaiting usersWaiting={this.props.usersWaiting} checkUser={this.props.checkUser} deleteUser={this.props.deleteUser}/>
-        Utilisateurs : 
-        <Users users={this.props.users} />
-      </div>       
+      <Admin users={this.props.users} usersWaiting={this.props.usersWaiting} checkUser={this.props.checkUser} deleteUser={this.props.deleteUser} />
     )
   }
 }
@@ -57,4 +47,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);

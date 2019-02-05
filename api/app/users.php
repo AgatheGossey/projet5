@@ -2,14 +2,20 @@
 
 use Respect\Validation\Validator as v;
 
-$usernameValidator = v::length(1, 10);
+$usernameValidator = v::alnum()->length(1, 10);
+$nameValidator = v::alpha()->length(1, 30);
+$emailValidator = v::email();
+$passwordValidator = v::length(6, 30);
 
 $inscriptionValidator = array(
   'username' => $usernameValidator,
+  'first_name' => $nameValidator,
+  'last_name' => $nameValidator,
+  'email' => $emailValidator,
+  'password' => $passwordValidator,
 );
 
-// USERS OPERATIONS
-
+// GET USERS
 // request for get users who are not approved
 $app->get('/users/approve', function($request, $response) {
   try {
@@ -48,7 +54,7 @@ $app->get('/users', function($request, $response) {
     }
 });
 
-
+// POST USERS
 $app->post('/users', function ($request, $response) {
   if ($request->getAttribute('has_errors')) {
     $errors = $request->getAttribute('errors');
@@ -76,8 +82,8 @@ $app->post('/users', function ($request, $response) {
   }
 })->add(new \DavidePastore\Slim\Validation\Validation($inscriptionValidator));
 
+// PUT USERS
 $app->put('/users/check/{id}', function ($request,$response) {
-  
   try {
     $id = $request->getAttribute('id');
     $connection = $this->db;
@@ -96,11 +102,10 @@ $app->put('/users/check/{id}', function ($request,$response) {
   catch(\Exception $ex) {
       return $response->withJson(array('error' => $ex->getMessage()),422);
   }
-
 });
 
+// DELETE USERS
 $app->delete('/users/{id}', function ($request, $response) {
-
   try {
     $id = $request->getAttribute('id');
     $connection = $this->db;
@@ -117,5 +122,4 @@ $app->delete('/users/{id}', function ($request, $response) {
   catch(\Exception $ex) {
     return $response->withJson(array('error' => $ex->getMessage()),422);
   } 
-
 });

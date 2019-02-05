@@ -7,7 +7,7 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 import styles from './users.module.css';
 
 // CONSTANTS
-import { USERS_TABLE_COLUMNS } from '../../constants';
+import { USERS_TABLE_COLUMNS } from 'constants.js';
 
 const Users = (props) => {
   const users = props.users;

@@ -12,7 +12,7 @@ import { toggleAddCategory } from 'actions/budget-actions';
 import styles from './addrow.module.css';
 
 // CONSTANTS
-import { API_HOST } from '../../../constants';
+import { API_HOST } from 'constants.js';
 
 // COMPONENTS 
 import AddCategory from '../manage-category/AddCategory';

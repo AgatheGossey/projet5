@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 
 // CONSTANTS
-import { API_HOST } from '../../../constants';
+import { API_HOST } from 'constants.js';
 
 class EditCategory extends Component {
     state = {

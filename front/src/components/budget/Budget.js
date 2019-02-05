@@ -1,31 +1,17 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import intersection from 'lodash/intersection';
-import {Button, TextField, Switch, MenuItem } from '@material-ui/core';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import {Button, TextField, Switch, MenuItem } from '@material-ui/core';
 
-// ACTIONS
-import { 
-  getOperations,
-  deleteOperation,
-  deleteOperations,
-  getCategories,
-  toggleFilterByDate,
-  toggleFilterByCategory,
-  toggleAddRow,
-  openManageCategories,
-  closeManageCategories,
-} from 'actions/budget-actions';
+// COMPONENTS
+import BudgetTable from './components/budget-table/BudgetTable';
+import BudgetCards from './components/budget-table/BudgetCards';
+import ManageCategory from './components/manage-category/ManageCategory';
+import AddRow from './components/add-row/AddRow';
 
 // STYLE 
 import styles from './budget.module.css';
-
-// COMPONENTS
-import BudgetTable from 'components/budget/budget-table/BudgetTable';
-import BudgetCards from 'components/budget/budget-table/BudgetCards';
-import ManageCategory from 'components/budget/manage-category/ManageCategory';
-import AddRow from 'components/budget/add-row/AddRow';
 
 class Budget extends Component {
   state = {
@@ -234,50 +220,8 @@ class Budget extends Component {
         />
 
       </div>
-    )}
-}
-
-const mapStateToProps = (state) => {
-  return {
-    operations: state.budget.operations,
-    categories: state.budget.categories,
-    isFilterByDate: state.budget.isFilterByDate,
-    isFilterByCategory: state.budget.isFilterByCategory,
-    isAddRow: state.budget.isAddRow,
-    isManageCategoryOpen: state.budget.isManageCategoryOpen,
+    )
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getOperations: () => {
-      dispatch(getOperations())
-    },   
-    deleteOperation: (operationId) => {
-      dispatch(deleteOperation(operationId));
-    },
-    deleteOperations: (operations) => {
-      dispatch(deleteOperations(operations));
-    },
-    getCategories: () => {
-      dispatch(getCategories())
-    },
-    toggleFilterByCategory: () => {
-      dispatch(toggleFilterByCategory());
-    },
-    openManageCategories: () => {
-      dispatch(openManageCategories());
-    },
-    closeManageCategories: () => {
-      dispatch(closeManageCategories());
-    },
-    toggleFilterByDate: () => {
-      dispatch(toggleFilterByDate());
-    },
-    toggleAddRow: () => {
-      dispatch(toggleAddRow());
-    }
-  }
-}
-
-export default withWidth()(connect(mapStateToProps, mapDispatchToProps)(Budget));
+export default  withWidth()(Budget);

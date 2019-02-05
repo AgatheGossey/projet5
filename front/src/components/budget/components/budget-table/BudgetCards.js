@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 // COMPONENTS
-import BudgetCard from 'components/budget/budget-table/BudgetCard';
+import BudgetCard from './BudgetCard';
 
 // STYLES
 import styles from './budgetcards.module.css';
