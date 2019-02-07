@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
 // REDUCERS
-import sidebarReducer from './menu-reducer'; 
+import menuReducer from './menu-reducer'; 
 import budgetReducer from './budget-reducer';
 import adminReducer from './admin-reducer';
 
 export default combineReducers({
-  sidebar: sidebarReducer,
+  menu: menuReducer,
   budget: budgetReducer,
   admin: adminReducer,
 })

@@ -87,8 +87,8 @@ class ManageCategory extends Component {
   render() {
     return (
       <Dialog 
-        open={this.props.open}
-        onClose={this.props.handleClose}
+        open={ this.props.open }
+        onClose={ this.props.handleClose }
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
@@ -105,15 +105,15 @@ class ManageCategory extends Component {
                     <AddIcon />
                   </Fab>
           <AddCategory 
-            open={this.state.isAddCategoryOpen}
-            handleClose={this.handleAddCategoryClose}
-            getCategories={this.props.getCategories}
+            open={ this.state.isAddCategoryOpen }
+            handleClose={ this.handleAddCategoryClose }
+            getCategories={ this.props.getCategories }
           />
           <EditCategory 
-            open={this.state.isEditCategoryOpen}
-            handleClose={this.handleEditCategoryClose}
-            category={this.state.category}
-            getCategories={this.props.getCategories}
+            open={ this.state.isEditCategoryOpen }
+            handleClose={ this.handleEditCategoryClose }
+            category={ this.state.category }
+            getCategories={ this.props.getCategories }
           />
         </DialogContent>
       </Dialog>

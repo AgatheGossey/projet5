@@ -24,7 +24,8 @@ export const ADMIN_ACTIONS = {
 }
 
 export const MENU_ACTIONS = {
-  toggleSideBar: 'SIDEBAR_TOGGLE'
+  toggleSideBar: 'SIDEBAR_TOGGLE',
+  toggleSignOut: 'SIGN_OUT_TOGGLE',
 }
 
 export const BUDGET_TABLE_COLUMNS = [

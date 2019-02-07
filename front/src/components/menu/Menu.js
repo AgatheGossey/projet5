@@ -11,6 +11,8 @@ class Menu extends Component {
         <TopBar 
           toggleSideBar={ this.props.toggleSideBar }
           isSideBarOpen={ this.props.isSideBarOpen }
+          toggleSignOut = { this.props.toggleSignOut }
+          isSignOutOpen= {this.props.isSignOutOpen}
         />
         <LeftBar
           isSideBarOpen= { this.props.isSideBarOpen }

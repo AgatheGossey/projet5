@@ -5,3 +5,9 @@ export const toggleSideBar = () => {
     type: MENU_ACTIONS.toggleSideBar,
   }
 };
+
+export const toggleSignOut = () => {
+  return {
+    type: MENU_ACTIONS.toggleSignOut,
+  }
+};
