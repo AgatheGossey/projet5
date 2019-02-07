@@ -39,7 +39,7 @@ export const getCategories = () => {
     const response = await axios.get(`${API_HOST}/category`);
     dispatch({
       type: BUDGET_ACTIONS.getCategories,
-      payload: response.data.result,
+      payload: response.data.result || [],
     })
   }
 }
