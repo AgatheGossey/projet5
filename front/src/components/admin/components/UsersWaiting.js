@@ -7,7 +7,7 @@ import MaterialTable from 'material-table';
 import { Card, CardContent, Typography } from '@material-ui/core';
 
 // STYLE 
-import styles from './userswaiting.module.css';
+import styles from './admin.module.css';
 
 // CONSTANTS
 import { USERS_TABLE_COLUMNS_WAITING } from 'constants.js';
@@ -39,6 +39,7 @@ const UsersWaiting = (props) => {
     })
 
     return (
+
       <div className={ styles.materialTable }>
         <MaterialTable 
           columns = { USERS_TABLE_COLUMNS_WAITING }

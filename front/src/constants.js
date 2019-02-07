@@ -8,11 +8,23 @@ export const BUDGET_ACTIONS = {
   toggleFilterByCategory: 'CATEGORY_FILTER_TOGGLE',
   toggleAddCategory: 'ADD_CATEGORY_TOGGLE',
   openManageCategories: 'OPEN_MANAGE_CATEGORIES',
+  handleSelectedCategoryChange: 'SELECTED_CATEGORY_CHANGE',
   closeManageCategories: 'CLOSE_MANAGE_CATEGORIES',
   // DATE
   toggleFilterByDate: 'DATE_FILTER_TOGGLE',
+  handleChangeDate: 'HANDLE_CHANGE_DATE',
+
   // ROW
   toggleAddRow: 'ADD_ROW_TOGGLE',
+}
+
+export const ADMIN_ACTIONS = {
+  getUsersWaiting: 'ADMIN_GET_USERS_WAITING',
+  getUsers: 'ADMIN_GET_USERS',
+}
+
+export const MENU_ACTIONS = {
+  toggleSideBar: 'SIDEBAR_TOGGLE'
 }
 
 export const BUDGET_TABLE_COLUMNS = [
@@ -40,4 +52,5 @@ export const USERS_TABLE_COLUMNS = [
   { title: 'Pseudo', field: 'pseudo'},
   { title: 'Prénom', field: 'prenom'},
   { title: 'Nom', field: 'nom'},
+  { title: '', field: 'supprimer'},
 ];

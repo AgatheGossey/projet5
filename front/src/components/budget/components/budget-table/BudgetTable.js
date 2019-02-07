@@ -32,7 +32,6 @@ const BudgetTable = (props) => {
           icon: 'delete',
           tooltip: 'Supprimer',
           onClick: (event, rows) => {
-            console.log(rows);
             props.deleteOperations(rows);
           },
         },

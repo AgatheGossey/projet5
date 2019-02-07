@@ -34,8 +34,6 @@ class TabHome extends Component {
       messages: {
         required: 'Ce champ est requis',
         email: 'Cette adresse mail n\'est pas valide',
-        alpha_num: 'Le :attribute ne doit pas contenir de caractères spéciaux',
-        alpha: 'Le :attribute ne doit pas contenir de caractères spéciaux ni de chiffres',
         between: 'Le :attribute doit contenir entre :min et :max caractères',
       },
       validators: {
@@ -69,7 +67,7 @@ class TabHome extends Component {
                 value={this.state.username_connection}
                 onChange={e => this.handleUsernameConnectionChange(e.target.value)}
               />
-              {this.validator.message('pseudo', this.state.username_connection, 'required|alpha_num|between:1,10')}
+              {this.validator.message('pseudo', this.state.username_connection, 'required|between:1,10')}
 
               <TextField 
                 label="Mot de passe :"
@@ -102,21 +100,21 @@ class TabHome extends Component {
               value={this.state.username}
               onChange={e => this.handleUsernameRegisterChange(e.target.value)}      
             />
-            {this.validator.message('pseudo', this.state.username, 'required|alpha_num|between:1,10')}
+            {this.validator.message('pseudo', this.state.username, 'required|between:1,10')}
 
             <TextField
               label="Prénom :"
               value={this.state.first_name}
               onChange={e => this.handleFirstNameRegisterChange(e.target.value)}
             />
-            {this.validator.message('prénom', this.state.first_name, 'required|alpha|between:1,30')}
+            {this.validator.message('prénom', this.state.first_name, 'required|between:1,30')}
 
             <TextField
               label="Nom :"
               value={this.state.last_name}
               onChange={e => this.handleLastNameRegisterChange(e.target.value)}
             />
-            {this.validator.message('nom', this.state.last_name, 'required|alpha|between:1,30')}
+            {this.validator.message('nom', this.state.last_name, 'required|between:1,30')}
 
             <TextField
               label="Mot de passe :"

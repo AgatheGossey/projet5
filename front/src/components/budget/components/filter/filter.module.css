@@ -1,0 +1,21 @@
+/* CATEGORY */
+
+.textFieldCategory {
+  width: 12em;
+}
+
+/* DATE */
+
+.dateIntervalText {
+  margin: 1em;
+}
+
+@media all and (min-width: 700px) {
+
+  .filterByDate {
+    display: flex;
+    flex-direction: row;
+    margin-left: 3em;  
+
+  }
+}

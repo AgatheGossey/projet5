@@ -1,15 +1,17 @@
+import { MENU_ACTIONS } from 'constants.js';
+
 const initialState = {
   open: false,
 }
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case 'SIDEBAR_TOGGLE':
+    case MENU_ACTIONS.toggleSideBar:
       state = {
         ...state,
         open: !state.open,
       };
-      break;
+    break;
     default:
       return state;
   }

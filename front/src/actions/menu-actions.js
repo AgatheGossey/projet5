@@ -1,7 +1,7 @@
-export function toggleSideBar() {
+import { MENU_ACTIONS } from 'constants.js';
+
+export const toggleSideBar = () => {
   return {
-    type: 'SIDEBAR_TOGGLE',
+    type: MENU_ACTIONS.toggleSideBar,
   }
 };
-
-

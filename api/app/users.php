@@ -2,8 +2,8 @@
 
 use Respect\Validation\Validator as v;
 
-$usernameValidator = v::alnum()->length(1, 10);
-$nameValidator = v::alpha()->length(1, 30);
+$usernameValidator = v::length(1, 10);
+$nameValidator = v::length(1, 30);
 $emailValidator = v::email();
 $passwordValidator = v::length(6, 30);
 
@@ -39,7 +39,7 @@ $app->get('/users/approve', function($request, $response) {
 $app->get('/users', function($request, $response) {
   try {
     $connection = $this->db;
-    $sql = "SELECT * FROM users";
+    $sql = "SELECT * FROM users WHERE approved = 1";
     $result = null;
 
     foreach ($connection->query($sql) as $row) {

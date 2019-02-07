@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-
 import Budget from 'components/budget/Budget';
 
 // ACTIONS
@@ -10,6 +9,8 @@ import {
   getCategories,
   toggleFilterByDate,
   toggleFilterByCategory,
+  handleSelectedCategoryChange,
+  handleChangeDate,
   toggleAddRow,
   openManageCategories,
   closeManageCategories,
@@ -21,6 +22,11 @@ const mapStateToProps = (state) => {
     categories: state.budget.categories,
     isFilterByDate: state.budget.isFilterByDate,
     isFilterByCategory: state.budget.isFilterByCategory,
+    selectedCategory: state.budget.selectedCategory,
+    operationsFilteredByCategory: state.budget.operationsFilteredByCategory,
+    selectedDateStart: state.budget.selectedDateStart,
+    selectedDateEnd: state.budget.selectedDateEnd,
+    operationsFilteredByDate: state.budget.operationsFilteredByDate,
     isAddRow: state.budget.isAddRow,
     isManageCategoryOpen: state.budget.isManageCategoryOpen,
   }
@@ -42,6 +48,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleFilterByCategory: () => {
       dispatch(toggleFilterByCategory());
+    },
+    handleSelectedCategoryChange: (operations, category) => {
+      dispatch(handleSelectedCategoryChange(operations, category));
+    },
+    handleChangeDate: (operations, date_budget_start, date_budget_end) => {
+      dispatch(handleChangeDate(operations, date_budget_start, date_budget_end));
     },
     openManageCategories: () => {
       dispatch(openManageCategories());

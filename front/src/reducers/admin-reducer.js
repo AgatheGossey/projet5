@@ -1,3 +1,5 @@
+import { ADMIN_ACTIONS } from 'constants.js';
+
 const initialState = {
   usersWaiting: [],
   users: [],
@@ -5,13 +7,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case 'ADMIN_GET_USERS_WAITING' :
+    case  ADMIN_ACTIONS.getUsersWaiting:
     state = {
       ...state,
       usersWaiting: action.payload,
     }
     break;
-    case 'ADMIN_GET_USERS' :
+    case ADMIN_ACTIONS.getUsers:
     state = {
       ...state, 
       users: action.payload,

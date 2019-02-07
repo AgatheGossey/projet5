@@ -5,6 +5,11 @@ const initialState = {
   categories: [],
   isFilterByDate: false,
   isFilterByCategory: false,
+  selectedCategory: {},
+  operationsFilteredByCategory: [],
+  selectedDateStart: {},
+  selectedDateEnd: {},
+  operationsFilteredByDate: [],
   isAddRow: false, 
   isAddCategory: false,
   isManageCategoryOpen: false,
@@ -32,6 +37,21 @@ export default (state = initialState, action) => {
       state = {
         ...state,
         isFilterByCategory: !state.isFilterByCategory,
+      }
+    break;
+    case BUDGET_ACTIONS.handleSelectedCategoryChange:
+      state = {
+        ...state,
+        selectedCategory: action.payload.category,
+        operationsFilteredByCategory: action.payload.operations,
+      }
+    break;
+    case BUDGET_ACTIONS.handleChangeDate:
+      state = {
+        ...state,
+        selectedDateStart: action.payload.date_budget_start,
+        selectedDateEnd: action.payload.date_budget_end,
+        operationsFilteredByDate: action.payload.operations,
       }
     break;
     case BUDGET_ACTIONS.toggleAddCategory:

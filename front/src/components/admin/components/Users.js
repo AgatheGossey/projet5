@@ -4,10 +4,12 @@ import MaterialTable from 'material-table';
 import { Card, CardContent, Typography } from '@material-ui/core';
 
 // STYLE 
-import styles from './users.module.css';
+import styles from './admin.module.css';
 
 // CONSTANTS
 import { USERS_TABLE_COLUMNS } from 'constants.js';
+import IconButton from '@material-ui/core/IconButton';
+import Clear from '@material-ui/icons/Clear';
 
 const Users = (props) => {
   const users = props.users;
@@ -22,6 +24,11 @@ const Users = (props) => {
           pseudo: username,
           prenom: first_name,
           nom: last_name,
+          supprimer: (
+            <IconButton aria-label="Clear" onClick={() => props.deleteUser(id)}>
+              <Clear />
+            </IconButton>
+          )
         };
       })
 
