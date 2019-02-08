@@ -11,29 +11,16 @@ import styles from './managecategory.module.css';
 import { API_HOST } from 'constants.js';
 
 // COMPONENTS 
-import AddCategory from '../manage-category/AddCategory';
-import EditCategory from '../manage-category/EditCategory';
+import AddCategory from '../category/AddCategory';
+import EditCategory from '../category/EditCategory';
 
 class ManageCategory extends Component {
   state = {
     // dialog
-    isAddCategoryOpen: false,
     isEditCategoryOpen: false,
     // get categories
     category: {},
-    // list
-    secondary: false, 
   };
-
-  // dialog add category
-
-  handleAddCategoryClick = () => {
-    this.setState({ isAddCategoryOpen: true });
-  }
-
-  handleAddCategoryClose = () => {
-    this.setState({ isAddCategoryOpen: false });
-  }
 
   // dialog edit category 
 
@@ -58,12 +45,11 @@ class ManageCategory extends Component {
         <ListItem button onClick={this.handleClickList}>
           <ListItemText 
             primary= {categoryOperation.name_category} 
-            secondary={this.state.secondary ? 'Secondary text' : null}
           />
           <ListItemSecondaryAction>
             <IconButton
               aria-label="Clear"
-              onClick={() => this.deleteCategory(categoryOperation)}>
+              onClick={() => this.props.deleteCategory(categoryOperation.id)}>
               <Clear />
             </IconButton>
             <IconButton
@@ -75,13 +61,6 @@ class ManageCategory extends Component {
           </ListItemSecondaryAction>
         </ListItem>
       </List>));
-  }
-
-  deleteCategory = (category) => {
-    axios.delete(`${API_HOST}/category/${category.id}`)
-      .then(() => {
-        this.props.getCategories();
-      })
   }
 
   render() {
@@ -97,16 +76,17 @@ class ManageCategory extends Component {
         <DialogContent>
           {this.displayCategory()}
           <Fab 
-          className={ styles.addButton }
-                    size="small"
-                    color="secondary"
-                    aria-label="Add"
-                    onClick={this.handleAddCategoryClick}>
-                    <AddIcon />
-                  </Fab>
+            className={ styles.addButton }
+            size="small"
+            color="secondary"
+            aria-label="Add"
+            onClick={this.props.toggleAddCategory}
+          >
+            <AddIcon />
+          </Fab>
           <AddCategory 
-            open={ this.state.isAddCategoryOpen }
-            handleClose={ this.handleAddCategoryClose }
+            open={ this.props.isAddCategoryOpen }
+            handleClose={ this.props.toggleAddCategory }
             getCategories={ this.props.getCategories }
           />
           <EditCategory 

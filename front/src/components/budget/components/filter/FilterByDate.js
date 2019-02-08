@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 
 // STYLE
@@ -15,15 +16,15 @@ const FilterByDate = (props) => {
             <TextField  
               variant='outlined'
               type='date' 
-              value={ props.selectedDateStart }
-              onChange={ e => props.handleChangeDate(props.operations, e.target.value) }
+              value={ props.selectedDateStart.format('YYYY-MM-DD') }
+              onChange={ e => props.handleChangeDate(props.operations, moment(e.target.value).utc(), props.selectedDateEnd) }
             />   
             <p className={styles.dateIntervalText} >Au</p>
             <TextField 
               variant='outlined'
               type='date'
-              value={ props.selectedDateEnd }
-              onChange={ e => props.handleChangeDate(props.operations, e.target.value) }
+              value={ props.selectedDateEnd.format('YYYY-MM-DD') }
+              onChange={ e => props.handleChangeDate(props.operations, props.selectedDateStart , moment(e.target.value).utc()) }
             />  
           </div>
         </Fragment> :

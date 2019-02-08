@@ -44,6 +44,14 @@ export const getCategories = () => {
   }
 }
 
+export const deleteCategory = (id) => {
+  console.log(id);
+  return async dispatch => {
+    await axios.delete(`${API_HOST}/category/${id}`);
+    dispatch(getCategories());
+  }
+}
+
 export const toggleFilterByCategory = () => {
   return {
     type: BUDGET_ACTIONS.toggleFilterByCategory,

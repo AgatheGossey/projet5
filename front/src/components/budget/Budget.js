@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import moment from 'moment';
 import intersection from 'lodash/intersection';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import {Button, Switch } from '@material-ui/core';
@@ -8,7 +7,7 @@ import {Button, Switch } from '@material-ui/core';
 // COMPONENTS
 import BudgetTable from './components/budget-table/BudgetTable';
 import BudgetCards from './components/budget-table/BudgetCards';
-import ManageCategory from './components/manage-category/ManageCategory';
+import ManageCategory from './components/category/ManageCategory';
 import FilterByDate from './components/filter/FilterByDate';
 import FilterByCategory from './components/filter/FilterByCategory';
 import AddRow from './components/add-row/AddRow';
@@ -17,13 +16,6 @@ import AddRow from './components/add-row/AddRow';
 import styles from './budget.module.css';
 
 class Budget extends Component {
-  state = {
-    filteredDateOperations: [],
-
-    // date_budget_start: moment(),
-    // date_budget_end: moment(),
-  }
-
   componentDidMount = () => {
     this.props.getCategories();
     this.props.getOperations();
@@ -68,57 +60,6 @@ class Budget extends Component {
     });
     return solde;
   }
-
-  
-  // handleChangeStartDate = async (date_budget_start) => {
-  //   const date = moment(date_budget_start);
-  //   await this.setState({ date_budget_start: date });
-  //   this.filterByDate();
-  // }
-
-  // handleChangeEndDate = async (date_budget_end) => {
-  //   const date = moment(date_budget_end);
-  //   await this.setState({ date_budget_end: date });
-  //   this.filterByDate();
-  // }
-
-  // filterByDate = () => {
-  //   const list = [];
-  //   this.props.operations.forEach(element => {
-  //     if (moment(element.date_budget).isBetween(this.state.date_budget_start, this.state.date_budget_end)) {
-  //       list.push(element);
-  //     } 
-  //   })
-  //   this.setState({ filteredDateOperations: list })
-  // }
-
-  // filterByDateText = () => {
-  //   if (this.props.isFilterByDate) {
-  //     return (
-  //       <Fragment>    
-  //         <p>Voir tout le tableau</p>
-  //         <div className={styles.filterByDate}>          
-  //           <p className={styles.dateIntervalText}>Du</p>
-  //           <TextField  
-  //             variant='outlined'
-  //             type='date' 
-  //             value={ this.state.date_budget_start.format('YYYY-MM-DD') }
-  //             onChange={ e => this.handleChangeStartDate(e.target.value) }
-  //           />   
-  //           <p className={styles.dateIntervalText} >Au</p>
-  //           <TextField 
-  //             variant='outlined'
-  //             type='date'
-  //             value={ this.state.date_budget_end.format('YYYY-MM-DD') }
-  //             onChange={ e => this.handleChangeEndDate(e.target.value) }
-  //           />  
-  //         </div>
-  //       </Fragment>
-  //     )
-  //   } else {
-  //     return <p>Filtrer par date</p>
-  //   }
-  // }
 
   render() {
     return (
@@ -168,8 +109,11 @@ class Budget extends Component {
 
         <ManageCategory 
           open={ this.props.isManageCategoryOpen }
+          isAddCategoryOpen={ this.props.isAddCategoryOpen }
+          toggleAddCategory={ this.props.toggleAddCategory }
           handleClose={ this.props.closeManageCategories }
           getCategories={ this.props.getCategories }
+          deleteCategory={this.props.deleteCategory}
           categories={ this.props.categories }
         />
         <div>
@@ -196,9 +140,10 @@ class Budget extends Component {
         <AddRow 
           open={ this.props.isAddRow }
           handleClose={ this.props.toggleAddRow }
+          categories={ this.props.categories }
           getOperations={ this.props.getOperations }
-          categoriesOperations={ this.state.categoriesOperations }
           getCategories={ this.props.getCategories }
+          toggleAddCategory={ this.props.toggleAddCategory }
           displayCategory={ this.displayCategory }
         />
       </div>

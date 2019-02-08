@@ -1,6 +1,16 @@
 import axios from 'axios';
 import { API_HOST, ADMIN_ACTIONS } from 'constants.js';
 
+export const getUsers = () => {
+  return async dispatch => {
+    const response = await axios.get(`${API_HOST}/users`);
+    dispatch({
+      type: ADMIN_ACTIONS.getUsers,
+      payload: response.data.result || [],
+    })
+  }
+}
+
 export const getUsersWaiting = () => {
   return async dispatch  => {
     const response = await axios.get(`${API_HOST}/users/approve`);
@@ -11,13 +21,9 @@ export const getUsersWaiting = () => {
   }
 }
 
-export const getUsers = () => {
+export const createUser = (data) => {
   return async dispatch => {
-    const response = await axios.get(`${API_HOST}/users`);
-    dispatch({
-      type: ADMIN_ACTIONS.getUsers,
-      payload: response.data.result || [],
-    })
+    await axios.post('http://localhost/my_manager/api/users', data)
   }
 }
 

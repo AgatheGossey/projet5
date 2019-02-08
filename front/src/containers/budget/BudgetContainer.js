@@ -7,8 +7,10 @@ import {
   deleteOperation,
   deleteOperations,
   getCategories,
+  deleteCategory,
   toggleFilterByDate,
   toggleFilterByCategory,
+  toggleAddCategory,
   handleSelectedCategoryChange,
   handleChangeDate,
   toggleAddRow,
@@ -22,6 +24,7 @@ const mapStateToProps = (state) => {
     categories: state.budget.categories,
     isFilterByDate: state.budget.isFilterByDate,
     isFilterByCategory: state.budget.isFilterByCategory,
+    isAddCategoryOpen: state.budget.isAddCategoryOpen,
     selectedCategory: state.budget.selectedCategory,
     operationsFilteredByCategory: state.budget.operationsFilteredByCategory,
     selectedDateStart: state.budget.selectedDateStart,
@@ -46,8 +49,14 @@ const mapDispatchToProps = (dispatch) => {
     getCategories: () => {
       dispatch(getCategories())
     },
+    deleteCategory: () => {
+      dispatch(deleteCategory());
+    },
     toggleFilterByCategory: () => {
       dispatch(toggleFilterByCategory());
+    },
+    toggleAddCategory: () => {
+      dispatch(toggleAddCategory());
     },
     handleSelectedCategoryChange: (operations, category) => {
       dispatch(handleSelectedCategoryChange(operations, category));

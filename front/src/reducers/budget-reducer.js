@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { BUDGET_ACTIONS } from 'constants.js';
 
 const initialState = {
@@ -7,11 +9,11 @@ const initialState = {
   isFilterByCategory: false,
   selectedCategory: {},
   operationsFilteredByCategory: [],
-  selectedDateStart: {},
-  selectedDateEnd: {},
+  selectedDateStart: moment(),
+  selectedDateEnd: moment(),
   operationsFilteredByDate: [],
   isAddRow: false, 
-  isAddCategory: false,
+  isAddCategoryOpen: false,
   isManageCategoryOpen: false,
 }
 
@@ -57,7 +59,7 @@ export default (state = initialState, action) => {
     case BUDGET_ACTIONS.toggleAddCategory:
     state = {
       ...state,
-      isAddCategory: !state.isAddCategory,
+      isAddCategoryOpen: !state.isAddCategoryOpen,
     }
     break;
     case BUDGET_ACTIONS.openManageCategories:

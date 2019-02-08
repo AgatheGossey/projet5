@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import moment from 'moment';
-
-// ACTIONS
-import { toggleAddCategory } from 'actions/budget-actions';
 
 // STYLE
 import styles from './addrow.module.css';
@@ -85,9 +81,7 @@ class AddRow extends Component {
           aria-labelledby="responsive-dialog-title" 
           maxWidth="xl"
         >
-          <DialogTitle id="responsive-dialog-title">
-            {"Ajouter un élément dans le budget :"}
-          </DialogTitle>
+          <DialogTitle id="responsive-dialog-title">Ajouter un élément dans le budget :</DialogTitle>
 
           <DialogContent>
             <div className={ styles.container }>
@@ -198,19 +192,4 @@ class AddRow extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    categories: state.budget.categories,
-    isAddCategory: state.budget.isAddCategory
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleAddCategory: () => {
-      dispatch(toggleAddCategory());
-    }
-  }
-}
-
-export default (connect(mapStateToProps, mapDispatchToProps)(AddRow));
+export default AddRow;

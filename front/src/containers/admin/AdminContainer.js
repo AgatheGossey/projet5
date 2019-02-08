@@ -21,10 +21,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getUsersWaiting: () => {
-      dispatch(getUsersWaiting())
+      dispatch(getUsersWaiting());
     },
     getUsers: () => {
-      dispatch(getUsers())
+      dispatch(getUsers());
     },
     deleteUser: (userId) => {
       dispatch(deleteUser(userId));
