@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, TextField, Button } from '@material-ui/core';
+import SimpleReactValidator from 'simple-react-validator';
+import { Grid, TextField, Button, FormHelperText } from '@material-ui/core';
+
+// COMPONENTS 
+import Message from './Message';
 
 // STYLE 
 import styles from '../home.module.css';
@@ -12,6 +16,31 @@ class Register extends Component {
     password: '',
     password_register_repeat: '',
     email: '',
+  }
+
+  componentWillMount = () => {
+    this.validator = new SimpleReactValidator({
+      element: message => <FormHelperText error id="component-error-text">{message}</FormHelperText>,
+      messageReplace: (message, params) => {
+        message.replace(':attribute', params.attribute);
+        message.replace(':min', params.min);
+        message.replace(':max', params.max);
+      }, 
+      messages: {
+        required: 'Ce champ est requis',
+        email: 'Cette adresse mail n\'est pas valide',
+        between: 'Le :attribute doit contenir entre :min et :max caractères',
+      },
+      validators: {
+        repeatPassword: {
+          message: 'Les mots de passe ne sont pas identiques',
+          rule: (val) => {
+            return val === this.state.password;
+          },
+          required: true,
+        }
+      }
+    });
   }
 
   handleUsernameRegisterChange = (username) => {
@@ -51,7 +80,7 @@ class Register extends Component {
   }
 
   handleSubmitRegister = () => {
-    if (this.props.validator.allValid()) {
+    if (this.validator.allValid()) {
       const data = {
         username: this.state.username,
         first_name: this.state.first_name,
@@ -59,11 +88,24 @@ class Register extends Component {
         password: this.state.password,
         email: this.state.email,
       };
-      this.props.createUser(data);
+      this.props.createUser(data)
+      this.cleanInput();
+      this.props.toggleMessage();
     } else {
-      this.props.validator.showMessages();
+      this.validator.showMessages();
       this.forceUpdate();
     }
+  }
+
+  cleanInput() {
+    this.setState({
+      username: '',
+      first_name: '',
+      last_name: '',
+      password: '',
+      password_register_repeat: '',
+      email: '',
+    })
   }
 
   render() {
@@ -76,21 +118,21 @@ class Register extends Component {
             value={ this.state.username }
             onChange={e => this.handleUsernameRegisterChange(e.target.value)}      
           />
-          {this.props.validator.message('pseudo', this.state.username, 'required|between:1,10')}
+          {this.validator.message('pseudo', this.state.username, 'required|between:1,10')}
 
           <TextField
             label="Prénom :"
             value={ this.state.first_name }
             onChange={e => this.handleFirstNameRegisterChange(e.target.value)}
           />
-          {this.props.validator.message('prénom', this.state.first_name, 'required|between:1,30')}
+          {this.validator.message('prénom', this.state.first_name, 'required|between:1,30')}
 
           <TextField
             label="Nom :"
             value={ this.state.last_name }
             onChange={e => this.handleLastNameRegisterChange(e.target.value)}
           />
-          {this.props.validator.message('nom', this.state.last_name, 'required|between:1,30')}
+          {this.validator.message('nom', this.state.last_name, 'required|between:1,30')}
 
           <TextField
             label="Mot de passe :"
@@ -98,7 +140,7 @@ class Register extends Component {
             value={ this.state.password }
             onChange={e => this.handlePasswordRegisterChange(e.target.value)}
           />
-          {this.props.validator.message('mot de passe', this.state.password, 'required|between:6,30')}
+          {this.validator.message('mot de passe', this.state.password, 'required|between:6,30')}
 
           <TextField
             label="Répétez le mot de passe :"
@@ -106,14 +148,14 @@ class Register extends Component {
             value={ this.state.password_register_repeat }
             onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}
           />
-          {this.props.validator.message('mot de passe', this.state.password_register_repeat, 'required|repeatPassword')}
+          {this.validator.message('mot de passe', this.state.password_register_repeat, 'required|repeatPassword')}
 
           <TextField
             label="Email :" 
             value={this.state.email}
             onChange={e => this.handleEmailRegisterChange(e.target.value)}
           />
-          {this.props.validator.message('email', this.state.email, 'required|email')}
+          {this.validator.message('email', this.state.email, 'required|email')}
 
           <Button
             onClick={ this.handleSubmitRegister }
@@ -121,6 +163,10 @@ class Register extends Component {
           >
           S'inscrire
           </Button>
+          <Message 
+            open={ this.props.isMessageOpen }
+            handleClose= { this.props.toggleMessage }
+          />
 
         </Grid>
       </form>

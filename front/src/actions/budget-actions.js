@@ -8,7 +8,7 @@ import { API_HOST, BUDGET_ACTIONS } from 'constants.js';
 export const getOperations = () => {
   return async dispatch => {
     const response = await axios.get(`${API_HOST}/budget`);
-    dispatch({
+    return dispatch({
       type: BUDGET_ACTIONS.getOperations,
       payload: response.data.result || [],
     })
@@ -37,7 +37,7 @@ export const deleteOperations = (operations) => {
 export const getCategories = () => {
   return async dispatch => {
     const response = await axios.get(`${API_HOST}/category`);
-    dispatch({
+    return dispatch({
       type: BUDGET_ACTIONS.getCategories,
       payload: response.data.result || [],
     })
@@ -130,5 +130,21 @@ export const toggleFilterByDate = () => {
 export const toggleAddRow = () => {
   return {
     type: BUDGET_ACTIONS.toggleAddRow,
+  }
+}
+
+// SNACKBAR
+export const openSnackbar = () => {
+  return {
+    type: BUDGET_ACTIONS.openSnackbar,
+  }
+}
+
+export const closeSnackbar = (reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+  return {
+    type: BUDGET_ACTIONS.closeSnackbar,
   }
 }

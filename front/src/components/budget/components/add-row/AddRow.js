@@ -11,7 +11,7 @@ import styles from './addrow.module.css';
 import { API_HOST } from 'constants.js';
 
 // COMPONENTS 
-import AddCategory from '../manage-category/AddCategory';
+import AddCategory from '../category/AddCategory';
 
 class AddRow extends Component {
   state = {
@@ -65,10 +65,10 @@ class AddRow extends Component {
    };
 
     axios.post(`${API_HOST}/budget`, data)
-      .then(() => {
-        this.props.getOperations();
-        this.props.handleClose();
-        });
+    .then(() => {
+      this.props.getOperations();
+      this.props.handleClose();
+      });
   }
 
   render() {

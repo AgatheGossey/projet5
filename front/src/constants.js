@@ -13,14 +13,17 @@ export const BUDGET_ACTIONS = {
   // DATE
   toggleFilterByDate: 'DATE_FILTER_TOGGLE',
   handleChangeDate: 'HANDLE_CHANGE_DATE',
-
   // ROW
   toggleAddRow: 'ADD_ROW_TOGGLE',
+  // SNACKBAR
+  openSnackbar: 'SNACKBAR_OPEN',
+  closeSnackbar: 'SNACKBAR_CLOSE',
 }
 
 export const ADMIN_ACTIONS = {
   getUsersWaiting: 'ADMIN_GET_USERS_WAITING',
   getUsers: 'ADMIN_GET_USERS',
+  toggleMessage: 'MESSAGE_TOGGLE',
 }
 
 export const MENU_ACTIONS = {

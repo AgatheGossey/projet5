@@ -32,8 +32,6 @@ class App extends Component {
     this.setState((state) => ({ isDarkThemeEnable: !state.isDarkThemeEnable }));
   }
 
- 
-
   render() {
     return (
       <MuiThemeProvider theme={!this.state.isDarkThemeEnable ? lightTheme : darkTheme}>
@@ -52,5 +50,3 @@ class App extends Component {
 }
 
 export default App;
-
-

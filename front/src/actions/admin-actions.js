@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { API_HOST, ADMIN_ACTIONS } from 'constants.js';
+import isEmpty from 'lodash/isEmpty';
+import { API_HOST, ADMIN_ACTIONS, BUDGET_ACTIONS } from 'constants.js';
 
 export const getUsers = () => {
   return async dispatch => {
@@ -12,12 +13,24 @@ export const getUsers = () => {
 }
 
 export const getUsersWaiting = () => {
-  return async dispatch  => {
+  return async dispatch => {
     const response = await axios.get(`${API_HOST}/users/approve`);
+    const users = response.data.result || [];
+
     dispatch({
       type: ADMIN_ACTIONS.getUsersWaiting,
-      payload: response.data.result || [],
+      payload: users,
     })
+
+    if (!isEmpty(users)) {
+      dispatch({
+        type: BUDGET_ACTIONS.openSnackbar,
+      })
+    } else {
+      dispatch({
+        type: BUDGET_ACTIONS.closeSnackbar,
+      })
+    }
   }
 }
 
@@ -40,5 +53,11 @@ export const checkUser = (userId) => {
     await axios.put(`${API_HOST}/users/check/${userId}`);
     dispatch(getUsers());
     dispatch(getUsersWaiting());
+  }
+}
+
+export const toggleMessage = () => {
+  return {
+    type: ADMIN_ACTIONS.toggleMessage,
   }
 }

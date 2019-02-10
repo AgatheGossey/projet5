@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 
 // ACTIONS
-import { createUser } from 'actions/admin-actions';
+import { createUser, toggleMessage } from 'actions/admin-actions';
 
 // COMPONENTS
 import Home from 'components/home/Home';
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    isMessageOpen: state.admin.isMessageOpen,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
     createUser: (data) => {
       dispatch(createUser(data));
     },
+    toggleMessage: () => {
+      dispatch(toggleMessage());
+    }
   }
 }
 

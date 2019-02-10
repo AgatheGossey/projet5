@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+
+// COMPONENTS
 import Menu from 'components/menu/Menu';
 
 // ACTION 

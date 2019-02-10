@@ -15,6 +15,7 @@ const initialState = {
   isAddRow: false, 
   isAddCategoryOpen: false,
   isManageCategoryOpen: false,
+  isSnackbarOpen: false,
 }
 
 export default (state = initialState, action) => {
@@ -91,7 +92,20 @@ export default (state = initialState, action) => {
       }
     break;
 
-    
+    // SNACKBAR
+    case BUDGET_ACTIONS.openSnackbar:
+      state = {
+        ...state,
+        isSnackbarOpen: true,
+      }
+    break;
+    case BUDGET_ACTIONS.closeSnackbar:
+
+      state = {
+        ...state,
+        isSnackbarOpen: false,
+      }
+    break;
     default:
       return state;
   }

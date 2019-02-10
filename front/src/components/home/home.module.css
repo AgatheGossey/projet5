@@ -3,9 +3,9 @@
   height: 100vh;
 }
 
-.test {
+.appBar {
   border: 1px solid black;
- background-color: white;
+  background-color: white;
 }
 
 .formRegister {

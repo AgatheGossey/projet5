@@ -11,30 +11,28 @@ import ManageCategory from './components/category/ManageCategory';
 import FilterByDate from './components/filter/FilterByDate';
 import FilterByCategory from './components/filter/FilterByCategory';
 import AddRow from './components/add-row/AddRow';
+import Snackbar from './components/snackbar/UsersWaitingNotification';
 
 // STYLE 
 import styles from './budget.module.css';
 
 class Budget extends Component {
   componentDidMount = () => {
+    this.props.getUsersWaiting();
     this.props.getCategories();
     this.props.getOperations();
   }
 
   getOperationsList = () => {
-
     if (this.props.isFilterByCategory && this.props.isFilterByDate) {
       return intersection(this.props.operationsFilteredByCategory, this.props.operationsFilteredByDate);
     }
-
     if (this.props.isFilterByCategory) {
       return this.props.operationsFilteredByCategory;
     }
-
     if (this.props.isFilterByDate) {
       return this.props.operationsFilteredByDate;
     }
-
     return this.props.operations;
   }
 
@@ -98,6 +96,7 @@ class Budget extends Component {
             />
         </Grid>
 
+
         <Button 
           className={ styles.buttonManageCategory }
           variant="outlined" 
@@ -145,7 +144,14 @@ class Budget extends Component {
           getCategories={ this.props.getCategories }
           toggleAddCategory={ this.props.toggleAddCategory }
           displayCategory={ this.displayCategory }
+        /> 
+
+        <Snackbar 
+          open= {this.props.isSnackbarOpen}
+          handleClose= { this.props.closeSnackbar }
+          openSnackbar= { this.props.openSnackbar }
         />
+
       </div>
     )
   }

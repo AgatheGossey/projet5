@@ -16,7 +16,11 @@ import {
   toggleAddRow,
   openManageCategories,
   closeManageCategories,
+  openSnackbar,
+  closeSnackbar,
 } from 'actions/budget-actions';
+
+import { getUsersWaiting } from 'actions/admin-actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -32,6 +36,8 @@ const mapStateToProps = (state) => {
     operationsFilteredByDate: state.budget.operationsFilteredByDate,
     isAddRow: state.budget.isAddRow,
     isManageCategoryOpen: state.budget.isManageCategoryOpen,
+    isSnackbarOpen: state.budget.isSnackbarOpen,
+    usersWaiting: state.admin.usersWaiting,
   }
 }
 
@@ -75,7 +81,16 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleAddRow: () => {
       dispatch(toggleAddRow());
-    }
+    },
+    openSnackbar: () => {
+      dispatch(openSnackbar());
+    },
+    closeSnackbar: () => {
+      dispatch(closeSnackbar());
+    },
+    getUsersWaiting: () => {
+      dispatch(getUsersWaiting());
+    },
   }
 }
 

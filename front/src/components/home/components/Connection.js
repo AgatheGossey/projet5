@@ -43,7 +43,7 @@ class Connection extends Component {
             value={ this.state.username_connection }
             onChange={e => this.handleUsernameConnectionChange(e.target.value)}
           />
-          {this.props.validator.message('pseudo', this.state.username_connection, 'required|between:1,10')}
+          {/* {this.props.validator.message('pseudo', this.state.username_connection, 'required|between:1,10')} */}
 
           <TextField 
             label="Mot de passe :"
@@ -51,7 +51,7 @@ class Connection extends Component {
             value={ this.state.password_connection }
             onChange={e => this.handlePasswordConnectionChange(e.target.value)}
           />
-          {this.props.validator.message('mot de passe', this.state.password_connection, 'required|between:6,30')}
+          {/* {this.props.validator.message('mot de passe', this.state.password_connection, 'required|between:6,30')} */}
 
           <Button 
             type="submit"
