@@ -6,31 +6,25 @@ import styles from '../home.module.css';
 
 class Connection extends Component {
   state = {
-    username_connection: '',
-    password_connection: '', 
+    username: '',
+    password: '', 
   };
 
-  handleUsernameConnectionChange = (username_connection) => {
+  handleUsernameConnectionChange = (username) => {
     this.setState({
-      username_connection: username_connection,
+      username: username,
     })
   }
 
-  handlePasswordConnectionChange = (password_connection) => {
+  handlePasswordConnectionChange = (password) => {
     this.setState({
-      password_connection: password_connection,
+      password: password,
     })
   }
 
   handleSubmitConnection = (e) => {
-    if (this.props.validator.allValid()) {
-      e.preventDefault();
-    }
-    else {
-      this.props.validator.showMessages();
-      this.forceUpdate();
-      e.preventDefault();
-    }
+    e.preventDefault();
+    this.props.login({ username: this.state.username, password: this.state.password });
   }
 
   render() {
@@ -40,18 +34,16 @@ class Connection extends Component {
 
           <TextField 
             label="Pseudo :"
-            value={ this.state.username_connection }
+            value={ this.state.username }
             onChange={e => this.handleUsernameConnectionChange(e.target.value)}
           />
-          {/* {this.props.validator.message('pseudo', this.state.username_connection, 'required|between:1,10')} */}
 
           <TextField 
             label="Mot de passe :"
             type="password"
-            value={ this.state.password_connection }
+            value={ this.state.password }
             onChange={e => this.handlePasswordConnectionChange(e.target.value)}
           />
-          {/* {this.props.validator.message('mot de passe', this.state.password_connection, 'required|between:6,30')} */}
 
           <Button 
             type="submit"

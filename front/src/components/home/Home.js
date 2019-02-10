@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import SimpleReactValidator from 'simple-react-validator';
-import { AppBar, Tabs, Tab, Grid, FormHelperText } from '@material-ui/core';
+import { AppBar, Tabs, Tab, Grid } from '@material-ui/core';
 
 // COMPONENTS 
 import Connection from './components/Connection';
@@ -31,9 +30,10 @@ class Home extends Component {
             </AppBar>
             { 
               this.state.value  === 0 ?
-              <Connection /> 
+              <Connection login={this.props.login}/> 
               : 
-              <Register 
+              <Register
+                registerUsernameError={ this.props.registerUsernameError }
                 createUser={ this.props.createUser }
                 toggleMessage= { this.props.toggleMessage }
                 isMessageOpen= { this.props.isMessageOpen }

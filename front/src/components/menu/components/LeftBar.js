@@ -28,7 +28,7 @@ const LeftBar = (props) => {
           <ListItemIcon>
             <EditIcon></EditIcon>
           </ListItemIcon>
-          <MenuLink to="/budget" label="Budget" />
+          <MenuLink to="/" label="Budget" />
         </ListItem>
         <ListItem button>
           <ListItemIcon>

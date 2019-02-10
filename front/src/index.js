@@ -5,6 +5,9 @@ import store from './store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
+
+axios.defaults.headers.common['authorization'] = `Bearer ${localStorage.getItem('token')}` || null;
 
 ReactDOM.render(
   <Provider store={store}>

@@ -30,6 +30,7 @@ const TopBar = (props) => {
         <SignOut 
           open= { props.isSignOutOpen }
           handleClose= { props.toggleSignOut }
+          logout={ props.logout }
         />
       </Toolbar>
     </AppBar>

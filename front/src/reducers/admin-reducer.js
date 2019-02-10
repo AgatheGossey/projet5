@@ -4,6 +4,7 @@ const initialState = {
   usersWaiting: [],
   users: [],
   isMessageOpen: false,
+  registerUsernameError: '',
 }
 
 export default (state = initialState, action) => {
@@ -24,6 +25,12 @@ export default (state = initialState, action) => {
       state = {
         ...state, 
         isMessageOpen: !state.isMessageOpen,
+      }
+    break;
+    case ADMIN_ACTIONS.registerUsernameError:
+      state = {
+        ...state,
+        registerUsernameError: action.payload,
       }
     break;
     default :

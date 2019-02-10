@@ -1,4 +1,12 @@
-export const API_HOST = 'http://localhost/my_manager/api';
+export const API_HOST = 'http://localhost/my_manager/api/public';
+
+export const API_ROUTES = {
+  login: `${API_HOST}/login`,
+  register: `${API_HOST}/register`,
+  budget: `${API_HOST}/api/budget`,
+  user: `${API_HOST}/api/users`,
+  category: `${API_HOST}/api/category`,
+}
 
 export const BUDGET_ACTIONS = {
   // OPERATIONS
@@ -20,10 +28,18 @@ export const BUDGET_ACTIONS = {
   closeSnackbar: 'SNACKBAR_CLOSE',
 }
 
+export const LOGIN_ACTIONS = {
+  loginSuccess: 'LOGIN_SUCCESS',
+  loginError: 'LOGIN_ERROR',
+  logout: 'LOGOUT',
+}
+
 export const ADMIN_ACTIONS = {
   getUsersWaiting: 'ADMIN_GET_USERS_WAITING',
   getUsers: 'ADMIN_GET_USERS',
   toggleMessage: 'MESSAGE_TOGGLE',
+  checkUsername: 'CHECK_USERNAME',
+  registerUsernameError: 'REGISTER_USERNAME_ERROR',
 }
 
 export const MENU_ACTIONS = {

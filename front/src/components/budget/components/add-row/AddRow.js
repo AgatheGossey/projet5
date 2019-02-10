@@ -8,7 +8,7 @@ import moment from 'moment';
 import styles from './addrow.module.css';
 
 // CONSTANTS
-import { API_HOST } from 'constants.js';
+import { API_ROUTES } from 'constants.js';
 
 // COMPONENTS 
 import AddCategory from '../category/AddCategory';
@@ -64,7 +64,7 @@ class AddRow extends Component {
       amount: this.state.amount,
    };
 
-    axios.post(`${API_HOST}/budget`, data)
+    axios.post(`${API_ROUTES.budget}`, data)
     .then(() => {
       this.props.getOperations();
       this.props.handleClose();

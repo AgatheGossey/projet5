@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 
 // CONSTANTS
-import { API_HOST } from 'constants.js';
+import { API_ROUTES } from 'constants.js';
 
 class EditCategory extends Component {
     state = {
@@ -25,7 +25,7 @@ class EditCategory extends Component {
         name_category: this.state.category.name_category,
       };
 
-      axios.put(`${API_HOST}/category/${this.state.category.id}`, data)
+      axios.put(`${API_ROUTES.category}/${this.state.category.id}`, data)
         .then(() => {
           this.props.getCategories();
           this.props.handleClose();

@@ -2,12 +2,12 @@ import axios from 'axios';
 import moment from 'moment';
 
 // CONSTANTS
-import { API_HOST, BUDGET_ACTIONS } from 'constants.js';
+import { API_ROUTES, BUDGET_ACTIONS } from 'constants.js';
 
 // OPERATIONS
 export const getOperations = () => {
   return async dispatch => {
-    const response = await axios.get(`${API_HOST}/budget`);
+    const response = await axios.get(API_ROUTES.budget);
     return dispatch({
       type: BUDGET_ACTIONS.getOperations,
       payload: response.data.result || [],
@@ -17,7 +17,7 @@ export const getOperations = () => {
 
 export const deleteOperation = (operationId) => {
   return async dispatch => {
-    await axios.delete(`${API_HOST}/budget/${operationId}`);
+    await axios.delete(`${API_ROUTES.budget}/${operationId}`);
     dispatch(getOperations());
   }
 }
@@ -26,7 +26,7 @@ export const deleteOperations = (operations) => {
   return async dispatch => {
     const promises = [];
     operations.map((operation) => {
-      return promises.push(axios.delete(`${API_HOST}/budget/${operation.id}`));
+      return promises.push(axios.delete(`${API_ROUTES.budget}/${operation.id}`));
     }); 
     await Promise.all(promises);
     dispatch(getOperations());
@@ -36,7 +36,7 @@ export const deleteOperations = (operations) => {
 // CATEGORIES
 export const getCategories = () => {
   return async dispatch => {
-    const response = await axios.get(`${API_HOST}/category`);
+    const response = await axios.get(API_ROUTES.category);
     return dispatch({
       type: BUDGET_ACTIONS.getCategories,
       payload: response.data.result || [],
@@ -47,7 +47,7 @@ export const getCategories = () => {
 export const deleteCategory = (id) => {
   console.log(id);
   return async dispatch => {
-    await axios.delete(`${API_HOST}/category/${id}`);
+    await axios.delete(`${API_ROUTES.category}/${id}`);
     dispatch(getCategories());
   }
 }

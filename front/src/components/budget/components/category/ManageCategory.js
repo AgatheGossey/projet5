@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Dialog, DialogContent, DialogTitle, List, Fab, ListItem, ListItemText, IconButton, ListItemSecondaryAction } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Edit, Clear } from '@material-ui/icons';
 
 // STYLE
 import styles from './managecategory.module.css';
-
-// CONSTANTS
-import { API_HOST } from 'constants.js';
 
 // COMPONENTS 
 import AddCategory from '../category/AddCategory';
@@ -42,7 +38,7 @@ class ManageCategory extends Component {
   displayCategory = () => {
     return this.props.categories.map((categoryOperation) => 
       (<List key={categoryOperation.id}>
-        <ListItem button onClick={this.handleClickList}>
+        <ListItem button>
           <ListItemText 
             primary= {categoryOperation.name_category} 
           />

@@ -79,7 +79,7 @@ class Register extends Component {
     })
   }
 
-  handleSubmitRegister = () => {
+  handleSubmitRegister = async () => {
     if (this.validator.allValid()) {
       const data = {
         username: this.state.username,
@@ -88,9 +88,18 @@ class Register extends Component {
         password: this.state.password,
         email: this.state.email,
       };
-      this.props.createUser(data)
-      this.cleanInput();
-      this.props.toggleMessage();
+
+      await this.props.createUser(data)
+
+      if (this.props.registerUsernameError) {
+        this.setState({
+          password: '',
+          password_register_repeat: '',
+        })
+      } else {
+        this.cleanInput();
+      }
+      
     } else {
       this.validator.showMessages();
       this.forceUpdate();
@@ -157,6 +166,7 @@ class Register extends Component {
           />
           {this.validator.message('email', this.state.email, 'required|email')}
 
+          <div>{ this.props.registerUsernameError }</div>
           <Button
             onClick={ this.handleSubmitRegister }
             color="secondary"
