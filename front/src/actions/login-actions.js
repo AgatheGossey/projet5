@@ -17,8 +17,12 @@ export const login = (data) => {
           user: response.data.user,
         },
       })
-
       history.push('/');
+    } else {
+      return dispatch({
+        type: LOGIN_ACTIONS.connectionError,
+        payload: 'Mauvais pseudo/mot de passe',
+      });
     }
   }
 }

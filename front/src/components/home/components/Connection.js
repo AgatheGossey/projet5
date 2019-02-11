@@ -25,6 +25,11 @@ class Connection extends Component {
   handleSubmitConnection = (e) => {
     e.preventDefault();
     this.props.login({ username: this.state.username, password: this.state.password });
+    if (this.props.connectionError) {
+      this.setState({
+        password: '',
+      })
+    }
   }
 
   render() {
@@ -44,7 +49,7 @@ class Connection extends Component {
             value={ this.state.password }
             onChange={e => this.handlePasswordConnectionChange(e.target.value)}
           />
-
+          <div className={ styles.connectionError }>{ this.props.connectionError }</div>
           <Button 
             type="submit"
             onClick={ this.handleSubmitConnection }

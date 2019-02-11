@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dialog, Button, DialogActions, DialogContent } from '@material-ui/core';
 
-class SignOut extends Component {
+class LogOut extends Component {
   handleClick = () => {
     this.props.handleClose();
     this.props.logout();
@@ -28,4 +28,4 @@ class SignOut extends Component {
   }
 }
 
-export default SignOut;
+export default LogOut;

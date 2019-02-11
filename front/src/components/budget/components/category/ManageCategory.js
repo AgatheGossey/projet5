@@ -69,6 +69,7 @@ class ManageCategory extends Component {
         <DialogTitle id="responsive-dialog-title">
           Gérer les catégories :
         </DialogTitle>
+
         <DialogContent>
           {this.displayCategory()}
           <Fab 
@@ -92,6 +93,7 @@ class ManageCategory extends Component {
             getCategories={ this.props.getCategories }
           />
         </DialogContent>
+        
       </Dialog>
       )
   }

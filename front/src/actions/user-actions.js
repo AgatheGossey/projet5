@@ -1,12 +1,12 @@
 import axios from 'axios';
 import isEmpty from 'lodash/isEmpty';
-import { API_HOST, API_ROUTES, ADMIN_ACTIONS, BUDGET_ACTIONS } from 'constants.js';
+import { API_HOST, API_ROUTES, USER_ACTIONS, BUDGET_ACTIONS } from 'constants.js';
 
 export const getUsers = () => {
   return async dispatch => {
     const response = await axios.get(API_ROUTES.user);
     dispatch({
-      type: ADMIN_ACTIONS.getUsers,
+      type: USER_ACTIONS.getUsers,
       payload: response.data.result || [],
     })
   }
@@ -18,7 +18,7 @@ export const getUsersWaiting = () => {
     const users = response.data.result || [];
 
     dispatch({
-      type: ADMIN_ACTIONS.getUsersWaiting,
+      type: USER_ACTIONS.getUsersWaiting,
       payload: users,
     })
 
@@ -43,7 +43,7 @@ export const createUser = (data) => {
       return dispatch(toggleMessage());
     } else {
       return dispatch({
-        type: ADMIN_ACTIONS.registerUsernameError,
+        type: USER_ACTIONS.registerUsernameError,
         payload: 'Ce pseudo est déjà utilisé.',
       });
     }
@@ -73,6 +73,6 @@ export const checkUser = (userId) => {
 
 export const toggleMessage = () => {
   return {
-    type: ADMIN_ACTIONS.toggleMessage,
+    type: USER_ACTIONS.toggleMessage,
   }
 }

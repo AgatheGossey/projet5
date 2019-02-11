@@ -4,7 +4,7 @@ import MaterialTable from 'material-table';
 import { Card, CardContent, Typography } from '@material-ui/core';
 
 // STYLE 
-import styles from './admin.module.css';
+import styles from '../user.module.css';
 
 // CONSTANTS
 import { USERS_TABLE_COLUMNS } from 'constants.js';

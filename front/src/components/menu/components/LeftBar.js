@@ -46,7 +46,7 @@ const LeftBar = (props) => {
           <ListItemIcon>
             <PeopleIcon></PeopleIcon>
           </ListItemIcon>
-          <MenuLink to="/admin" label="Utilisateurs" />
+          <MenuLink to="/user" label="Utilisateurs" />
         </ListItem>
       </List>
     </Drawer>

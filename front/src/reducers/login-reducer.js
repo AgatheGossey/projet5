@@ -4,7 +4,8 @@ const user = localStorage.getItem('user');
 
 const initialState = {
   user: user || {},
-  isLoggedIn: user ? true : false,  
+  isLoggedIn: user ? true : false, 
+  connectionError: '', 
 }
 
 export default (state = initialState, action) => {
@@ -25,6 +26,12 @@ export default (state = initialState, action) => {
     break;
     default:
       return state;
+    case LOGIN_ACTIONS.connectionError:
+      state = {
+        ...state, 
+        connectionError: action.payload,
+      }
+    break;
   }
   return state;
 }

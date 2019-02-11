@@ -1,4 +1,4 @@
-import { ADMIN_ACTIONS } from 'constants.js';
+import { USER_ACTIONS } from 'constants.js';
 
 const initialState = {
   usersWaiting: [],
@@ -9,25 +9,25 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case  ADMIN_ACTIONS.getUsersWaiting:
+    case  USER_ACTIONS.getUsersWaiting:
       state = {
         ...state,
         usersWaiting: action.payload,
       }
     break;
-    case ADMIN_ACTIONS.getUsers:
+    case USER_ACTIONS.getUsers:
       state = {
         ...state, 
         users: action.payload,
       }
     break;
-    case ADMIN_ACTIONS.toggleMessage:
+    case USER_ACTIONS.toggleMessage:
       state = {
         ...state, 
         isMessageOpen: !state.isMessageOpen,
       }
     break;
-    case ADMIN_ACTIONS.registerUsernameError:
+    case USER_ACTIONS.registerUsernameError:
       state = {
         ...state,
         registerUsernameError: action.payload,

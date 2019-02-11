@@ -6,15 +6,15 @@ import {
   getUsers,
   deleteUser,
   checkUser,
-} from 'actions/admin-actions';
+} from 'actions/user-actions';
 
 // COMPONENTS
-import Admin from 'components/admin/Admin';
+import User from 'components/user/User';
 
 const mapStateToProps = (state) => {
   return {
-    usersWaiting: state.admin.usersWaiting,
-    users: state.admin.users,
+    usersWaiting: state.user.usersWaiting,
+    users: state.user.users,
   }
 }
 
@@ -35,6 +35,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const AdminContainer = connect(mapStateToProps, mapDispatchToProps)(Admin);
+const UserContainer = connect(mapStateToProps, mapDispatchToProps)(User);
 
-export default AdminContainer;
+export default UserContainer;

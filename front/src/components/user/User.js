@@ -7,9 +7,9 @@ import UsersWaiting from './components/UsersWaiting';
 import Users from './components/Users';
 
 // STYLE 
-import styles from './admin.module.css';
+import styles from './user.module.css';
 
-class Admin extends Component {
+class User extends Component {
 
   componentDidMount = () => {
     this.props.getUsersWaiting();
@@ -39,4 +39,4 @@ class Admin extends Component {
   }
 }
 
-export default Admin;
+export default User;

@@ -32,11 +32,12 @@ export const LOGIN_ACTIONS = {
   loginSuccess: 'LOGIN_SUCCESS',
   loginError: 'LOGIN_ERROR',
   logout: 'LOGOUT',
+  connectionError: 'CONNECTION_ERROR',
 }
 
-export const ADMIN_ACTIONS = {
-  getUsersWaiting: 'ADMIN_GET_USERS_WAITING',
-  getUsers: 'ADMIN_GET_USERS',
+export const USER_ACTIONS = {
+  getUsersWaiting: 'USER_GET_USERS_WAITING',
+  getUsers: 'USER_GET_USERS',
   toggleMessage: 'MESSAGE_TOGGLE',
   checkUsername: 'CHECK_USERNAME',
   registerUsernameError: 'REGISTER_USERNAME_ERROR',
@@ -44,7 +45,7 @@ export const ADMIN_ACTIONS = {
 
 export const MENU_ACTIONS = {
   toggleSideBar: 'SIDEBAR_TOGGLE',
-  toggleSignOut: 'SIGN_OUT_TOGGLE',
+  toggleLogOut : 'LOG_OUT_TOGGLE',
 }
 
 export const BUDGET_TABLE_COLUMNS = [

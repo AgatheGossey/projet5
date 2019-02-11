@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 // COMPONENTS 
-import SignOut from './SignOut';
+import LogOut from './LogOut';
 
 // STYLE
 import styles from '../menu.module.css';
@@ -23,13 +23,13 @@ const TopBar = (props) => {
           color="inherit"
           aria-owns='menu-appbar'
           aria-haspopup="true"
-          onClick= { props.toggleSignOut }
+          onClick= { props.toggleLogOut }
         >
           <AccountCircle />
         </IconButton>
-        <SignOut 
-          open= { props.isSignOutOpen }
-          handleClose= { props.toggleSignOut }
+        <LogOut
+          open= { props.isLogOutOpen }
+          handleClose= { props.toggleLogOut }
           logout={ props.logout }
         />
       </Toolbar>

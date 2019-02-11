@@ -30,7 +30,10 @@ class Home extends Component {
             </AppBar>
             { 
               this.state.value  === 0 ?
-              <Connection login={this.props.login}/> 
+              <Connection 
+                login={ this.props.login }
+                connectionError={ this.props.connectionError }
+              /> 
               : 
               <Register
                 registerUsernameError={ this.props.registerUsernameError }

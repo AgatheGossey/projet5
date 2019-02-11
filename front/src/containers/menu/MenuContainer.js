@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import Menu from 'components/menu/Menu';
 
 // ACTION 
-import { toggleSideBar, toggleSignOut } from 'actions/menu-actions';
+import { toggleSideBar, toggleLogOut } from 'actions/menu-actions';
 import { logout } from 'actions/login-actions';
 
 const mapStateToProps = (state) => {
   return {
     isSideBarOpen: state.menu.open, 
-    isSignOutOpen: state.menu.isSignOutOpen,
+    isLogOutOpen: state.menu.isLogOutOpen,
   }
 }
 
@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
     toggleSideBar: () => {
       dispatch(toggleSideBar());
     },
-    toggleSignOut: () => {
-      dispatch(toggleSignOut());
+    toggleLogOut: () => {
+      dispatch(toggleLogOut());
     },
     logout: () => {
       dispatch(logout());

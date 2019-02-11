@@ -139,11 +139,10 @@ class Budget extends Component {
         <AddRow 
           open={ this.props.isAddRow }
           handleClose={ this.props.toggleAddRow }
-          categories={ this.props.categories }
           getOperations={ this.props.getOperations }
-          getCategories={ this.props.getCategories }
-          toggleAddCategory={ this.props.toggleAddCategory }
+          categories={ this.props.categories }
           displayCategory={ this.displayCategory }
+          getCategories={ this.props.getCategories }
         /> 
 
         <Snackbar 

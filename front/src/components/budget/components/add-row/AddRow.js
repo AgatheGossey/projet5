@@ -125,23 +125,9 @@ class AddRow extends Component {
                 {this.props.categories.map((categoryOperation) => {
                   return <MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>
                 })}
-                <div value="">
-                  <Fab 
-                    className={ styles.addButton }
-                    size="small"
-                    color="secondary"
-                    aria-label="Add"
-                    onClick={ this.props.toggleAddCategory }>
-                    <AddIcon />
-                  </Fab>
-                </div> 
               </TextField>
 
-              <AddCategory
-                open={ this.props.isAddCategory }
-                handleClose={ this.props.toggleAddCategory }
-                getCategories ={ this.props.getCategories }
-              />
+        
 
               <TextField 
                 required

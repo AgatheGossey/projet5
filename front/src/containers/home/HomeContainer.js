@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 // ACTIONS
-import { createUser, toggleMessage } from 'actions/admin-actions';
+import { createUser, toggleMessage } from 'actions/user-actions';
 import { login } from 'actions/login-actions';
 
 // COMPONENTS
@@ -9,8 +9,9 @@ import Home from 'components/home/Home';
 
 const mapStateToProps = (state) => {
   return {
-    isMessageOpen: state.admin.isMessageOpen,
-    registerUsernameError: state.admin.registerUsernameError,
+    isMessageOpen: state.user.isMessageOpen,
+    registerUsernameError: state.user.registerUsernameError,
+    connectionError: state.login.connectionError,
   }
 }
 

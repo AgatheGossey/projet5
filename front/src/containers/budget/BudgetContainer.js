@@ -20,7 +20,7 @@ import {
   closeSnackbar,
 } from 'actions/budget-actions';
 
-import { getUsersWaiting } from 'actions/admin-actions';
+import { getUsersWaiting } from 'actions/user-actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
     isAddRow: state.budget.isAddRow,
     isManageCategoryOpen: state.budget.isManageCategoryOpen,
     isSnackbarOpen: state.budget.isSnackbarOpen,
-    usersWaiting: state.admin.usersWaiting,
+    usersWaiting: state.user.usersWaiting,
   }
 }
 
