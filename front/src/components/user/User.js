@@ -28,6 +28,8 @@ class User extends Component {
           <UsersWaiting usersWaiting={ this.props.usersWaiting }
                         checkUser={ this.props.checkUser }
                         deleteUser={ this.props.deleteUser }
+                        toggleConfirmationMessage={ this.props.toggleConfirmationMessage }
+                        isConfirmationMessageOpen= { this.props.isConfirmationMessageOpen }
           />
           <p>Utilisateurs :</p>
           <Users users={ this.props.users } 

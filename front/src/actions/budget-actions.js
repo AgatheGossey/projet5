@@ -52,6 +52,7 @@ export const deleteCategory = (id) => {
   }
 }
 
+// filter by category
 export const toggleFilterByCategory = () => {
   return {
     type: BUDGET_ACTIONS.toggleFilterByCategory,
@@ -76,31 +77,7 @@ export const handleSelectedCategoryChange = (operations, category) => {
   }
 }
 
-export const handleChangeDate = (operations, date_budget_start, date_budget_end) => {
-  const list = [];
-  operations.forEach(operation => {
-    if (moment(operation.date_budget).isBetween(date_budget_start, date_budget_end)) {
-      list.push(operation);
-    }
-  })
-  return dispatch => {
-    dispatch({
-      type: BUDGET_ACTIONS.handleChangeDate,
-      payload: {
-        date_budget_start,
-        date_budget_end,
-        operations: list, 
-      }
-    })
-  }
-} 
-
-export const toggleAddCategory = () => {
-  return {
-    type: BUDGET_ACTIONS.toggleAddCategory,
-  }
-}
-
+// manage Categories 
 export const openManageCategories = () => {
   return async dispatch => {
     await dispatch(getCategories());
@@ -119,12 +96,38 @@ export const closeManageCategories = () => {
   }
 }
 
+// add category
+export const toggleAddCategory = () => {
+  return {
+    type: BUDGET_ACTIONS.toggleAddCategory,
+  }
+}
+
 // DATE
 export const toggleFilterByDate = () => {
   return {
     type: BUDGET_ACTIONS.toggleFilterByDate,
   }
 }
+
+export const handleChangeDate = (operations, date_budget_start, date_budget_end) => {
+  const list = [];
+  operations.forEach(operation => {
+    if (moment(operation.date_budget).isBetween(date_budget_start, date_budget_end)) {
+      list.push(operation);
+    }
+  })
+  return dispatch => {
+    dispatch({
+      type: BUDGET_ACTIONS.handleChangeDate,
+      payload: {
+        date_budget_start,
+        date_budget_end,
+        operations: list, 
+      }
+    })
+  }
+} 
 
 // ROW
 export const toggleAddRow = () => {

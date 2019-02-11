@@ -39,6 +39,7 @@ export const USER_ACTIONS = {
   getUsersWaiting: 'USER_GET_USERS_WAITING',
   getUsers: 'USER_GET_USERS',
   toggleMessage: 'MESSAGE_TOGGLE',
+  toggleConfirmationMessage: 'CONFIRMATION_MESSAGE_TOGGLE',
   checkUsername: 'CHECK_USERNAME',
   registerUsernameError: 'REGISTER_USERNAME_ERROR',
 }

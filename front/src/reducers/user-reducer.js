@@ -4,6 +4,7 @@ const initialState = {
   usersWaiting: [],
   users: [],
   isMessageOpen: false,
+  isConfirmationMessageOpen: false,
   registerUsernameError: '',
 }
 
@@ -25,6 +26,12 @@ export default (state = initialState, action) => {
       state = {
         ...state, 
         isMessageOpen: !state.isMessageOpen,
+      }
+    break;
+    case USER_ACTIONS.toggleConfirmationMessage:
+      state = {
+        ...state,
+        isConfirmationMessageOpen: !state.isConfirmationMessageOpen,
       }
     break;
     case USER_ACTIONS.registerUsernameError:

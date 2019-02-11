@@ -6,6 +6,7 @@ import {
   getUsers,
   deleteUser,
   checkUser,
+  toggleConfirmationMessage
 } from 'actions/user-actions';
 
 // COMPONENTS
@@ -15,6 +16,7 @@ const mapStateToProps = (state) => {
   return {
     usersWaiting: state.user.usersWaiting,
     users: state.user.users,
+    isConfirmationMessageOpen: state.user.isConfirmationMessageOpen,
   }
 }
 
@@ -31,7 +33,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     checkUser: (userId) => {
       dispatch(checkUser(userId));
-    }
+    },
+    toggleConfirmationMessage: () => {
+      dispatch(toggleConfirmationMessage());
+    },
   }
 }
 

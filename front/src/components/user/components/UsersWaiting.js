@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import IconButton from '@material-ui/core/IconButton';
 import Check from '@material-ui/icons/Check';
@@ -12,78 +12,111 @@ import styles from '../user.module.css';
 // CONSTANTS
 import { USERS_TABLE_COLUMNS_WAITING } from 'constants.js';
 
-const UsersWaiting = (props) => {
-  const usersWaiting = props.usersWaiting;
+// COMPONENTS 
+import ConfirmationMessage from './ConfirmationMessage';
 
-  // If on large screens, display a Table. If not, display Cards 
-  if (isWidthUp('md', props.width)) {
-    // Prepare table data
-    const tableData = usersWaiting.map(user => {
-      const { id, username, first_name, last_name } = user;
-      return {
-        id,
-        pseudo: username,
-        prenom: first_name,
-        nom: last_name,
-        approuver: (
-          <IconButton aria-label="Check" onClick={() => props.checkUser(id)}>
-            <Check />
-          </IconButton>
-        ),
-        supprimer: (
-          <IconButton aria-label="Clear" onClick={() => props.deleteUser(id)}>
-            <Clear />
-          </IconButton>
-        )
-      };
-    })
+class UsersWaiting extends Component {
 
-    return (
+  state = {
+    deleteId: null,
+  };
 
-      <div className={ styles.materialTable }>
-        <MaterialTable 
-          columns = { USERS_TABLE_COLUMNS_WAITING }
-          data = { tableData }
-          options={{
-            toolbar: false,
-            paging: false,
-          }}
-          localization={{
-            body: {
-            emptyDataSourceMessage: 'Aucun utilisateur en attente',
-            },
-          }}
-        />
-      </div>
-    ) 
-  } else {
-    const userCards = usersWaiting.map(user => {
-      const { id, username, first_name, last_name} = user;
+  handleDeleteClick = (id) => {
+    this.setState({
+      deleteId: id,
+    });
+    this.props.toggleConfirmationMessage();
+  };
 
+  render() {
+
+    // If on large screens, display a Table. If not, display Cards 
+    if (isWidthUp('md', this.props.width)) {
+      // Prepare table data
+      const tableData = this.props.usersWaiting.map(user => {
+        const { id, username, first_name, last_name } = user;
+        return {
+          id,
+          pseudo: username,
+          prenom: first_name,
+          nom: last_name,
+          approuver: (
+            <IconButton aria-label="Check" onClick={() => this.props.checkUser(id)}>
+              <Check />
+            </IconButton>
+          ),
+          supprimer: (
+            <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+              <Clear />
+            </IconButton>
+          )
+        };
+      })
+  
       return (
-        <Fragment key={id}>
-          <Card>
-            <CardContent>
-              <Typography>Pseudo : { username }</Typography>
-              <Typography>Prénom : { first_name }</Typography>
-              <Typography>Nom : { last_name }</Typography> 
-              <IconButton aria-label="Check" onClick={() => props.checkUser(id)}>
-                <Check />
-              </IconButton>
-              <IconButton aria-label="Clear" onClick={() => props.deleteUser(id)}>
-                <Clear />
-              </IconButton>
-            </CardContent>
-          </Card>
-        </Fragment>
+  
+        <div className={ styles.materialTable }>
+          <MaterialTable 
+            columns = { USERS_TABLE_COLUMNS_WAITING }
+            data = { tableData }
+            options={{
+              toolbar: false,
+              paging: false,
+            }}
+            localization={{
+              body: {
+              emptyDataSourceMessage: 'Aucun utilisateur en attente',
+              },
+            }}
+          />
+          <ConfirmationMessage
+            open={ this.props.isConfirmationMessageOpen }
+            handleClose={ this.props.toggleConfirmationMessage }
+            deleteUser={ this.props.deleteUser }
+            deleteId={ this.state.deleteId }
+          />     
+        </div>
       ) 
-    })
-    return (
-      <Fragment>
-        { userCards }
-      </Fragment>
-    )
+    } else {
+      const userCards = this.props.usersWaiting.map(user => {
+        const { id, username, first_name, last_name} = user;
+  
+        return (
+          <Fragment key={id}>
+            <Card>
+              <CardContent>
+                <Typography>Pseudo : { username }</Typography>
+                <Typography>Prénom : { first_name }</Typography>
+                <Typography>Nom : { last_name }</Typography> 
+                <IconButton aria-label="Check" onClick={() => this.props.checkUser(id)}>
+                  <Check />
+                </IconButton>
+                <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+                  <Clear />
+                </IconButton>
+              </CardContent>
+            </Card>
+          </Fragment>
+        ) 
+      })
+      return (
+        <div>
+          <Fragment>
+            { userCards }
+          </Fragment>
+          <ConfirmationMessage
+            open={ this.props.isConfirmationMessageOpen }
+            handleClose={ this.props.toggleConfirmationMessage }
+            usersWaiting={ this.props.usersWaiting }
+            deleteUser={ this.props.deleteUser }
+            deleteId={ this.state.deleteId } 
+          />     
+        </div>
+  
+      )
+    }
   }
+ 
 }
 
 export default withWidth()(UsersWaiting);

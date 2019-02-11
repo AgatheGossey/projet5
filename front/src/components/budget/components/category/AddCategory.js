@@ -5,7 +5,6 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 // CONSTANTS
 import { API_ROUTES } from 'constants.js';
 
-
 class AddCategory extends Component {
     state = {
       name_category: '',
@@ -32,13 +31,26 @@ class AddCategory extends Component {
     render() {
       return (
         <div>
-          <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">{"Ajouter une catégorie"}</DialogTitle>
+          <Dialog open={ this.props.open }
+                  onClose={ this.props.handleClose }
+                  aria-labelledby="responsive-dialog-title"
+          >
+            <DialogTitle id="responsive-dialog-title">
+              Ajouter une catégorie
+            </DialogTitle>
             <DialogContent>
-              <TextField label="Nom :" value={this.state.name_category} onChange={e => this.handleTextChange(e.target.value)}/>
+              <TextField 
+                label="Nom :"
+                value={ this.state.name_category }
+                onChange={ e => this.handleTextChange(e.target.value) }
+              />
             </DialogContent>
             <DialogActions>
-              <Button  color="primary" onClick={this.handleSubmit} autoFocus>
+              <Button
+                color="primary"
+                onClick={ this.handleSubmit }
+                autoFocus
+              >
                 Ajouter
               </Button>
             </DialogActions>

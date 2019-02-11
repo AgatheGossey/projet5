@@ -50,6 +50,12 @@ export const createUser = (data) => {
   }
 }
 
+export const toggleMessage = () => {
+  return {
+    type: USER_ACTIONS.toggleMessage,
+  }
+}
+
 export const checkUsername = async (username) => {
   const response = await axios.post(`${API_HOST}/checkUsername`, { username });
   return response.data.isFree;
@@ -63,6 +69,12 @@ export const deleteUser = (userId) => {
   }
 }
 
+export const toggleConfirmationMessage = () => {
+  return {
+    type: USER_ACTIONS.toggleConfirmationMessage,
+  }
+}
+
 export const checkUser = (userId) => {
   return async dispatch => {
     await axios.put(`${API_ROUTES.user}/check/${userId}`);
@@ -71,8 +83,3 @@ export const checkUser = (userId) => {
   }
 }
 
-export const toggleMessage = () => {
-  return {
-    type: USER_ACTIONS.toggleMessage,
-  }
-}

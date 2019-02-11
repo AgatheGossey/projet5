@@ -3,19 +3,24 @@ import Budget from 'components/budget/Budget';
 
 // ACTIONS
 import { 
+  // operations
   getOperations,
   deleteOperation,
   deleteOperations,
+  // categories
   getCategories,
   deleteCategory,
-  toggleFilterByDate,
   toggleFilterByCategory,
-  toggleAddCategory,
   handleSelectedCategoryChange,
-  handleChangeDate,
-  toggleAddRow,
   openManageCategories,
   closeManageCategories,
+  toggleAddCategory,
+  // date
+  toggleFilterByDate,
+  handleChangeDate,
+  // row
+  toggleAddRow,
+  // snackbar
   openSnackbar,
   closeSnackbar,
 } from 'actions/budget-actions';
@@ -24,18 +29,23 @@ import { getUsersWaiting } from 'actions/user-actions';
 
 const mapStateToProps = (state) => {
   return {
+    // operations
     operations: state.budget.operations,
+    // categories
     categories: state.budget.categories,
-    isFilterByDate: state.budget.isFilterByDate,
-    isFilterByCategory: state.budget.isFilterByCategory,
-    isAddCategoryOpen: state.budget.isAddCategoryOpen,
     selectedCategory: state.budget.selectedCategory,
+    isFilterByCategory: state.budget.isFilterByCategory,
     operationsFilteredByCategory: state.budget.operationsFilteredByCategory,
+    isManageCategoryOpen: state.budget.isManageCategoryOpen,
+    isAddCategoryOpen: state.budget.isAddCategoryOpen,
+    // date
+    isFilterByDate: state.budget.isFilterByDate,
+    operationsFilteredByDate: state.budget.operationsFilteredByDate,
     selectedDateStart: state.budget.selectedDateStart,
     selectedDateEnd: state.budget.selectedDateEnd,
-    operationsFilteredByDate: state.budget.operationsFilteredByDate,
+    // row
     isAddRow: state.budget.isAddRow,
-    isManageCategoryOpen: state.budget.isManageCategoryOpen,
+    // snackbar
     isSnackbarOpen: state.budget.isSnackbarOpen,
     usersWaiting: state.user.usersWaiting,
   }
@@ -43,6 +53,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // operations
     getOperations: () => {
       dispatch(getOperations())
     },   
@@ -52,6 +63,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteOperations: (operations) => {
       dispatch(deleteOperations(operations));
     },
+    // categories
     getCategories: () => {
       dispatch(getCategories())
     },
@@ -61,27 +73,30 @@ const mapDispatchToProps = (dispatch) => {
     toggleFilterByCategory: () => {
       dispatch(toggleFilterByCategory());
     },
-    toggleAddCategory: () => {
-      dispatch(toggleAddCategory());
-    },
     handleSelectedCategoryChange: (operations, category) => {
       dispatch(handleSelectedCategoryChange(operations, category));
-    },
-    handleChangeDate: (operations, date_budget_start, date_budget_end) => {
-      dispatch(handleChangeDate(operations, date_budget_start, date_budget_end));
-    },
+    },    
     openManageCategories: () => {
       dispatch(openManageCategories());
     },
     closeManageCategories: () => {
       dispatch(closeManageCategories());
     },
+    toggleAddCategory: () => {
+      dispatch(toggleAddCategory());
+    },
+    // date
     toggleFilterByDate: () => {
       dispatch(toggleFilterByDate());
     },
+    handleChangeDate: (operations, date_budget_start, date_budget_end) => {
+      dispatch(handleChangeDate(operations, date_budget_start, date_budget_end));
+    },
+    // row
     toggleAddRow: () => {
       dispatch(toggleAddRow());
     },
+    // snackbar
     openSnackbar: () => {
       dispatch(openSnackbar());
     },

@@ -68,12 +68,14 @@ class Budget extends Component {
           direction="row"
           justify="center"
           alignItems="center"
-          className={styles.filter}>
+          className={ styles.filter }>
+
           <Switch 
             value={ this.props.isFilterByDate }
             color="secondary"
             onChange={ this.props.toggleFilterByDate }
           />
+
           <FilterByDate
             isFilterByDate={ this.props.isFilterByDate }
             selectedDateStart= { this.props.selectedDateStart }
@@ -81,21 +83,23 @@ class Budget extends Component {
             handleChangeDate= { this.props.handleChangeDate }
             operations={ this.props.operations }
             />
+
           <Switch
             className={ styles.switchCategory }
             value={ this.props.isFilterByCategory }
             color="secondary"
             onChange={ this.props.toggleFilterByCategory }
           />
-          <FilterByCategory 
-            isFilterByCategory={this.props.isFilterByCategory} 
-            selectedCategory={this.props.selectedCategory} 
-            handleSelectedCategoryChange={this.props.handleSelectedCategoryChange}
-            operations={this.props.operations}
-            categories={this.props.categories}
-            />
-        </Grid>
 
+          <FilterByCategory 
+            isFilterByCategory={ this.props.isFilterByCategory } 
+            selectedCategory={ this.props.selectedCategory } 
+            handleSelectedCategoryChange={ this.props.handleSelectedCategoryChange }
+            operations={ this.props.operations }
+            categories={ this.props.categories }
+            />
+
+        </Grid>
 
         <Button 
           className={ styles.buttonManageCategory }
@@ -115,8 +119,9 @@ class Budget extends Component {
           deleteCategory={this.props.deleteCategory}
           categories={ this.props.categories }
         />
+
         <div>
-          {this.displayOperations()}
+          { this.displayOperations() }
         </div>
 
         <Grid
@@ -126,6 +131,7 @@ class Budget extends Component {
           alignItems="center"
           className={ styles.button }
           >
+
         <Button 
           size="large"
           variant="contained"
@@ -134,6 +140,7 @@ class Budget extends Component {
         >
           Ajouter
         </Button>
+
         </Grid>
 
         <AddRow 
@@ -146,7 +153,7 @@ class Budget extends Component {
         /> 
 
         <Snackbar 
-          open= {this.props.isSnackbarOpen}
+          open= { this.props.isSnackbarOpen }
           handleClose= { this.props.closeSnackbar }
           openSnackbar= { this.props.openSnackbar }
         />

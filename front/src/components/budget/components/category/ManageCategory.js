@@ -71,7 +71,7 @@ class ManageCategory extends Component {
         </DialogTitle>
 
         <DialogContent>
-          {this.displayCategory()}
+          { this.displayCategory() }
           <Fab 
             className={ styles.addButton }
             size="small"
@@ -89,8 +89,8 @@ class ManageCategory extends Component {
           <EditCategory 
             open={ this.state.isEditCategoryOpen }
             handleClose={ this.handleEditCategoryClose }
-            category={ this.state.category }
             getCategories={ this.props.getCategories }
+            category={ this.state.category }
           />
         </DialogContent>
         

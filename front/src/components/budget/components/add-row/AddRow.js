@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment, Fab } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment } from '@material-ui/core';
 import moment from 'moment';
 
 // STYLE
@@ -9,9 +8,6 @@ import styles from './addrow.module.css';
 
 // CONSTANTS
 import { API_ROUTES } from 'constants.js';
-
-// COMPONENTS 
-import AddCategory from '../category/AddCategory';
 
 class AddRow extends Component {
   state = {

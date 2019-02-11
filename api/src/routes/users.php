@@ -24,7 +24,7 @@ $app->get('/api/users/approve', function($request, $response) {
 $app->get('/api/users', function($request, $response) {
   try {
     $connection = $this->db;
-    $sql = "SELECT * FROM users WHERE approved = 1";
+    $sql = "SELECT * FROM users WHERE approved = 1 AND status = 0";
     $result = null;
 
     foreach ($connection->query($sql) as $row) {

@@ -27,17 +27,16 @@ $app->post('/login', function (Request $request, Response $response, array $args
   $sth->execute();
   $user = $sth->fetchObject();
 
-  // verify email address.
+
   if(!$user) {
       return $this->response->withJson(['error' => true, 'message' => 'These credentials do not match our records.']);  
   }
 
-  // verify password.
   if (!password_verify($input['password'],$user->password)) {
       return $this->response->withJson(['error' => true, 'message' => 'These credentials do not match our records.']);  
   }
 
-  $settings = $this->get('settings'); // get settings array.
+  $settings = $this->get('settings'); 
   
   $token = JWT::encode(['id' => $user->id, 'username' => $user->username], $settings['jwt']['secret'], "HS256");
 
