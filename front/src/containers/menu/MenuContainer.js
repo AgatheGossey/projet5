@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
   return {
     isSideBarOpen: state.menu.open, 
     isLogOutOpen: state.menu.isLogOutOpen,
+    userIsAdmin: parseInt(state.login.user.status, 10) === 1, 
   }
 }
 

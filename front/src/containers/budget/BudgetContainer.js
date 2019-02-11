@@ -48,6 +48,7 @@ const mapStateToProps = (state) => {
     // snackbar
     isSnackbarOpen: state.budget.isSnackbarOpen,
     usersWaiting: state.user.usersWaiting,
+    userIsAdmin: parseInt(state.login.user.status, 10) === 1, 
   }
 }
 

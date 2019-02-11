@@ -81,6 +81,7 @@ class Register extends Component {
 
   handleSubmitRegister = async () => {
     if (this.validator.allValid()) {
+      this.validator.hideMessages();
       const data = {
         username: this.state.username,
         first_name: this.state.first_name,
@@ -99,7 +100,6 @@ class Register extends Component {
       } else {
         this.cleanInput();
       }
-      
     } else {
       this.validator.showMessages();
       this.forceUpdate();

@@ -18,7 +18,9 @@ import styles from './budget.module.css';
 
 class Budget extends Component {
   componentDidMount = () => {
-    this.props.getUsersWaiting();
+    if (this.props.userIsAdmin) {
+      this.props.getUsersWaiting();
+    }
     this.props.getCategories();
     this.props.getOperations();
   }
@@ -151,13 +153,13 @@ class Budget extends Component {
           displayCategory={ this.displayCategory }
           getCategories={ this.props.getCategories }
         /> 
-
+        { this.props.userIsAdmin ? 
         <Snackbar 
           open= { this.props.isSnackbarOpen }
           handleClose= { this.props.closeSnackbar }
           openSnackbar= { this.props.openSnackbar }
         />
-
+        : null}
       </div>
     )
   }

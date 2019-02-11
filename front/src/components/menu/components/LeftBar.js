@@ -42,12 +42,17 @@ const LeftBar = (props) => {
           </ListItemIcon>
           <MenuLink to="/parametres" label="Paramètres" />
         </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleIcon></PeopleIcon>
-          </ListItemIcon>
-          <MenuLink to="/user" label="Utilisateurs" />
-        </ListItem>
+        {props.userIsAdmin ? 
+          (
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon></PeopleIcon>
+              </ListItemIcon>
+              <MenuLink to="/user" label="Utilisateurs" />
+            </ListItem>
+          ) : null
+        }
+        
       </List>
     </Drawer>
   )

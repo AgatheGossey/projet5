@@ -38,7 +38,7 @@ $app->post('/login', function (Request $request, Response $response, array $args
 
   $settings = $this->get('settings'); 
   
-  $token = JWT::encode(['id' => $user->id, 'username' => $user->username], $settings['jwt']['secret'], "HS256");
+  $token = JWT::encode(['id' => $user->id, 'username' => $user->username, 'status' => $user->status], $settings['jwt']['secret'], "HS256");
 
   return $this->response->withJson(['user' => $user, 'token' => $token]);
 });

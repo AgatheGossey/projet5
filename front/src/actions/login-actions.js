@@ -10,7 +10,10 @@ export const login = (data) => {
     const response = await axios.post(API_ROUTES.login, data);
     
     if (response.data.user && response.data.token && parseInt(response.data.user.approved, 10) === 1) {
+      console.log(response.data.user);
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+
       await dispatch({
         type: LOGIN_ACTIONS.loginSuccess,
         payload: {

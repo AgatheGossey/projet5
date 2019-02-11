@@ -1,6 +1,6 @@
 import { LOGIN_ACTIONS } from 'constants.js';
 
-const user = localStorage.getItem('user');
+const user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
   user: user || {},

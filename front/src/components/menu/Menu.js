@@ -11,13 +11,14 @@ class Menu extends Component {
         <TopBar 
           toggleSideBar={ this.props.toggleSideBar }
           isSideBarOpen={ this.props.isSideBarOpen }
-          toggleLogOut= { this.props.toggleLogOut }
-          isLogOutOpen= {this.props.isLogOutOpen}
+          toggleLogOut={ this.props.toggleLogOut }
+          isLogOutOpen={this.props.isLogOutOpen}
           logout={ this.props.logout }
         />
         <LeftBar
-          isSideBarOpen= { this.props.isSideBarOpen }
-          toggleSideBar= { this.props.toggleSideBar }
+          isSideBarOpen={ this.props.isSideBarOpen }
+          toggleSideBar={ this.props.toggleSideBar }
+          userIsAdmin={ this.props.userIsAdmin }
         />
         {this.props.children}
       </div>
