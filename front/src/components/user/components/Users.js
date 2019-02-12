@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import MaterialTable from 'material-table';
 import { Card, CardContent, Typography } from '@material-ui/core';
@@ -11,13 +11,28 @@ import { USERS_TABLE_COLUMNS } from 'constants.js';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
 
-const Users = (props) => {
-  const users = props.users;
+// COMPONENTS 
+import ConfirmationMessage from './ConfirmationMessage';
 
-    // If on large screens, display a Table. If not, display Cards 
-    if (isWidthUp('md', props.width)) {
+class Users extends Component {
+
+  state = {
+    deleteId: null,
+  };
+
+  handleDeleteClick = (id) => {
+    this.setState({
+      deleteId: id,
+    });
+    this.props.toggleConfirmationMessage();
+  };
+
+  render () {
+
+  // If on large screens, display a Table. If not, display Cards 
+    if (isWidthUp('md', this.props.width)) {
       // Prepare table data
-      const tableData = users.map(user => {
+      const tableData = this.props.users.map(user => {
         const { id, username, first_name, last_name } = user;
         return {
           id,
@@ -25,7 +40,7 @@ const Users = (props) => {
           prenom: first_name,
           nom: last_name,
           supprimer: (
-            <IconButton aria-label="Clear" onClick={() => props.deleteUser(id)}>
+            <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
               <Clear />
             </IconButton>
           )
@@ -47,10 +62,17 @@ const Users = (props) => {
               },
             }}
           />
+          <ConfirmationMessage
+            open={ this.props.isConfirmationMessageOpen }
+            handleClose={ this.props.toggleConfirmationMessage }
+            users={ this.props.users }
+            deleteUser={ this.props.deleteUser }
+            deleteId={ this.state.deleteId } 
+          />
         </div>
       ) 
     } else {
-      const userCards = users.map(user => {
+      const userCards = this.props.users.map(user => {
         const { id, username, first_name, last_name} = user;
 
         return (
@@ -66,11 +88,22 @@ const Users = (props) => {
         ) 
       })
       return (
-        <Fragment>
-          { userCards }
-        </Fragment>
+        <div>
+          <Fragment>
+            { userCards }
+          </Fragment>
+          <ConfirmationMessage
+            open={ this.props.isConfirmationMessageOpen }
+            handleClose={ this.props.toggleConfirmationMessage }
+            users={ this.props.users }
+            deleteUser={ this.props.deleteUser }
+            deleteId={ this.state.deleteId } 
+          />
+        </div>   
       )
-    }
+    }  
+  }
+    
 }
 
 export default withWidth()(Users);

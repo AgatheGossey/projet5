@@ -34,6 +34,8 @@ class User extends Component {
           <p>Utilisateurs :</p>
           <Users users={ this.props.users } 
                 deleteUser={ this.props.deleteUser }
+                toggleConfirmationMessage={ this.props.toggleConfirmationMessage }
+                isConfirmationMessageOpen= { this.props.isConfirmationMessageOpen }
           />
         </div>
       </Grid>
