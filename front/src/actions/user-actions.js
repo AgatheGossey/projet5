@@ -1,10 +1,10 @@
-import axios from 'axios';
+import request from 'utils/request';
 import isEmpty from 'lodash/isEmpty';
-import { API_HOST, API_ROUTES, USER_ACTIONS, BUDGET_ACTIONS } from 'constants.js';
+import { API_ROUTES, USER_ACTIONS, BUDGET_ACTIONS } from 'constants.js';
 
 export const getUsers = () => {
   return async dispatch => {
-    const response = await axios.get(API_ROUTES.user);
+    const response = await request.get(API_ROUTES.user);
     dispatch({
       type: USER_ACTIONS.getUsers,
       payload: response.data.result || [],
@@ -14,7 +14,7 @@ export const getUsers = () => {
 
 export const getUsersWaiting = () => {
   return async dispatch => {
-    const response = await axios.get(`${API_ROUTES.user}/approve`);
+    const response = await request.get(`${API_ROUTES.user}/approve`);
     const users = response.data.result || [];
 
     dispatch({
@@ -39,7 +39,7 @@ export const createUser = (data) => {
     const isUsernameFree = await checkUsername(data.username);
 
     if (isUsernameFree) {
-      await axios.post(API_ROUTES.register, data);
+      await request.post(API_ROUTES.register, data);
       return dispatch(toggleMessage());
     } else {
       return dispatch({
@@ -57,13 +57,13 @@ export const toggleMessage = () => {
 }
 
 export const checkUsername = async (username) => {
-  const response = await axios.post(`${API_HOST}/checkUsername`, { username });
+  const response = await request.post('/checkUsername', { username });
   return response.data.isFree;
 }
 
 export const deleteUser = (userId) => {
   return async dispatch => {
-    await axios.delete(`${API_ROUTES.user}/${userId}`)
+    await request.delete(`${API_ROUTES.user}/${userId}`)
     dispatch(getUsers());
     dispatch(getUsersWaiting());
   }
@@ -77,7 +77,7 @@ export const toggleConfirmationMessage = () => {
 
 export const checkUser = (userId) => {
   return async dispatch => {
-    await axios.put(`${API_ROUTES.user}/check/${userId}`);
+    await request.put(`${API_ROUTES.user}/check/${userId}`);
     dispatch(getUsers());
     dispatch(getUsersWaiting());
   }

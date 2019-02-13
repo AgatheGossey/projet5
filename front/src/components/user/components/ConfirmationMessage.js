@@ -3,7 +3,8 @@ import { Dialog, Button, DialogActions, DialogContent } from '@material-ui/core'
 
 class ConfirmationMessage extends Component {
   handleClick = () => {
-    this.props.deleteUser(this.props.deleteId);
+    // this.props.deleteUser(this.props.deleteId);
+    console.log(this.props.deleteIdT);
     this.props.handleClose();
   }
 

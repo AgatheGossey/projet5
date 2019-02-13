@@ -20,7 +20,7 @@ const BudgetCard = (props) => {
           <Typography>Nom : { name }</Typography>
           <Typography>Mode : { mode }</Typography>
           <Typography>Categorie : { name_category }</Typography>
-          <Typography>Motif : { reason }</Typography>
+          <Typography>Détails : { reason }</Typography>
           <Typography>{type === 'Recette' ? 'Recette' : 'Dépense'}: { amount }€</Typography>
         </CardContent>
       </Card> 

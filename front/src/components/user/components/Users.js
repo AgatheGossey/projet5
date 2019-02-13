@@ -82,6 +82,9 @@ class Users extends Component {
                 <Typography>Pseudo : { username }</Typography>
                 <Typography>Prénom : { first_name }</Typography>
                 <Typography>Nom : { last_name }</Typography> 
+                <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+                  <Clear />
+                </IconButton>
               </CardContent>
             </Card>
           </Fragment>

@@ -1,11 +1,11 @@
 export const API_HOST = 'http://localhost/my_manager/api/public';
 
 export const API_ROUTES = {
-  login: `${API_HOST}/login`,
-  register: `${API_HOST}/register`,
-  budget: `${API_HOST}/api/budget`,
-  user: `${API_HOST}/api/users`,
-  category: `${API_HOST}/api/category`,
+  login: '/login',
+  register: '/register',
+  budget: '/api/budget',
+  user: '/api/users',
+  category: '/api/category',
 }
 
 export const BUDGET_ACTIONS = {
@@ -55,7 +55,7 @@ export const BUDGET_TABLE_COLUMNS = [
   { title: 'Nom', field: 'nom'},
   { title: 'Mode', field: 'mode'},
   { title: 'Catégorie', field: 'category'},
-  { title: 'Motif', field: 'motif'},
+  { title: 'Détails', field: 'details'},
   { title: 'Recette', field: 'recette', type: 'numeric'},
   { title: 'Dépense', field: 'depense', type: 'numeric'},
 ];

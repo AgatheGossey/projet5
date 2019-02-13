@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 import { history } from 'App.js';
 
 // CONSTANTS
@@ -7,10 +7,9 @@ import { API_ROUTES, LOGIN_ACTIONS } from 'constants.js';
 export const login = (data) => {
   return async dispatch => {
     
-    const response = await axios.post(API_ROUTES.login, data);
+    const response = await request.post(API_ROUTES.login, data);
     
     if (response.data.user && response.data.token && parseInt(response.data.user.approved, 10) === 1) {
-      console.log(response.data.user);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
 
@@ -33,6 +32,7 @@ export const login = (data) => {
 export const logout = () => {
   return dispatch => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
 
     dispatch({
       type: LOGIN_ACTIONS.logout,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import request from 'utils/request';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment } from '@material-ui/core';
 import moment from 'moment';
 
@@ -60,7 +60,7 @@ class AddRow extends Component {
       amount: this.state.amount,
    };
 
-    axios.post(`${API_ROUTES.budget}`, data)
+    request.post(`${API_ROUTES.budget}`, data)
     .then(() => {
       this.props.getOperations();
       this.props.handleClose();
@@ -122,14 +122,11 @@ class AddRow extends Component {
                   return <MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>
                 })}
               </TextField>
-
-        
-
+              
               <TextField 
-                required
                 className={ styles.addRowTextField }
                 variant="outlined"
-                label="Motif :"
+                label="Détails :"
                 onChange={ e => this.handleReasonChange(e.target.value) }
               />
               

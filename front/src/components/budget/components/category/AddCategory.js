@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import request from 'utils/request';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 
 // CONSTANTS
@@ -15,7 +15,7 @@ class AddCategory extends Component {
         name_category: this.state.name_category
       };
 
-      axios.post(API_ROUTES.category, data)
+      request.post(API_ROUTES.category, data)
         .then(() => {
           this.props.getCategories();
           this.props.handleClose();

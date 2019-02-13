@@ -15,7 +15,7 @@ const BudgetTable = (props) => {
         nom: name,
         mode,
         category: name_category || '',
-        motif: reason,
+        details: reason,
         recette: type === "Recette" ? amount : "",
         depense: type === "Depense" ? amount : "", 
       };
@@ -36,6 +36,16 @@ const BudgetTable = (props) => {
           },
         },
       ]}
+      localization={{
+        toolbar: {
+          nRowsSelected: '{0} ligne(s) sélectionnée(s)',
+        },
+        pagination: {
+          labelDisplayedRows: '{from}-{to} sur {count}',
+          labelRowsPerPage: 'Lignes par page',
+        }
+        
+      }}
       options={ { selection: true } }
     />
   )

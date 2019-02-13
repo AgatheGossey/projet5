@@ -7,9 +7,9 @@ import {Button, Switch } from '@material-ui/core';
 // COMPONENTS
 import BudgetTable from './components/budget-table/BudgetTable';
 import BudgetCards from './components/budget-table/BudgetCards';
-import ManageCategory from './components/category/ManageCategory';
 import FilterByDate from './components/filter/FilterByDate';
 import FilterByCategory from './components/filter/FilterByCategory';
+import ManageCategory from './components/category/ManageCategory';
 import AddRow from './components/add-row/AddRow';
 import Snackbar from './components/snackbar/UsersWaitingNotification';
 
@@ -17,6 +17,7 @@ import Snackbar from './components/snackbar/UsersWaitingNotification';
 import styles from './budget.module.css';
 
 class Budget extends Component {
+  
   componentDidMount = () => {
     if (this.props.userIsAdmin) {
       this.props.getUsersWaiting();
