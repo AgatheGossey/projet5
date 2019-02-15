@@ -12,13 +12,13 @@ class usersWaitingNotification extends Component {
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={this.props.open}
-          autoHideDuration={6000}
-          onClose={this.props.handleClose}
+          open={ this.props.open }
+          autoHideDuration={ 6000 }
+          onClose={ this.props.handleClose }
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">Vous avez des inscriptions en attente.</span>}
+          message={ <span id="message-id">Vous avez des inscriptions en attente.</span> }
           action={[
             <IconButton
               key="close"

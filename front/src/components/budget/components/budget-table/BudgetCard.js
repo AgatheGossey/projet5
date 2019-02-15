@@ -16,7 +16,7 @@ const BudgetCard = (props) => {
           <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => props.deleteOperation(id) } >  
             <Clear />
           </IconButton>
-          <Typography>Date : { moment(date_budget).format('DD/MM/YYYY') }</Typography>
+          <Typography>Date : { moment(date_budget).format('DD/MM/YYYY') }</Typography> 
           <Typography>Nom : { name }</Typography>
           <Typography>Mode : { mode }</Typography>
           <Typography>Categorie : { name_category }</Typography>

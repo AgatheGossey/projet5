@@ -86,7 +86,7 @@ class AddRow extends Component {
                 className={ styles.addRowTextField }
                 variant='outlined'
                 type='date'
-                value={ moment(this.state.date_budget).format('YYYY-MM-DD') }
+                value={ moment(this.state.date_budget).format('YYYY-MM-DD') } 
                 onChange={ e => this.handleDateChange(e.target.value) }
               />   
 
@@ -119,7 +119,7 @@ class AddRow extends Component {
                 onChange={ e => this.handleCategoryChange(e.target.value) }
               >
                 {this.props.categories.map((categoryOperation) => {
-                  return <MenuItem key={categoryOperation.id} value={categoryOperation}>{categoryOperation.name_category}</MenuItem>
+                  return <MenuItem key={ categoryOperation.id } value={ categoryOperation }>{ categoryOperation.name_category }</MenuItem>
                 })}
               </TextField>
               

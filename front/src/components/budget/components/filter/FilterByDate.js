@@ -8,9 +8,9 @@ import styles from './filter.module.css';
 const FilterByDate = (props) => {
   return (
     <div className={ styles.filterContainer }> 
+      {/* if the "isFilterByDate" button is equal to "true", we display two calendar fields */}
       { props.isFilterByDate ?
         <Fragment>    
-          <p>Voir tout le tableau</p>
           <div className={ styles.filterByDate }>          
             <p className={ styles.dateIntervalText }>Du</p>
             <TextField  

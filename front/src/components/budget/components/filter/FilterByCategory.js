@@ -7,6 +7,7 @@ import styles from './filter.module.css';
 const FilterByCategory = (props) => {
   return (
     <div>
+    {/* if the "isFilterByCategory" button is equal to "true", the option to select a category is displayed */}
       { props.isFilterByCategory ?
         <TextField 
           className={ styles.textFieldCategory }
@@ -14,7 +15,7 @@ const FilterByCategory = (props) => {
           label="Catégorie :"
           value={ props.selectedCategory }
           onChange={ e => props.handleSelectedCategoryChange(props.operations, e.target.value) }>
-          {props.categories.map(category => <MenuItem key={ category.id } value={ category }>{ category.name_category }</MenuItem>)}              
+          { props.categories.map(category => <MenuItem key={ category.id } value={ category }>{ category.name_category }</MenuItem>) }              
         </TextField> :
         <p>Filtrer par catégorie</p>
       }

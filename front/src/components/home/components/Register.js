@@ -3,7 +3,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import { Grid, TextField, Button, FormHelperText } from '@material-ui/core';
 
 // COMPONENTS 
-import Message from './Message';
+import MessageAfterRegister from './MessageAfterRegister';
 
 // STYLE 
 import styles from '../home.module.css';
@@ -18,7 +18,7 @@ class Register extends Component {
     email: '',
   }
 
-  componentWillMount = () => {
+  componentWillMount = () => { // this method is only called one time, which is before the initial render
     this.validator = new SimpleReactValidator({
       element: message => <FormHelperText error id="component-error-text">{message}</FormHelperText>,
       messageReplace: (message, params) => {
@@ -26,11 +26,13 @@ class Register extends Component {
         message.replace(':min', params.min);
         message.replace(':max', params.max);
       }, 
+      // create a custom validation message
       messages: {
         required: 'Ce champ est requis',
         email: 'Cette adresse mail n\'est pas valide',
         between: 'Le :attribute doit contenir entre :min et :max caractères',
       },
+      // create validation for the field "repeat password"
       validators: {
         repeatPassword: {
           message: 'Les mots de passe ne sont pas identiques',
@@ -92,7 +94,7 @@ class Register extends Component {
 
       await this.props.createUser(data)
 
-      if (this.props.registerUsernameError) {
+      if (this.props.registerUsernameError) { 
         this.setState({
           password: '',
           password_register_repeat: '',
@@ -173,9 +175,10 @@ class Register extends Component {
           >
           S'inscrire
           </Button>
-          <Message 
-            open={ this.props.isMessageOpen }
-            handleClose= { this.props.toggleMessage }
+          
+          <MessageAfterRegister
+            open={ this.props.isMessageAfterRegisterOpen }
+            handleClose= { this.props.toggleMessageAfterRegister }
           />
 
         </Grid>

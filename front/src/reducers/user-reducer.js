@@ -3,7 +3,7 @@ import { USER_ACTIONS } from 'constants.js';
 const initialState = {
   usersWaiting: [],
   users: [],
-  isMessageOpen: false,
+  isMessageAfterRegisterOpen: false,
   isConfirmationMessageOpen: false,
   registerUsernameError: '',
 }
@@ -22,10 +22,10 @@ export default (state = initialState, action) => {
         users: action.payload,
       }
     break;
-    case USER_ACTIONS.toggleMessage:
+    case USER_ACTIONS.toggleMessageAfterRegister:
       state = {
         ...state, 
-        isMessageOpen: !state.isMessageOpen,
+        isMessageAfterRegisterOpen: !state.isMessageAfterRegisterOpen,
       }
     break;
     case USER_ACTIONS.toggleConfirmationMessage:

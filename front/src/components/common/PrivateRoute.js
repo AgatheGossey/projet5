@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router-dom";
 import Menu from 'containers/menu/MenuContainer';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
+   // if a "user" is stored, access to the road is allowed
   if (localStorage.getItem('user')) {
     return (
       <Route {...rest}>

@@ -38,8 +38,8 @@ class Home extends Component {
               <Register
                 registerUsernameError={ this.props.registerUsernameError }
                 createUser={ this.props.createUser }
-                toggleMessage= { this.props.toggleMessage }
-                isMessageOpen= { this.props.isMessageOpen }
+                toggleMessageAfterRegister= { this.props.toggleMessageAfterRegister }
+                isMessageAfterRegisterOpen= { this.props.isMessageAfterRegisterOpen }
               />
             }
           </div>

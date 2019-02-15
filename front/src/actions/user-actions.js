@@ -16,12 +16,11 @@ export const getUsersWaiting = () => {
   return async dispatch => {
     const response = await request.get(`${API_ROUTES.user}/approve`);
     const users = response.data.result || [];
-
     dispatch({
       type: USER_ACTIONS.getUsersWaiting,
       payload: users,
     })
-
+    // display a notification only if the users array are not empty
     if (!isEmpty(users)) {
       dispatch({
         type: BUDGET_ACTIONS.openSnackbar,
@@ -37,10 +36,10 @@ export const getUsersWaiting = () => {
 export const createUser = (data) => {
   return async dispatch => {
     const isUsernameFree = await checkUsername(data.username);
-
+    // check that the username is available before validating it
     if (isUsernameFree) {
       await request.post(API_ROUTES.register, data);
-      return dispatch(toggleMessage());
+      return dispatch(toggleMessageAfterRegister());
     } else {
       return dispatch({
         type: USER_ACTIONS.registerUsernameError,
@@ -50,15 +49,15 @@ export const createUser = (data) => {
   }
 }
 
-export const toggleMessage = () => {
-  return {
-    type: USER_ACTIONS.toggleMessage,
-  }
-}
-
 export const checkUsername = async (username) => {
   const response = await request.post('/checkUsername', { username });
   return response.data.isFree;
+}
+
+export const toggleMessageAfterRegister = () => {
+  return {
+    type: USER_ACTIONS.toggleMessageAfterRegister,
+  }
 }
 
 export const deleteUser = (userId) => {

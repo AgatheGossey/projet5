@@ -11,22 +11,7 @@ import { USERS_TABLE_COLUMNS } from 'constants.js';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
 
-// COMPONENTS 
-import ConfirmationMessage from './ConfirmationMessage';
-
 class Users extends Component {
-
-  state = {
-    deleteId: null,
-  };
-
-  handleDeleteClick = (id) => {
-    this.setState({
-      deleteId: id,
-    });
-    this.props.toggleConfirmationMessage();
-  };
-
   render () {
 
   // If on large screens, display a Table. If not, display Cards 
@@ -40,7 +25,7 @@ class Users extends Component {
           prenom: first_name,
           nom: last_name,
           supprimer: (
-            <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+            <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
               <Clear />
             </IconButton>
           )
@@ -62,13 +47,6 @@ class Users extends Component {
               },
             }}
           />
-          <ConfirmationMessage
-            open={ this.props.isConfirmationMessageOpen }
-            handleClose={ this.props.toggleConfirmationMessage }
-            users={ this.props.users }
-            deleteUser={ this.props.deleteUser }
-            deleteId={ this.state.deleteId } 
-          />
         </div>
       ) 
     } else {
@@ -82,7 +60,7 @@ class Users extends Component {
                 <Typography>Pseudo : { username }</Typography>
                 <Typography>Prénom : { first_name }</Typography>
                 <Typography>Nom : { last_name }</Typography> 
-                <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+                <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
                   <Clear />
                 </IconButton>
               </CardContent>
@@ -95,13 +73,6 @@ class Users extends Component {
           <Fragment>
             { userCards }
           </Fragment>
-          <ConfirmationMessage
-            open={ this.props.isConfirmationMessageOpen }
-            handleClose={ this.props.toggleConfirmationMessage }
-            users={ this.props.users }
-            deleteUser={ this.props.deleteUser }
-            deleteId={ this.state.deleteId } 
-          />
         </div>   
       )
     }  

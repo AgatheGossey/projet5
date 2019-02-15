@@ -12,22 +12,7 @@ import styles from '../user.module.css';
 // CONSTANTS
 import { USERS_TABLE_COLUMNS_WAITING } from 'constants.js';
 
-// COMPONENTS 
-import ConfirmationMessage from './ConfirmationMessage';
-
 class UsersWaiting extends Component {
-
-  state = {
-    deleteId: null,
-  };
-
-  handleDeleteClick = (id) => {
-    this.setState({
-      deleteId: id,
-    });
-    this.props.toggleConfirmationMessage();
-  };
-
   render() {
 
     // If on large screens, display a Table. If not, display Cards 
@@ -46,7 +31,7 @@ class UsersWaiting extends Component {
             </IconButton>
           ),
           supprimer: (
-            <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+            <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
               <Clear />
             </IconButton>
           )
@@ -54,7 +39,6 @@ class UsersWaiting extends Component {
       })
   
       return (
-  
         <div className={ styles.materialTable }>
           <MaterialTable 
             columns = { USERS_TABLE_COLUMNS_WAITING }
@@ -68,13 +52,7 @@ class UsersWaiting extends Component {
               emptyDataSourceMessage: 'Aucun utilisateur en attente',
               },
             }}
-          />
-          <ConfirmationMessage
-            open={ this.props.isConfirmationMessageOpen }
-            handleClose={ this.props.toggleConfirmationMessage }
-            deleteUser={ this.props.deleteUser }
-            deleteId={ this.state.deleteId }
-          />     
+          />  
         </div>
       ) 
     } else {
@@ -91,7 +69,7 @@ class UsersWaiting extends Component {
                 <IconButton aria-label="Check" onClick={() => this.props.checkUser(id)}>
                   <Check />
                 </IconButton>
-                <IconButton aria-label="Clear" onClick={() => this.handleDeleteClick(id) }>
+                <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
                   <Clear />
                 </IconButton>
               </CardContent>
@@ -103,14 +81,7 @@ class UsersWaiting extends Component {
         <div>
           <Fragment>
             { userCards }
-          </Fragment>
-          <ConfirmationMessage
-            open={ this.props.isConfirmationMessageOpen }
-            handleClose={ this.props.toggleConfirmationMessage }
-            usersWaiting={ this.props.usersWaiting }
-            deleteUser={ this.props.deleteUser }
-            deleteId={ this.state.deleteId } 
-          />     
+          </Fragment>    
         </div>
   
       )

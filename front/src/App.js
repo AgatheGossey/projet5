@@ -15,6 +15,7 @@ import AdminRoute from 'components/common/AdminRoute';
 // THEME
 import { lightTheme, darkTheme } from 'theme';
 
+// create a history object for handle the browser history 
 export const history = createBrowserHistory();
 
 class App extends Component {
@@ -28,14 +29,33 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={!this.state.isDarkThemeEnable ? lightTheme : darkTheme}>
+      <MuiThemeProvider
+        theme={!this.state.isDarkThemeEnable ? lightTheme : darkTheme}
+      >
         <CssBaseline />
         <Router history={history}>
           <Switch>
-            <Route path="/login" component={Home} />
-            <PrivateRoute exact path="/" component={ Budget }  />
-            <PrivateRoute exact path="/parametres" component={ Parameters } isDarkThemeEnable={this.state.isDarkThemeEnable} toggleDarkTheme={this.toggleDarkTheme}/>
-            <AdminRoute exact path="/user" component={ User }  />
+            <Route 
+              path="/login"
+              component={Home}
+            />
+            <PrivateRoute
+              exact
+              path="/"
+              component={ Budget } 
+            />
+            <PrivateRoute 
+              exact
+              path="/parametres"
+              component={ Parameters }
+              isDarkThemeEnable={ this.state.isDarkThemeEnable }
+              toggleDarkTheme={ this.toggleDarkTheme }
+            />
+            <AdminRoute
+              exact
+              path="/user"
+              component={ User } 
+            />
           </Switch>
         </Router>
       </MuiThemeProvider>

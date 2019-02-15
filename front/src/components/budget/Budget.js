@@ -18,7 +18,7 @@ import styles from './budget.module.css';
 
 class Budget extends Component {
   
-  componentDidMount = () => {
+  componentDidMount = () => { // after all the elements of the page is rendered correctly, this method is called
     if (this.props.userIsAdmin) {
       this.props.getUsersWaiting();
     }
@@ -166,4 +166,4 @@ class Budget extends Component {
   }
 }
 
-export default  withWidth()(Budget);
+export default withWidth()(Budget);

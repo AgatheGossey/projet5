@@ -1,13 +1,13 @@
 import React from 'react';
-import {  IconButton, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Link } from "react-router-dom";
+import { IconButton, Drawer, Divider, List, ListItem, ListItemIcon, Typography } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import EditIcon from '@material-ui/icons/Edit';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PeopleIcon from '@material-ui/icons/People';
 
-// COMPONENTS
-import MenuLink from './MenuLink';
+// STYLE
+import style from '../menu.module.css';
 
 const LeftBar = (props) => {
   return (
@@ -24,32 +24,38 @@ const LeftBar = (props) => {
       </div>
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <EditIcon></EditIcon>
-          </ListItemIcon>
-          <MenuLink to="/" label="Budget" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <NoteAddIcon></NoteAddIcon>
-          </ListItemIcon>
-          <ListItemText inset primary="Factures" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SettingsIcon></SettingsIcon>
-          </ListItemIcon>
-          <MenuLink to="/parametres" label="Paramètres" />
-        </ListItem>
+        <Link to='/' className={style.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <EditIcon />
+            </ListItemIcon>
+            <Typography color="textPrimary">
+              Budget
+            </Typography>
+          </ListItem>
+        </Link>
+        <Link to='/parametres' className={style.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <Typography color="textPrimary">
+              Paramètres
+            </Typography>
+          </ListItem>
+        </Link>
         {props.userIsAdmin ? 
           (
-            <ListItem button>
-              <ListItemIcon>
-                <PeopleIcon></PeopleIcon>
-              </ListItemIcon>
-              <MenuLink to="/user" label="Utilisateurs" />
-            </ListItem>
+            <Link to='/user' className={style.link}>
+              <ListItem button>
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <Typography color="textPrimary">
+                  Utilisateurs
+                </Typography>
+              </ListItem>
+            </Link>
           ) : null
         }
         

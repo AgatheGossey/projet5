@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'; // for split the reducing function into separate functions, each managing independent parts of the state
 
 // REDUCERS
 import menuReducer from './menu-reducer'; 

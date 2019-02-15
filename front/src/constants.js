@@ -28,6 +28,11 @@ export const BUDGET_ACTIONS = {
   closeSnackbar: 'SNACKBAR_CLOSE',
 }
 
+export const COMMON_ACTIONS = {
+  openConfirmationMessage: 'CONFIRMATION_MESSAGE_OPEN',
+  closeConfirmationMessage: 'CONFIRMATION_MESSAGE_CLOSE',
+}
+
 export const LOGIN_ACTIONS = {
   loginSuccess: 'LOGIN_SUCCESS',
   loginError: 'LOGIN_ERROR',
@@ -38,8 +43,7 @@ export const LOGIN_ACTIONS = {
 export const USER_ACTIONS = {
   getUsersWaiting: 'USER_GET_USERS_WAITING',
   getUsers: 'USER_GET_USERS',
-  toggleMessage: 'MESSAGE_TOGGLE',
-  toggleConfirmationMessage: 'CONFIRMATION_MESSAGE_TOGGLE',
+  toggleMessageAfterRegister: 'MESSAGE_AFTER_REGISTER_TOGGLE',
   checkUsername: 'CHECK_USERNAME',
   registerUsernameError: 'REGISTER_USERNAME_ERROR',
 }

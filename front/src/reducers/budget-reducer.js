@@ -3,18 +3,23 @@ import moment from 'moment';
 import { BUDGET_ACTIONS } from 'constants.js';
 
 const initialState = {
+  // OPERATIONS
   operations: [],
+  // CATEGORIES
   categories: [],
-  isFilterByDate: false,
   isFilterByCategory: false,
+  isAddCategoryOpen: false,
+  isManageCategoryOpen: false,
   selectedCategory: {},
   operationsFilteredByCategory: [],
+  // DATE
+  isFilterByDate: false,
   selectedDateStart: moment(),
   selectedDateEnd: moment(),
   operationsFilteredByDate: [],
+  // ROW
   isAddRow: false, 
-  isAddCategoryOpen: false,
-  isManageCategoryOpen: false,
+  // SNACKBAR
   isSnackbarOpen: false,
 }
 

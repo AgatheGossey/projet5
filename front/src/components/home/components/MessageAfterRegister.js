@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dialog, DialogContent, Typography } from '@material-ui/core';
 
-class Message extends Component {
+class MessageAfterRegister extends Component {
   render() {
     return (
       <div>
@@ -17,4 +17,4 @@ class Message extends Component {
   }
 }
 
-export default Message
+export default MessageAfterRegister;

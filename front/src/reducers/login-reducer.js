@@ -1,10 +1,9 @@
 import { LOGIN_ACTIONS } from 'constants.js';
 
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user')); // transform user to Javascript object
 
 const initialState = {
   user: user || {},
-  isLoggedIn: user ? true : false, 
   connectionError: '', 
 }
 
@@ -14,14 +13,12 @@ export default (state = initialState, action) => {
       state = {
         ...state,
         user: action.payload.user,
-        isLoggedIn: true,
       }
     break;
     case LOGIN_ACTIONS.logout:
       state = {
         ...state,
         user: {},
-        isLoggedIn: false,
       }
     break;
     default:

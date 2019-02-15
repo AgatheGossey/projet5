@@ -28,7 +28,7 @@ export const deleteOperations = (operations) => {
     operations.map((operation) => {
       return promises.push(request.delete(`${API_ROUTES.budget}/${operation.id}`));
     }); 
-    await Promise.all(promises);
+    await Promise.all(promises); // wait until all the promises inside the array are closed 
     dispatch(getOperations());
   }
 }
@@ -45,7 +45,6 @@ export const getCategories = () => {
 }
 
 export const deleteCategory = (id) => {
-  console.log(id);
   return async dispatch => {
     await request.delete(`${API_ROUTES.category}/${id}`);
     dispatch(getCategories());

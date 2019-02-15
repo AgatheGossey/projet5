@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; // connecter the props of the react component to a redux store
 import Budget from 'components/budget/Budget';
 
 // ACTIONS
@@ -27,7 +27,7 @@ import {
 
 import { getUsersWaiting } from 'actions/user-actions';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => { // this function tells your component what props will be added
   return {
     // operations
     operations: state.budget.operations,
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => { // a props object that contains action dispatchers
   return {
     // operations
     getOperations: () => {
@@ -112,4 +112,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const BudgetContainer = connect(mapStateToProps, mapDispatchToProps)(Budget);
 
-export default BudgetContainer;
+export default BudgetContainer; 

@@ -15,11 +15,11 @@ code {
 
 a {
   text-decoration: none;
-  color: black;
+  color: inherit;
   font-size: 1.1em;
   margin:0 1em;
 }
 
 a:visited {
-  color: black;
+  color: inherit;
 }
