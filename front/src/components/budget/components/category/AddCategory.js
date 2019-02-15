@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
-import request from 'utils/request';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
-
-// CONSTANTS
-import { API_ROUTES } from 'constants.js';
 
 class AddCategory extends Component {
     state = {
       name_category: '',
     };
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
       const data = {
         name_category: this.state.name_category
       };
 
-      request.post(API_ROUTES.category, data)
-        .then(() => {
-          this.props.getCategories();
-          this.props.handleClose();
-        });
+      await this.props.addCategory(data);
+      this.props.handleClose();
     }
 
     handleTextChange = (name_category) => {

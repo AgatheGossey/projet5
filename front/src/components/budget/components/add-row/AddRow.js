@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import request from 'utils/request';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField, InputAdornment, Select, OutlinedInput, InputLabel, FormControl } from '@material-ui/core';
 import moment from 'moment';
 
 // STYLE
 import styles from './addrow.module.css';
-
-// CONSTANTS
-import { API_ROUTES } from 'constants.js';
 
 class AddRow extends Component {
   state = {
@@ -34,6 +30,7 @@ class AddRow extends Component {
   }
 
   handleCategoryChange = (category) => {
+    console.log(category)
     this.setState ({ category: category })
   }
 
@@ -49,7 +46,7 @@ class AddRow extends Component {
     this.setState({ amount: amount })
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const data = {
       date_budget: this.state.date_budget,
       name: this.state.name,
@@ -60,11 +57,8 @@ class AddRow extends Component {
       amount: this.state.amount,
    };
 
-    request.post(`${API_ROUTES.budget}`, data)
-    .then(() => {
-      this.props.getOperations();
-      this.props.handleClose();
-      });
+    await this.props.addOperation(data);
+    this.props.handleClose();
   }
 
   render() {
@@ -82,21 +76,26 @@ class AddRow extends Component {
           <DialogContent>
             <div className={ styles.container }>
 
+            <FormControl>
               <TextField 
                 className={ styles.addRowTextField }
                 variant='outlined'
                 type='date'
                 value={ moment(this.state.date_budget).format('YYYY-MM-DD') } 
                 onChange={ e => this.handleDateChange(e.target.value) }
-              />   
+              />
+            </FormControl>
 
+            <FormControl>
               <TextField 
                 className={ styles.addRowTextField }
                 variant="outlined"
                 label="Nom :"
                 onChange={ e => this.handleNameChange(e.target.value) }
               />
-
+            </FormControl>
+              
+            <FormControl>
               <TextField 
                 className={ styles.addRowTextField }
                 select 
@@ -109,27 +108,39 @@ class AddRow extends Component {
                 <MenuItem value="Chèque">Chèque</MenuItem>
                 <MenuItem value="Espèce">Espèce</MenuItem>
               </TextField>
+            </FormControl>
+              
 
-              <TextField 
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="category"> Categorie : </InputLabel>
+              <Select
                 className={ styles.addRowTextField }
-                select
-                variant="outlined"
-                label="Catégorie :"
+                input={
+                  <OutlinedInput
+                    name="category"
+                    id="category"
+                    labelWidth={0}
+                  />
+                }
                 value={ this.state.category }
                 onChange={ e => this.handleCategoryChange(e.target.value) }
               >
                 {this.props.categories.map((categoryOperation) => {
                   return <MenuItem key={ categoryOperation.id } value={ categoryOperation }>{ categoryOperation.name_category }</MenuItem>
                 })}
-              </TextField>
-              
+              </Select>
+            </FormControl>
+            
+            <FormControl>
               <TextField 
                 className={ styles.addRowTextField }
                 variant="outlined"
                 label="Détails :"
                 onChange={ e => this.handleReasonChange(e.target.value) }
               />
+            </FormControl>
               
+            <FormControl>
               <TextField
                 className={ styles.addRowTextField }
                 select variant="outlined"
@@ -140,7 +151,9 @@ class AddRow extends Component {
                 <MenuItem value="Recette">Recette</MenuItem>
                 <MenuItem value="Depense">Dépense</MenuItem>
               </TextField> 
-
+            </FormControl>
+              
+            <FormControl>
               <TextField 
                 className={ styles.addRowTextField }
                 variant="outlined"
@@ -150,7 +163,8 @@ class AddRow extends Component {
                     startAdornment: <InputAdornment position="start">€</InputAdornment>,
                 }}>
               </TextField>
-
+            </FormControl>
+              
             </div>    
           </DialogContent>
 

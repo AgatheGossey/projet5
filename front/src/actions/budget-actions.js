@@ -15,6 +15,13 @@ export const getOperations = () => {
   }
 }
 
+export const addOperation = (data) => {
+  return async dispatch => {
+    await request.post(API_ROUTES.budget, data);
+    return dispatch(getOperations());
+  }
+}
+
 export const deleteOperation = (operationId) => {
   return async dispatch => {
     await request.delete(`${API_ROUTES.budget}/${operationId}`);
@@ -41,6 +48,20 @@ export const getCategories = () => {
       type: BUDGET_ACTIONS.getCategories,
       payload: response.data.result || [],
     })
+  }
+}
+
+export const editCategory = (id, data) => {
+  return async dispatch => {
+    await request.put(`${API_ROUTES.category}/${id}`, data);
+    return dispatch(getCategories());
+  }
+}
+
+export const addCategory = (data) => {
+  return async dispatch => {
+    await request.post(API_ROUTES.category, data);
+    return dispatch(getCategories());
   }
 }
 

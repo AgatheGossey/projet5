@@ -33,6 +33,10 @@ class ManageCategory extends Component {
       category: '',
     });
   }
+
+  handleDeleteClick = (id) => {
+    this.props.deleteCategory(id);
+  }
   
   //  categories
   displayCategory = () => {
@@ -45,7 +49,7 @@ class ManageCategory extends Component {
           <ListItemSecondaryAction>
             <IconButton
               aria-label="Clear"
-              onClick={() => this.props.deleteCategory(categoryOperation.id)}>
+              onClick={() => this.handleDeleteClick(categoryOperation.id)}>
               <Clear />
             </IconButton>
             <IconButton
@@ -83,12 +87,14 @@ class ManageCategory extends Component {
           </Fab>
           <AddCategory 
             open={ this.props.isAddCategoryOpen }
+            addCategory={ this.props.addCategory }
             handleClose={ this.props.toggleAddCategory }
             getCategories={ this.props.getCategories }
           />
           <EditCategory 
             open={ this.state.isEditCategoryOpen }
             handleClose={ this.handleEditCategoryClose }
+            editCategory={ this.props.editCategory }
             getCategories={ this.props.getCategories }
             category={ this.state.category }
           />

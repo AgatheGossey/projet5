@@ -5,11 +5,14 @@ import Budget from 'components/budget/Budget';
 import { 
   // operations
   getOperations,
+  addOperation,
   deleteOperation,
   deleteOperations,
   // categories
   getCategories,
   deleteCategory,
+  addCategory,
+  editCategory,
   toggleFilterByCategory,
   handleSelectedCategoryChange,
   openManageCategories,
@@ -57,7 +60,10 @@ const mapDispatchToProps = (dispatch) => { // a props object that contains actio
     // operations
     getOperations: () => {
       dispatch(getOperations())
-    },   
+    },    
+    addOperation: async (data) => {
+      await dispatch(addOperation(data));
+    },
     deleteOperation: (operationId) => {
       dispatch(deleteOperation(operationId));
     },
@@ -66,10 +72,16 @@ const mapDispatchToProps = (dispatch) => { // a props object that contains actio
     },
     // categories
     getCategories: () => {
-      dispatch(getCategories())
+      dispatch(getCategories());
     },
-    deleteCategory: () => {
-      dispatch(deleteCategory());
+    addCategory: async (data) => {
+      await dispatch(addCategory(data));
+    },
+    editCategory: async (id, data) => {
+      await dispatch(editCategory(id, data));
+    },
+    deleteCategory: (id) => {
+      dispatch(deleteCategory(id));
     },
     toggleFilterByCategory: () => {
       dispatch(toggleFilterByCategory());

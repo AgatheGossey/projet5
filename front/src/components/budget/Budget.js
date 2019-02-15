@@ -118,6 +118,8 @@ class Budget extends Component {
           isAddCategoryOpen={ this.props.isAddCategoryOpen }
           toggleAddCategory={ this.props.toggleAddCategory }
           handleClose={ this.props.closeManageCategories }
+          addCategory={ this.props.addCategory }
+          editCategory={ this.props.editCategory }
           getCategories={ this.props.getCategories }
           deleteCategory={this.props.deleteCategory}
           categories={ this.props.categories }
@@ -150,6 +152,7 @@ class Budget extends Component {
           open={ this.props.isAddRow }
           handleClose={ this.props.toggleAddRow }
           getOperations={ this.props.getOperations }
+          addOperation={ this.props.addOperation }
           categories={ this.props.categories }
           displayCategory={ this.displayCategory }
           getCategories={ this.props.getCategories }

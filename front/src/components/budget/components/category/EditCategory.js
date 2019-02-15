@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import request from 'utils/request';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
-
-// CONSTANTS
-import { API_ROUTES } from 'constants.js';
 
 class EditCategory extends Component {
     state = {
@@ -20,16 +16,13 @@ class EditCategory extends Component {
       this.setState((state) => ({ category: { ...state.category, name_category:name_category }}));
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
       const data = {
         name_category: this.state.category.name_category,
       };
 
-      request.put(`${API_ROUTES.category}/${this.state.category.id}`, data)
-        .then(() => {
-          this.props.getCategories();
-          this.props.handleClose();
-        })
+      await this.props.editCategory(this.state.category.id, data)
+      this.props.handleClose();
     }
 
     render() {
