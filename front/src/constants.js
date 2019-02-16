@@ -8,6 +8,11 @@ export const API_ROUTES = {
   category: '/api/category',
 }
 
+export const MODAL_ACTIONS = {
+  showModal: 'SHOW_MODAL',
+  hideModal: 'HIDE_MODAL',
+}
+
 export const BUDGET_ACTIONS = {
   // OPERATIONS
   getOperations: 'BUDGET_GET_OPERATIONS',
@@ -22,7 +27,7 @@ export const BUDGET_ACTIONS = {
   toggleFilterByDate: 'DATE_FILTER_TOGGLE',
   handleChangeDate: 'HANDLE_CHANGE_DATE',
   // ROW
-  toggleAddRow: 'ADD_ROW_TOGGLE',
+  toggleAddOperation: 'ADD_OPERATION_TOGGLE',
   // SNACKBAR
   openSnackbar: 'SNACKBAR_OPEN',
   closeSnackbar: 'SNACKBAR_CLOSE',
@@ -43,14 +48,12 @@ export const LOGIN_ACTIONS = {
 export const USER_ACTIONS = {
   getUsersWaiting: 'USER_GET_USERS_WAITING',
   getUsers: 'USER_GET_USERS',
-  toggleMessageAfterRegister: 'MESSAGE_AFTER_REGISTER_TOGGLE',
   checkUsername: 'CHECK_USERNAME',
   registerUsernameError: 'REGISTER_USERNAME_ERROR',
 }
 
 export const MENU_ACTIONS = {
   toggleSideBar: 'SIDEBAR_TOGGLE',
-  toggleLogOut : 'LOG_OUT_TOGGLE',
 }
 
 export const BUDGET_TABLE_COLUMNS = [

@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import intersection from 'lodash/intersection';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import {Button, Switch } from '@material-ui/core';
+import { Button, Switch } from '@material-ui/core';
 
 // COMPONENTS
 import BudgetTable from './components/budget-table/BudgetTable';
 import BudgetCards from './components/budget-table/BudgetCards';
 import FilterByDate from './components/filter/FilterByDate';
 import FilterByCategory from './components/filter/FilterByCategory';
-import ManageCategory from './components/category/ManageCategory';
-import AddRow from './components/add-row/AddRow';
 import Snackbar from './components/snackbar/UsersWaitingNotification';
 
 // STYLE 
@@ -108,22 +106,13 @@ class Budget extends Component {
           className={ styles.buttonManageCategory }
           variant="outlined" 
           color="secondary"
-          onClick={ this.props.openManageCategories }
+          onClick={() => {
+            return this.props.showModal('MANAGE_CATEGORIES')
+            }
+          }
         >
           Gérer les catégories
         </Button>
-
-        <ManageCategory 
-          open={ this.props.isManageCategoryOpen }
-          isAddCategoryOpen={ this.props.isAddCategoryOpen }
-          toggleAddCategory={ this.props.toggleAddCategory }
-          handleClose={ this.props.closeManageCategories }
-          addCategory={ this.props.addCategory }
-          editCategory={ this.props.editCategory }
-          getCategories={ this.props.getCategories }
-          deleteCategory={this.props.deleteCategory}
-          categories={ this.props.categories }
-        />
 
         <div>
           { this.displayOperations() }
@@ -141,22 +130,13 @@ class Budget extends Component {
           size="large"
           variant="contained"
           color="secondary"
-          onClick={ this.props.toggleAddRow }
+          onClick={ () => this.props.showModal('ADD_OPERATION', { addOperation: this.props.addOperation, categories: this.props.categories, hideModal: this.props.hideModal }) }
         >
           Ajouter
         </Button>
 
         </Grid>
 
-        <AddRow 
-          open={ this.props.isAddRow }
-          handleClose={ this.props.toggleAddRow }
-          getOperations={ this.props.getOperations }
-          addOperation={ this.props.addOperation }
-          categories={ this.props.categories }
-          displayCategory={ this.displayCategory }
-          getCategories={ this.props.getCategories }
-        /> 
         { this.props.userIsAdmin ? 
         <Snackbar 
           open= { this.props.isSnackbarOpen }

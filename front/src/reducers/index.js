@@ -5,11 +5,13 @@ import menuReducer from './menu-reducer';
 import budgetReducer from './budget-reducer';
 import userReducer from './user-reducer';
 import loginReducer from './login-reducer';
+import modalReducer from './modal-reducer';
 
 export default combineReducers({
   menu: menuReducer,
   budget: budgetReducer,
   user: userReducer,
   login: loginReducer,
+  modal: modalReducer,
 })
 

@@ -6,7 +6,7 @@ $textBudgetValidator = v::length(1, 50);
 $reasonValidator = v::length(1, 500);
 $amountValidator = v::numeric();
 
-$addRowValidator = array(
+$addOperationValidator = array(
   'name' => $textBudgetValidator,
   'mode' => $textBudgetValidator,
   'category' => $textBudgetValidator,
@@ -82,7 +82,7 @@ $app->post('/api/budget', function ($request, $response) {
       return $response->withJson(array('error' => $ex->getMessage()),422);
     }
   }
-})->add(new \DavidePastore\Slim\Validation\Validation($addRowValidator));
+})->add(new \DavidePastore\Slim\Validation\Validation($addOperationValidator));
 
 // PUT BUDGET
 

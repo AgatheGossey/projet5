@@ -1,6 +1,6 @@
 import request from 'utils/request';
 import isEmpty from 'lodash/isEmpty';
-import { API_ROUTES, USER_ACTIONS, BUDGET_ACTIONS } from 'constants.js';
+import { API_ROUTES, USER_ACTIONS, BUDGET_ACTIONS, MODAL_ACTIONS } from 'constants.js';
 
 export const getUsers = () => {
   return async dispatch => {
@@ -39,7 +39,13 @@ export const createUser = (data) => {
     // check that the username is available before validating it
     if (isUsernameFree) {
       await request.post(API_ROUTES.register, data);
-      return dispatch(toggleMessageAfterRegister());
+      return dispatch({
+        type: MODAL_ACTIONS.showModal,
+        modalType: 'MESSAGE_AFTER_REGISTER',
+        modalProps: {
+          hideModal: () => dispatch({ type: MODAL_ACTIONS.hideModal, modalType: 'MESSAGE_AFTER_REGISTER' }) 
+        },
+      });
     } else {
       return dispatch({
         type: USER_ACTIONS.registerUsernameError,
@@ -54,23 +60,11 @@ export const checkUsername = async (username) => {
   return response.data.isFree;
 }
 
-export const toggleMessageAfterRegister = () => {
-  return {
-    type: USER_ACTIONS.toggleMessageAfterRegister,
-  }
-}
-
 export const deleteUser = (userId) => {
   return async dispatch => {
     await request.delete(`${API_ROUTES.user}/${userId}`)
     dispatch(getUsers());
     dispatch(getUsersWaiting());
-  }
-}
-
-export const toggleConfirmationMessage = () => {
-  return {
-    type: USER_ACTIONS.toggleConfirmationMessage,
   }
 }
 

@@ -2,7 +2,6 @@ import { MENU_ACTIONS } from 'constants.js';
 
 const initialState = {
   open: false,
-  isLogOutOpen: false, 
 }
 
 export default (state = initialState, action) => {
@@ -12,12 +11,6 @@ export default (state = initialState, action) => {
         ...state,
         open: !state.open,
       };
-    break;
-    case MENU_ACTIONS.toggleLogOut:
-      state = {
-        ...state,
-        isLogOutOpen: !state.isLogOutOpen,
-      }
     break;
     default:
       return state;

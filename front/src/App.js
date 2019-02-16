@@ -11,6 +11,7 @@ import Budget from 'containers/budget/BudgetContainer';
 import Parameters from 'components/parameters/Parameters';
 import PrivateRoute from 'components/common/PrivateRoute';
 import AdminRoute from 'components/common/AdminRoute';
+import Modal from 'containers/modal/ModalContainer';
 
 // THEME
 import { lightTheme, darkTheme } from 'theme';
@@ -58,6 +59,7 @@ class App extends Component {
             />
           </Switch>
         </Router>
+        <Modal />
       </MuiThemeProvider>
     );
   }

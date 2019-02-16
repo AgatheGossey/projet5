@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import moment from 'moment';
-import TextField from '@material-ui/core/TextField';
+import { TextField, Typography } from '@material-ui/core';
 
 // STYLE
 import styles from './filter.module.css';
@@ -12,14 +12,14 @@ const FilterByDate = (props) => {
       { props.isFilterByDate ?
         <Fragment>    
           <div className={ styles.filterByDate }>          
-            <p className={ styles.dateIntervalText }>Du</p>
+            <Typography className={ styles.dateIntervalText }>Du</Typography>
             <TextField  
               variant='outlined'
               type='date' 
               value={ props.selectedDateStart.format('YYYY-MM-DD') }
               onChange={ e => props.handleChangeDate(props.operations, moment(e.target.value).utc(), props.selectedDateEnd) }
             />   
-            <p className={styles.dateIntervalText} >Au</p>
+            <Typography className={styles.dateIntervalText} >Au</Typography>
             <TextField 
               variant='outlined'
               type='date'
@@ -28,7 +28,7 @@ const FilterByDate = (props) => {
             />  
           </div>
         </Fragment> :
-        <p>Filtrer par date</p>
+        <Typography>Filtrer par date</Typography>
       }
     </div>
   )

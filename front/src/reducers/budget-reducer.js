@@ -8,8 +8,6 @@ const initialState = {
   // CATEGORIES
   categories: [],
   isFilterByCategory: false,
-  isAddCategoryOpen: false,
-  isManageCategoryOpen: false,
   selectedCategory: {},
   operationsFilteredByCategory: [],
   // DATE
@@ -17,8 +15,6 @@ const initialState = {
   selectedDateStart: moment(),
   selectedDateEnd: moment(),
   operationsFilteredByDate: [],
-  // ROW
-  isAddRow: false, 
   // SNACKBAR
   isSnackbarOpen: false,
 }
@@ -62,38 +58,12 @@ export default (state = initialState, action) => {
         operationsFilteredByDate: action.payload.operations,
       }
     break;
-    case BUDGET_ACTIONS.toggleAddCategory:
-    state = {
-      ...state,
-      isAddCategoryOpen: !state.isAddCategoryOpen,
-    }
-    break;
-    case BUDGET_ACTIONS.openManageCategories:
-    state = {
-      ...state,
-      isManageCategoryOpen: true,
-    }
-    break;
-    case BUDGET_ACTIONS.closeManageCategories:
-      state = {
-        ...state,
-        isManageCategoryOpen: false,
-      }
-    break;
 
     // DATE
     case BUDGET_ACTIONS.toggleFilterByDate:
       state = {
         ...state,
         isFilterByDate: !state.isFilterByDate,
-      }
-    break;
-    
-    // ROW
-    case BUDGET_ACTIONS.toggleAddRow:
-      state = {
-        ...state,
-        isAddRow: !state.isAddRow,
       }
     break;
 

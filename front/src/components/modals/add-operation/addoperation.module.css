@@ -4,9 +4,13 @@
     margin: 1em;
 }
 
-.addRowTextField {
+.addOperationTextField {
   width: 12em;
   margin: 0.5em 0.5em!important;
+}
+
+.categoryLabel {
+  margin: 0.5em;
 }
 
 .addButton {

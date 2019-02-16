@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import { Grid, TextField, Button, FormHelperText } from '@material-ui/core';
 
-// COMPONENTS 
-import MessageAfterRegister from './MessageAfterRegister';
-
 // STYLE 
 import styles from '../home.module.css';
 
@@ -170,17 +167,11 @@ class Register extends Component {
 
           <div>{ this.props.registerUsernameError }</div>
           <Button
-            onClick={ this.handleSubmitRegister }
             color="secondary"
+            onClick={ this.handleSubmitRegister }
           >
           S'inscrire
           </Button>
-          
-          <MessageAfterRegister
-            open={ this.props.isMessageAfterRegisterOpen }
-            handleClose= { this.props.toggleMessageAfterRegister }
-          />
-
         </Grid>
       </form>
     )

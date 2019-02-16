@@ -68,7 +68,7 @@ export const addCategory = (data) => {
 export const deleteCategory = (id) => {
   return async dispatch => {
     await request.delete(`${API_ROUTES.category}/${id}`);
-    dispatch(getCategories());
+    await dispatch(getCategories());
   }
 }
 
@@ -97,32 +97,6 @@ export const handleSelectedCategoryChange = (operations, category) => {
   }
 }
 
-// manage Categories 
-export const openManageCategories = () => {
-  return async dispatch => {
-    await dispatch(getCategories());
-    dispatch({
-      type: BUDGET_ACTIONS.openManageCategories,
-    })
-  }
-}
-
-export const closeManageCategories = () => {
-  return async dispatch => {
-    await dispatch(getOperations());
-    dispatch({
-      type: BUDGET_ACTIONS.closeManageCategories,
-    })
-  }
-}
-
-// add category
-export const toggleAddCategory = () => {
-  return {
-    type: BUDGET_ACTIONS.toggleAddCategory,
-  }
-}
-
 // DATE
 export const toggleFilterByDate = () => {
   return {
@@ -148,13 +122,6 @@ export const handleChangeDate = (operations, date_budget_start, date_budget_end)
     })
   }
 } 
-
-// ROW
-export const toggleAddRow = () => {
-  return {
-    type: BUDGET_ACTIONS.toggleAddRow,
-  }
-}
 
 // SNACKBAR
 export const openSnackbar = () => {

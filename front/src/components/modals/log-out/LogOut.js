@@ -3,14 +3,14 @@ import { Dialog, Button, DialogActions, DialogContent } from '@material-ui/core'
 
 class LogOut extends Component {
   handleClick = () => {
-    this.props.handleClose();
+    this.props.hideModal('LOG_OUT');
     this.props.logout();
   }
 
   render() {
     return (
       <div>
-        <Dialog open={ this.props.open } onClose={ this.props.handleClose } aria-labelledby="responsive-dialog-title">
+        <Dialog open={ true } onClose={ () => this.props.hideModal('LOG_OUT') } aria-labelledby="responsive-dialog-title">
           <DialogContent>
             <DialogActions>
               <Button 

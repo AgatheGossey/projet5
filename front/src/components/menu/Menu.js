@@ -1,29 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // COMPONENTS
 import TopBar from './components/TopBar';
 import LeftBar from './components/LeftBar';
 
-class Menu extends Component {
-  render() {
-    return (
-      <div>
-        <TopBar 
-          toggleSideBar={ this.props.toggleSideBar }
-          isSideBarOpen={ this.props.isSideBarOpen }
-          toggleLogOut={ this.props.toggleLogOut }
-          isLogOutOpen={this.props.isLogOutOpen}
-          logout={ this.props.logout }
-        />
-        <LeftBar
-          isSideBarOpen={ this.props.isSideBarOpen }
-          toggleSideBar={ this.props.toggleSideBar }
-          userIsAdmin={ this.props.userIsAdmin }
-        />
-        {this.props.children}
-      </div>
-    )
-  }
+const Menu = (props) => {
+  return (
+    <div>
+      <TopBar 
+        showModal={ props.showModal }
+        hideModal={ props.hideModal }
+        toggleSideBar={ props.toggleSideBar }
+        isSideBarOpen={ props.isSideBarOpen }
+        logout={ props.logout }
+      />
+      <LeftBar
+        isSideBarOpen={ props.isSideBarOpen }
+        toggleSideBar={ props.toggleSideBar }
+        userIsAdmin={ props.userIsAdmin }
+      />
+    {props.children}
+  </div>
+  )
 }
 
 export default Menu;

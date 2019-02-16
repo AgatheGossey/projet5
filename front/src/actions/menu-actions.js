@@ -6,8 +6,4 @@ export const toggleSideBar = () => {
   }
 };
 
-export const toggleLogOut = () => {
-  return {
-    type: MENU_ACTIONS.toggleLogOut,
-  }
-};
+

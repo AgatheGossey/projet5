@@ -7,7 +7,7 @@
 /* DATE */
 
 .dateIntervalText {
-  margin: 1em;
+  margin: 1em!important
 }
 
 @media all and (min-width: 700px) {

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { MenuItem, FormControl, InputLabel, Select, OutlinedInput } from '@material-ui/core';
+import { Typography, MenuItem, FormControl, InputLabel, Select, OutlinedInput } from '@material-ui/core';
 
 // STYLE
 import styles from './filter.module.css';
@@ -26,7 +26,7 @@ const FilterByCategory = (props) => {
               { props.categories.map(category => <MenuItem key={ category.id } value={ category }>{ category.name_category }</MenuItem>) }
             </Select>
           </FormControl> :
-          <p>Filtrer par catégorie</p>
+          <Typography>Filtrer par catégorie</Typography>
       }
     </Fragment>
   )

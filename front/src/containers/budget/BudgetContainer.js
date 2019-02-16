@@ -15,20 +15,17 @@ import {
   editCategory,
   toggleFilterByCategory,
   handleSelectedCategoryChange,
-  openManageCategories,
-  closeManageCategories,
-  toggleAddCategory,
   // date
   toggleFilterByDate,
   handleChangeDate,
-  // row
-  toggleAddRow,
   // snackbar
   openSnackbar,
   closeSnackbar,
 } from 'actions/budget-actions';
 
 import { getUsersWaiting } from 'actions/user-actions';
+
+import { showModal, hideModal } from 'actions/modal-actions';
 
 const mapStateToProps = (state) => { // this function tells your component what props will be added
   return {
@@ -39,15 +36,11 @@ const mapStateToProps = (state) => { // this function tells your component what 
     selectedCategory: state.budget.selectedCategory,
     isFilterByCategory: state.budget.isFilterByCategory,
     operationsFilteredByCategory: state.budget.operationsFilteredByCategory,
-    isManageCategoryOpen: state.budget.isManageCategoryOpen,
-    isAddCategoryOpen: state.budget.isAddCategoryOpen,
     // date
     isFilterByDate: state.budget.isFilterByDate,
     operationsFilteredByDate: state.budget.operationsFilteredByDate,
     selectedDateStart: state.budget.selectedDateStart,
     selectedDateEnd: state.budget.selectedDateEnd,
-    // row
-    isAddRow: state.budget.isAddRow,
     // snackbar
     isSnackbarOpen: state.budget.isSnackbarOpen,
     usersWaiting: state.user.usersWaiting,
@@ -57,6 +50,13 @@ const mapStateToProps = (state) => { // this function tells your component what 
 
 const mapDispatchToProps = (dispatch) => { // a props object that contains action dispatchers
   return {
+    // modal
+    showModal: (modalType, modalProps) => {
+      dispatch(showModal(modalType, modalProps));
+    },
+    hideModal: (modalType) => {
+      dispatch(hideModal(modalType));
+    },
     // operations
     getOperations: () => {
       dispatch(getOperations())
@@ -88,15 +88,6 @@ const mapDispatchToProps = (dispatch) => { // a props object that contains actio
     },
     handleSelectedCategoryChange: (operations, category) => {
       dispatch(handleSelectedCategoryChange(operations, category));
-    },    
-    openManageCategories: () => {
-      dispatch(openManageCategories());
-    },
-    closeManageCategories: () => {
-      dispatch(closeManageCategories());
-    },
-    toggleAddCategory: () => {
-      dispatch(toggleAddCategory());
     },
     // date
     toggleFilterByDate: () => {
@@ -104,10 +95,6 @@ const mapDispatchToProps = (dispatch) => { // a props object that contains actio
     },
     handleChangeDate: (operations, date_budget_start, date_budget_end) => {
       dispatch(handleChangeDate(operations, date_budget_start, date_budget_end));
-    },
-    // row
-    toggleAddRow: () => {
-      dispatch(toggleAddRow());
     },
     // snackbar
     openSnackbar: () => {

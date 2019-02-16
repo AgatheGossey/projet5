@@ -3,9 +3,9 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Te
 import moment from 'moment';
 
 // STYLE
-import styles from './addrow.module.css';
+import styles from './addoperation.module.css';
 
-class AddRow extends Component {
+class AddOperation extends Component {
   state = {
     date_budget:'',
     name:'',
@@ -30,7 +30,6 @@ class AddRow extends Component {
   }
 
   handleCategoryChange = (category) => {
-    console.log(category)
     this.setState ({ category: category })
   }
 
@@ -58,7 +57,7 @@ class AddRow extends Component {
    };
 
     await this.props.addOperation(data);
-    this.props.handleClose();
+    this.props.hideModal('ADD_OPERATION');
   }
 
   render() {
@@ -66,8 +65,8 @@ class AddRow extends Component {
       <form>
 
         <Dialog 
-          open={ this.props.open }
-          onClose={ this.props.handleClose }
+          open={true}
+          onClose={() => this.props.hideModal('ADD_OPERATION') }
           aria-labelledby="responsive-dialog-title" 
           maxWidth="xl"
         >
@@ -78,7 +77,7 @@ class AddRow extends Component {
 
             <FormControl>
               <TextField 
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 variant='outlined'
                 type='date'
                 value={ moment(this.state.date_budget).format('YYYY-MM-DD') } 
@@ -88,7 +87,7 @@ class AddRow extends Component {
 
             <FormControl>
               <TextField 
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 variant="outlined"
                 label="Nom :"
                 onChange={ e => this.handleNameChange(e.target.value) }
@@ -97,7 +96,7 @@ class AddRow extends Component {
               
             <FormControl>
               <TextField 
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 select 
                 variant="outlined"
                 label="Mode :"
@@ -112,9 +111,14 @@ class AddRow extends Component {
               
 
             <FormControl variant="outlined">
-              <InputLabel htmlFor="category"> Categorie : </InputLabel>
+              <InputLabel 
+                className={ styles.categoryLabel }
+                htmlFor="category"
+              > 
+                Categorie : 
+              </InputLabel>
               <Select
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 input={
                   <OutlinedInput
                     name="category"
@@ -133,7 +137,7 @@ class AddRow extends Component {
             
             <FormControl>
               <TextField 
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 variant="outlined"
                 label="Détails :"
                 onChange={ e => this.handleReasonChange(e.target.value) }
@@ -142,7 +146,7 @@ class AddRow extends Component {
               
             <FormControl>
               <TextField
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 select variant="outlined"
                 label="Type :"
                 value={ this.state.type }
@@ -155,7 +159,7 @@ class AddRow extends Component {
               
             <FormControl>
               <TextField 
-                className={ styles.addRowTextField }
+                className={ styles.addOperationTextField }
                 variant="outlined"
                 label="Montant"
                 onChange={ e => this.handleAmountChange(e.target.value) }
@@ -185,4 +189,4 @@ class AddRow extends Component {
   }
 }
 
-export default AddRow;
+export default AddOperation;

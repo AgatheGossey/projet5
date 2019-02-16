@@ -11,8 +11,13 @@ class AddCategory extends Component {
         name_category: this.state.name_category
       };
 
-      await this.props.addCategory(data);
-      this.props.handleClose();
+      if (this.props.category) {
+        await this.props.editCategory(this.props.category.id, data);
+      } else {
+        await this.props.addCategory(data);
+      }
+
+      this.props.hideModal('ADD_CATEGORY');
     }
 
     handleTextChange = (name_category) => {
@@ -21,15 +26,23 @@ class AddCategory extends Component {
       })
     }
 
+    componentDidMount() {
+      if (this.props.category) {
+        this.setState({
+          name_category: this.props.category.name_category,
+        })
+      }
+    }
+
     render() {
       return (
         <div>
-          <Dialog open={ this.props.open }
-                  onClose={ this.props.handleClose }
+          <Dialog open={ true }
+                  onClose={ () => this.props.hideModal('ADD_CATEGORY') }
                   aria-labelledby="responsive-dialog-title"
           >
             <DialogTitle id="responsive-dialog-title">
-              Ajouter une catégorie
+              {this.props.category ? 'Editer' : 'Ajouter une catégorie'}
             </DialogTitle>
             <DialogContent>
               <TextField 
