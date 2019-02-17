@@ -16,15 +16,14 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
         "db" => [
-          "host" => "localhost",
-          "dbname" => "my_manager",
-          "user" => "root",
-          "pass" => ""
+          "host" => getenv('DB_HOST', 'localhost'),
+          "dbname" => getenv('DB_NAME', ''),
+          "user" => getenv('DB_USER', 'root'),
+          "pass" => getenv('DB_PASSWORD', '')
         ],
-
         // jwt settings
         "jwt" => [
-          'secret' => 'supersecretkeyyoushouldnotcommittogithub'
+          'secret' => getenv('SECRET_API_KEY', '')
         ],
     ],
 ];
