@@ -1,7 +1,9 @@
 <?php
 
 // Application middleware
- $app->add(new \Tuupola\Middleware\JwtAuthentication([
+
+// MIDDLEWARE FOR AUTHENTICATION
+$app->add(new \Tuupola\Middleware\JwtAuthentication([
     "path" => "/api",
     "attribute" => "decoded_token_data",
     "secret" => getenv('SECRET_API_KEY', ''),
@@ -15,6 +17,7 @@
     }
 ]));
 
+// MIDDLEWARE FOR CROSS-ORIGIN REQUESTS
 $app->add(function ($req, $res, $next) {
   $response = $next($req, $res);
   return $response

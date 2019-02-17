@@ -18,8 +18,8 @@ $inscriptionValidator = array(
   'password' => $passwordValidator,
 );
 
+// LOGIN
 $app->post('/login', function (Request $request, Response $response, array $args) {
- 
   $input = $request->getParsedBody();
   $sql = "SELECT * FROM users WHERE username= :username";
   $sth = $this->db->prepare($sql);
@@ -35,10 +35,8 @@ $app->post('/login', function (Request $request, Response $response, array $args
   if (!password_verify($input['password'],$user->password)) {
       return $this->response->withJson(['error' => true, 'message' => 'These credentials do not match our records.']);  
   }
-
-  $settings = $this->get('settings'); 
-  
-  $token = JWT::encode(['id' => $user->id, 'username' => $user->username, 'status' => $user->status], $settings['jwt']['secret'], "HS256");
+    
+  $token = JWT::encode(['id' => $user->id, 'username' => $user->username, 'status' => $user->status], getenv('SECRET_API_KEY', ''), "HS256");
 
   return $this->response->withJson(['user' => $user, 'token' => $token]);
 });
@@ -72,6 +70,7 @@ $app->post('/register', function ($request, $response) {
   }
 })->add(new \DavidePastore\Slim\Validation\Validation($inscriptionValidator));
 
+// CHECK USERNAME
 $app->post('/checkUsername', function ($request, $response) {
   try {
     $username = $request->getParam('username');

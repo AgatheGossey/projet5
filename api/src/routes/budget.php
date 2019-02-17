@@ -66,6 +66,7 @@ $app->post('/api/budget', function ($request, $response) {
     try {
       $connection = $this->db;
       $sql = "INSERT INTO `budget`(`date_budget`, `name`, `mode`, `category`, `reason`, `type`, `amount`) VALUES (:date_budget,:name,:mode,:category,:reason,:type,:amount)";
+      // Prepare SQL request to avoid SQL injections
       $pre = $connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
       $values = array(
           ':date_budget' => $request->getParam('date_budget'),
