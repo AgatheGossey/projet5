@@ -13,7 +13,7 @@ const BudgetCard = (props) => {
     <Fragment key={ id }>
       <Card className={ styles.card }>
         <CardContent className={ styles.cardContent } >
-          <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => props.deleteOperation(id) } >  
+          <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => props.showModal('CONFIRMATION', { action: () => props.deleteOperation(id) }) } >  
             <Clear />
           </IconButton>
           <Typography>Date : { moment(date_budget).format('DD/MM/YYYY') }</Typography> 

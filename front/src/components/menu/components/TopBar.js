@@ -20,7 +20,7 @@ const TopBar = (props) => {
           color="inherit"
           aria-owns='menu-appbar'
           aria-haspopup="true"
-          onClick={ () => props.showModal('LOG_OUT', { logout: props.logout, hideModal: props.hideModal }) }
+          onClick={ () => props.showModal('LOG_OUT', { logout: props.logout }) }
         >
           <AccountCircle />
         </IconButton>

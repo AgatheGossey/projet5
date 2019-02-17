@@ -28,12 +28,14 @@ class User extends Component {
           <UsersWaiting usersWaiting={ this.props.usersWaiting }
                         checkUser={ this.props.checkUser }
                         deleteUser={ this.props.deleteUser }
-                        openConfirmationMessage={ this.props.openConfirmationMessage }
+                        showModal={ this.props.showModal }
+                        hideModal={ this.props.hideModal }
           />
           <p>Utilisateurs :</p>
           <Users users={ this.props.users } 
                 deleteUser={ this.props.deleteUser }
-                openConfirmationMessage={ this.props.openConfirmationMessage }
+                showModal={ this.props.showModal }
+                hideModal={ this.props.hideModal }
           />
         </div>
       </Grid>

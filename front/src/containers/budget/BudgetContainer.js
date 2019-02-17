@@ -43,8 +43,11 @@ const mapStateToProps = (state) => { // this function tells your component what 
     selectedDateEnd: state.budget.selectedDateEnd,
     // snackbar
     isSnackbarOpen: state.budget.isSnackbarOpen,
+    // users
     usersWaiting: state.user.usersWaiting,
     userIsAdmin: parseInt(state.login.user.status, 10) === 1, 
+    // current user's username
+    username: state.login.user.username,
   }
 }
 

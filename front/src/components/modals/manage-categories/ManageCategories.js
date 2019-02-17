@@ -17,7 +17,7 @@ const ManageCategories = (props) => {
           <ListItemSecondaryAction>
             <IconButton
               aria-label="Clear"
-              onClick={() => props.deleteCategory(category.id)}>
+              onClick={() => props.showModal('CONFIRMATION', { action: () => props.deleteCategory(category.id) })}>
               <Clear />
             </IconButton>
             <IconButton
@@ -25,7 +25,6 @@ const ManageCategories = (props) => {
               color="primary"
               onClick={() => props.showModal('ADD_CATEGORY', {
                 editCategory: props.editCategory,
-                hideModal: props.hideModal,
                 category,
               })} >
               <Edit />
@@ -57,7 +56,6 @@ const ManageCategories = (props) => {
           aria-label="Add"
           onClick={() => props.showModal('ADD_CATEGORY', {
             addCategory: props.addCategory,
-            hideModal: props.hideModal,
           })}
         >
           <AddIcon />

@@ -32,7 +32,7 @@ const BudgetTable = (props) => {
           icon: 'delete',
           tooltip: 'Supprimer',
           onClick: (event, rows) => {
-            props.deleteOperations(rows);
+            props.showModal('CONFIRMATION', { action: () => props.deleteOperations(rows) });
           },
         },
       ]}

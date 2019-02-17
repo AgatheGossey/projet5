@@ -31,7 +31,7 @@ class UsersWaiting extends Component {
             </IconButton>
           ),
           supprimer: (
-            <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
+            <IconButton aria-label="Clear" onClick={() =>  this.props.showModal('CONFIRMATION', { action: () => this.props.deleteUser(id) })  }>
               <Clear />
             </IconButton>
           )

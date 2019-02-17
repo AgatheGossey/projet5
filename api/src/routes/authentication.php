@@ -35,8 +35,10 @@ $app->post('/login', function (Request $request, Response $response, array $args
   if (!password_verify($input['password'],$user->password)) {
       return $this->response->withJson(['error' => true, 'message' => 'These credentials do not match our records.']);  
   }
-    
-  $token = JWT::encode(['id' => $user->id, 'username' => $user->username, 'status' => $user->status], getenv('SECRET_API_KEY', ''), "HS256");
+  
+  $settings = $this->get('settings'); 
+  
+  $token = JWT::encode(['id' => $user->id, 'username' => $user->username, 'status' => $user->status], $settings['jwt']['secret'], "HS256");
 
   return $this->response->withJson(['user' => $user, 'token' => $token]);
 });

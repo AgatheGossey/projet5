@@ -12,7 +12,7 @@ const BudgetCards = (props) => {
       <div className={ styles.balanceText }>
         Solde total : <span>{ props.balance }€</span>
       </div>
-      {props.operations.map(operation => <BudgetCard key={operation.id} operation={operation} deleteOperation={props.deleteOperation} />)}
+      {props.operations.map(operation => <BudgetCard key={operation.id} operation={operation} deleteOperation={props.deleteOperation} showModal={props.showModal} hideModal={props.hideModal} />)}
    </Fragment>
  )
 }

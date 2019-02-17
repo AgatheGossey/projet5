@@ -1,5 +1,5 @@
 import request from 'utils/request';
-import { history } from 'App.js';
+import history from 'utils/history';
 
 // CONSTANTS
 import { API_ROUTES, LOGIN_ACTIONS } from 'constants.js';

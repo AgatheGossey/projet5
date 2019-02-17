@@ -8,6 +8,8 @@ import {
   checkUser,
 } from 'actions/user-actions';
 
+import { showModal, hideModal } from 'actions/modal-actions';
+
 // COMPONENTS
 import User from 'components/user/User';
 
@@ -31,6 +33,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     checkUser: (userId) => {
       dispatch(checkUser(userId));
+    },
+    showModal: (modalType, modalProps) => {
+      dispatch(showModal(modalType, modalProps));
+    },
+    hideModal: (modalType) => {
+      dispatch(hideModal(modalType));
     },
   }
 }

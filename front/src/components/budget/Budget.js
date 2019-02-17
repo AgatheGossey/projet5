@@ -42,9 +42,21 @@ class Budget extends Component {
 
     // If on large screens, display a Table. If not, display Cards 
     if (isWidthUp('md', this.props.width)) {
-      return <BudgetTable operations={operations} balance={this.calculateBalance()} deleteOperations={this.props.deleteOperations} />
+      return <BudgetTable 
+        operations={operations} 
+        balance={this.calculateBalance()} 
+        deleteOperations={this.props.deleteOperations} 
+        showModal={this.props.showModal} 
+        hideModal={this.props.hideModal} 
+      />
     } else {
-      return <BudgetCards operations={operations} balance={this.calculateBalance()} deleteOperation={this.props.deleteOperation} />
+      return <BudgetCards 
+        operations={operations} 
+        balance={this.calculateBalance()} 
+        deleteOperation={this.props.deleteOperation} 
+        showModal={this.props.showModal} 
+        hideModal={this.props.hideModal} 
+      />
     }   
   }
 
@@ -130,7 +142,7 @@ class Budget extends Component {
           size="large"
           variant="contained"
           color="secondary"
-          onClick={ () => this.props.showModal('ADD_OPERATION', { addOperation: this.props.addOperation, categories: this.props.categories, hideModal: this.props.hideModal }) }
+          onClick={ () => this.props.showModal('ADD_OPERATION', { addOperation: this.props.addOperation, categories: this.props.categories, username: this.props.username }) }
         >
           Ajouter
         </Button>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from 'history';
+import history from 'utils/history';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -12,12 +12,10 @@ import Parameters from 'components/parameters/Parameters';
 import PrivateRoute from 'components/common/PrivateRoute';
 import AdminRoute from 'components/common/AdminRoute';
 import Modal from 'containers/modal/ModalContainer';
+import NotFound from 'components/notfound/NotFound'; 
 
 // THEME
 import { lightTheme, darkTheme } from 'theme';
-
-// create a history object for handle the browser history 
-export const history = createBrowserHistory();
 
 class App extends Component {
   state = {
@@ -57,6 +55,7 @@ class App extends Component {
               path="/user"
               component={ User } 
             />
+            <Route path='*' exact={true} component={NotFound} />
           </Switch>
         </Router>
         <Modal />

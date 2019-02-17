@@ -16,6 +16,12 @@ class AddOperation extends Component {
     amount:'',
   };
 
+  componentDidMount() {
+    this.setState({
+      name: this.props.username
+    })
+  }
+
   handleDateChange = (date_budget) => {
     const date = moment.utc(date_budget).toDate();
     this.setState({ date_budget: date })
@@ -78,19 +84,21 @@ class AddOperation extends Component {
             <FormControl>
               <TextField 
                 className={ styles.addOperationTextField }
+                variant="outlined"
+                label="Nom :"
+                disabled
+                value={ this.state.name }
+                onChange={ e => this.handleNameChange(e.target.value) }
+              />
+            </FormControl>
+            
+            <FormControl>
+              <TextField 
+                className={ styles.addOperationTextField }
                 variant='outlined'
                 type='date'
                 value={ moment(this.state.date_budget).format('YYYY-MM-DD') } 
                 onChange={ e => this.handleDateChange(e.target.value) }
-              />
-            </FormControl>
-
-            <FormControl>
-              <TextField 
-                className={ styles.addOperationTextField }
-                variant="outlined"
-                label="Nom :"
-                onChange={ e => this.handleNameChange(e.target.value) }
               />
             </FormControl>
               
