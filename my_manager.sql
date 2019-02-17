@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 11 fév. 2019 à 22:42
+-- Généré le :  sam. 16 fév. 2019 à 13:50
 -- Version du serveur :  10.1.37-MariaDB
 -- Version de PHP :  7.2.12
 
@@ -44,9 +44,8 @@ CREATE TABLE `budget` (
 --
 
 INSERT INTO `budget` (`id`, `date_budget`, `name`, `mode`, `category`, `reason`, `type`, `amount`) VALUES
-(60, '2019-01-31 23:00:00', 'Agathe', 'ChÃ¨que', '4', 'Site du samedi', 'Depense', 250),
-(61, '2019-02-06 23:00:00', 'Vincent', 'Virement', '3', 'De Lasst', 'Depense', 1000),
-(62, '2019-02-20 23:00:00', 'CÃ©cile', 'Virement', '6', 'DÃ©partement', 'Recette', 15000);
+(69, '2019-02-19 23:00:00', 'k', 'ChÃ¨que', '4', 'k', 'Depense', 10),
+(70, '2019-02-19 23:00:00', 'qsd', 'Virement', '8', 'qsd', 'Recette', 40);
 
 -- --------------------------------------------------------
 
@@ -64,10 +63,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name_category`) VALUES
-(3, 'Concert'),
-(4, 'DÃ©coration'),
-(5, 'Catering'),
-(6, 'Subvention');
+(8, 'tccsdfsf');
 
 -- --------------------------------------------------------
 
@@ -92,9 +88,20 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `password`, `email`, `approved`, `status`) VALUES
 (26, 'Admin', 'Admin', 'Admin', '$2y$10$jCeFrqdhByTaibNLh3hT1uNtuVR2Urfj0ORv4WRo26KIB73HNMq7e', 'admin@admin.admin', 1, 1),
-(35, 'Agathe', 'Agathe', 'Gossey', '$2y$10$o35du1XM34Lcs1S15eA0B.8/nJ0gI9.0TSlLOTq.XaKx9Ux.5ZMr6', 'aga@de.fr', 1, 0),
-(36, 'CÃ©cile', 'CÃ©cile', 'Deq', '$2y$10$7on9dm3VmTYdCkvqF8GK9.3udO.x4.OdTWg9xIW3YO7lzpFQ2m3Vq', 'cecile@gmail.com', 0, 0),
-(37, 'Vince', 'Vincent', 'Lar', '$2y$10$S9qNVYrpkLYkeEk3ru3IjOsVUzDzU1m.sVl8zOjlDoLdI9SlnCHHO', 'vincent@gmail.com', 0, 0);
+(57, 'ddddfvvffd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
+(58, 'dddqsqsdd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
+(59, 'ddddfdgd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
+(60, 'ddddhhhhdddd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
+(61, 'ddzzzddd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
+(62, 'dddvvcvdd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
+(63, 'Agathe', 'Agathe', 'Gossey', '$2y$10$080YY0oLXeJfV.nhhEOzk.a8KS4Aju0prdbf48QozIwwZkFG/JM1C', 'agathe.gossey@gmail.com', 1, 0),
+(64, 'fff', 'Agathe', 'Gossey', '$2y$10$vdb2J1.T1y0dvPknm3AUY.0HS43NEIqjd/v6NiDIkZZ8H3ygjE3mG', 'agathe.gossey@gmail.com', 0, 0),
+(66, 'dd', 'dd', 'dd', '$2y$10$roiOxACPOAc8Ki20SOH3LOU30pYRxczwPQf2v7nsuYdTqSUV/koaO', 'd@dd.de', 0, 0),
+(67, 'fsdwfsqfq', 'd', 'd', '$2y$10$NEdFxRK2anrDe883ayOGbu1RCUK9JWsAMbHDwzIO8y9Pg150r3NMO', 'd@dd.fr', 0, 0),
+(68, 'f', 'f', 'f', '$2y$10$hlmKQwZ6IyciJbqrKQL8AuetXWE7wZK4LxQoA6f3PQL1qz4JwESdK', 'f@ff.fr', 0, 0),
+(69, 'tt', 'tt', 'tt', '$2y$10$lrm5OFCxSB67aP6RJA9j0OPFk2Le8wbPUksG0YITtPryrc/u5s41G', 'tt@t.tt', 0, 0),
+(70, 'qsd', 'qsd', 'qsd', '$2y$10$KPXcYaiQqGTXpL/w.Nj7Eesc7YzrsGZ3yaJOx4X7MSlFX.Ct9yXva', 'tcc@tcc.tcc', 0, 0),
+(71, 'vbn', 'vbn', 'vbn', '$2y$10$8VcIh95noGljZioCoh69eOwQVOhqPoQmh.2s0v.V..A/wPiTDvepq', 'tcc@tcc.tcc', 0, 0);
 
 --
 -- Index pour les tables déchargées
@@ -127,19 +134,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `budget`
 --
 ALTER TABLE `budget`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT pour la table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -11,7 +11,7 @@ const BudgetTable = (props) => {
       const { id, date_budget, name, mode, name_category, reason, type, amount } = operation;
       return { 
         id,
-        date_budget: moment(date_budget).format('DD/MM/YYYY'), 
+        date_budget: moment(date_budget).format('YYYY-MM-DD'), 
         nom: name,
         mode,
         category: name_category || '',

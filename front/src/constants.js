@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const API_HOST = 'http://localhost/my_manager/api/public';
 
 export const API_ROUTES = {
@@ -58,7 +60,13 @@ export const MENU_ACTIONS = {
 
 export const BUDGET_TABLE_COLUMNS = [
   { title: 'id', field: 'id', hidden: true},
-  { title: 'Date', field: 'date_budget', type: 'numeric'},
+  { 
+    title: 'Date',
+    field: 'date_budget',
+    type: 'numeric',
+    // Sort method for Date column
+    customSort: (a, b) => moment(a.date_budget) - moment(b.date_budget),
+  },
   { title: 'Nom', field: 'nom'},
   { title: 'Mode', field: 'mode'},
   { title: 'Catégorie', field: 'category'},
