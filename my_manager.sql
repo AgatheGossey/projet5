@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.3
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le :  sam. 16 fév. 2019 à 13:50
--- Version du serveur :  10.1.37-MariaDB
--- Version de PHP :  7.2.12
+-- Hôte : vincentlqkagap5.mysql.db
+-- Généré le :  lun. 18 fév. 2019 à 19:38
+-- Version du serveur :  5.6.42-log
+-- Version de PHP :  7.0.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `my_manager`
+-- Base de données :  `vincentlqkagap5`
 --
 
 -- --------------------------------------------------------
@@ -44,8 +44,12 @@ CREATE TABLE `budget` (
 --
 
 INSERT INTO `budget` (`id`, `date_budget`, `name`, `mode`, `category`, `reason`, `type`, `amount`) VALUES
-(69, '2019-02-19 23:00:00', 'k', 'ChÃ¨que', '4', 'k', 'Depense', 10),
-(70, '2019-02-19 23:00:00', 'qsd', 'Virement', '8', 'qsd', 'Recette', 40);
+(81, '2018-12-03 23:00:00', 'Admin', 'Virement', '10', 'DÃ©partement', 'Recette', 5000),
+(82, '2019-02-13 23:00:00', 'Admin', 'ChÃ¨que', '12', 'Impression flyers', 'Depense', 150),
+(83, '2019-02-04 23:00:00', 'Agat', 'EspÃ¨ce', '11', 'Repas', 'Depense', 210),
+(84, '2019-02-08 23:00:00', 'Agat', 'ChÃ¨que', '9', 'Fournitures ', 'Depense', 182),
+(85, '2019-01-29 23:00:00', 'ThÃ©o', 'Virement', '10', 'Mairie', 'Recette', 2500),
+(86, '2019-02-03 23:00:00', 'ThÃ©o', 'ChÃ¨que', '11', 'T-shirt', 'Depense', 320);
 
 -- --------------------------------------------------------
 
@@ -63,7 +67,11 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name_category`) VALUES
-(8, 'tccsdfsf');
+(9, 'Divers'),
+(10, 'Subvention'),
+(11, 'BÃ©nÃ©voles'),
+(12, 'Communication'),
+(13, 'AdhÃ©sion');
 
 -- --------------------------------------------------------
 
@@ -88,20 +96,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `password`, `email`, `approved`, `status`) VALUES
 (26, 'Admin', 'Admin', 'Admin', '$2y$10$jCeFrqdhByTaibNLh3hT1uNtuVR2Urfj0ORv4WRo26KIB73HNMq7e', 'admin@admin.admin', 1, 1),
-(57, 'ddddfvvffd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
-(58, 'dddqsqsdd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
-(59, 'ddddfdgd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
-(60, 'ddddhhhhdddd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
-(61, 'ddzzzddd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
-(62, 'dddvvcvdd', 'd', 'd', 'dddddd', 'a@d.fd', 0, 0),
-(63, 'Agathe', 'Agathe', 'Gossey', '$2y$10$080YY0oLXeJfV.nhhEOzk.a8KS4Aju0prdbf48QozIwwZkFG/JM1C', 'agathe.gossey@gmail.com', 1, 0),
-(64, 'fff', 'Agathe', 'Gossey', '$2y$10$vdb2J1.T1y0dvPknm3AUY.0HS43NEIqjd/v6NiDIkZZ8H3ygjE3mG', 'agathe.gossey@gmail.com', 0, 0),
-(66, 'dd', 'dd', 'dd', '$2y$10$roiOxACPOAc8Ki20SOH3LOU30pYRxczwPQf2v7nsuYdTqSUV/koaO', 'd@dd.de', 0, 0),
-(67, 'fsdwfsqfq', 'd', 'd', '$2y$10$NEdFxRK2anrDe883ayOGbu1RCUK9JWsAMbHDwzIO8y9Pg150r3NMO', 'd@dd.fr', 0, 0),
-(68, 'f', 'f', 'f', '$2y$10$hlmKQwZ6IyciJbqrKQL8AuetXWE7wZK4LxQoA6f3PQL1qz4JwESdK', 'f@ff.fr', 0, 0),
-(69, 'tt', 'tt', 'tt', '$2y$10$lrm5OFCxSB67aP6RJA9j0OPFk2Le8wbPUksG0YITtPryrc/u5s41G', 'tt@t.tt', 0, 0),
-(70, 'qsd', 'qsd', 'qsd', '$2y$10$KPXcYaiQqGTXpL/w.Nj7Eesc7YzrsGZ3yaJOx4X7MSlFX.Ct9yXva', 'tcc@tcc.tcc', 0, 0),
-(71, 'vbn', 'vbn', 'vbn', '$2y$10$8VcIh95noGljZioCoh69eOwQVOhqPoQmh.2s0v.V..A/wPiTDvepq', 'tcc@tcc.tcc', 0, 0);
+(73, 'Agat', 'Agathe', 'Gossey', '$2y$10$0juko7tDeEk5j1ePNDsZyeOAm7UhsSuvKWWF6ExXD8g6Pmo2LUfY.', 'test@gm.fr', 1, 0),
+(74, 'Vince', 'Vincent', 'Lar', '$2y$10$hz6F4iGiKurAyLEznW/9lewj3.ZAVMAkZ5gcu4OZC/.eXP0XTMdyu', 'lar@gm.fr', 0, 0),
+(75, 'Mouth', 'Mathilde', 'Taf', '$2y$10$Ny3DfMSSrohUQA9dpL1nTuPhd4xsDCuSxvxzuaB46mhCARPs2ZMtG', 'mat@gm.fr', 0, 0),
+(76, 'Thib', 'Thibault', 'Van', '$2y$10$1stlDqNk9UlJ5kQ6xFqORevCOEYLCPdDy2ws6wOqDlmGpZB6O.7nK', 'tihb@gm.fr', 0, 0),
+(77, 'ThÃ©o', 'ThÃ©o', 'Taf', '$2y$10$GiwEcHmSFCjNrkG.lo1UFua/bDzqY9X31F/S6oIK8FMZVzb5gPsLy', 'theo@gm.fr', 1, 0);
 
 --
 -- Index pour les tables déchargées
@@ -134,20 +133,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `budget`
 --
 ALTER TABLE `budget`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 --
 -- AUTO_INCREMENT pour la table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
-COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

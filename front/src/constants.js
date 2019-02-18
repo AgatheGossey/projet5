@@ -25,23 +25,13 @@ export const BUDGET_ACTIONS = {
   // CATEGORIES
   getCategories: 'BUDGET_GET_CATEGORIES',
   toggleFilterByCategory: 'CATEGORY_FILTER_TOGGLE',
-  toggleAddCategory: 'ADD_CATEGORY_TOGGLE',
-  openManageCategories: 'OPEN_MANAGE_CATEGORIES',
   handleSelectedCategoryChange: 'SELECTED_CATEGORY_CHANGE',
-  closeManageCategories: 'CLOSE_MANAGE_CATEGORIES',
   // DATE
   toggleFilterByDate: 'DATE_FILTER_TOGGLE',
   handleChangeDate: 'HANDLE_CHANGE_DATE',
-  // ROW
-  toggleAddOperation: 'ADD_OPERATION_TOGGLE',
   // SNACKBAR
   openSnackbar: 'SNACKBAR_OPEN',
   closeSnackbar: 'SNACKBAR_CLOSE',
-}
-
-export const COMMON_ACTIONS = {
-  openConfirmationMessage: 'CONFIRMATION_MESSAGE_OPEN',
-  closeConfirmationMessage: 'CONFIRMATION_MESSAGE_CLOSE',
 }
 
 export const LOGIN_ACTIONS = {
