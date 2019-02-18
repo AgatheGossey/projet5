@@ -11,7 +11,7 @@ import {
   editCategory,
 } from 'actions/budget-actions';
 
-import { showModal, hideModal } from 'actions/modal-actions';
+import { showModal } from 'actions/modal-actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -38,9 +38,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     showModal: (modalType, modalProps) => {
       dispatch(showModal(modalType, modalProps));
-    },
-    hideModal: (modalType) => {
-      dispatch(hideModal(modalType));
     },
   }
 }

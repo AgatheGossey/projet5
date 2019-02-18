@@ -5,7 +5,7 @@ import Pagination from "material-ui-flat-pagination";
 import BudgetCard from './BudgetCard';
 
 // STYLES
-import styles from './budgetcards.module.css';
+import styles from './budgetTable.module.css';
 
 class BudgetCards extends Component {
   state = {
@@ -31,23 +31,22 @@ class BudgetCards extends Component {
         <div className={ styles.balanceText }>
           Solde total : <span>{ this.props.balance }€</span>
         </div>
-        {operations.map((operation, index) => {
+        {operations.map((operation) => {
           return (
             <BudgetCard 
-              key={operation.id} 
-              operation={operation} 
-              deleteOperation={this.props.deleteOperation} 
-              showModal={this.props.showModal} 
-              hideModal={this.props.hideModal} 
+              key={ operation.id } 
+              operation={ operation } 
+              deleteOperation={ this.props.deleteOperation } 
+              showModal={ this.props.showModal } 
             />);
           })
         }
-
         <Pagination 
-          limit={this.state.limit}
-          offset={this.state.offset}
-          total={this.props.operations.length}
-          onClick={(e, offset) => this.handleClick(offset)}
+          align= "center"
+          limit={ this.state.limit }
+          offset={ this.state.offset }
+          total={ this.props.operations.length }
+          onClick={ (e, offset) => this.handleClick(offset) }
         />
       </Fragment>
     )

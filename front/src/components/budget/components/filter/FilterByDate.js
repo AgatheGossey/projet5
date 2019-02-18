@@ -7,7 +7,7 @@ import styles from './filter.module.css';
 
 const FilterByDate = (props) => {
   return (
-    <div className={ styles.filterContainer }> 
+    <div> 
       {/* if the "isFilterByDate" button is equal to "true", we display two calendar fields */}
       { props.isFilterByDate ?
         <Fragment>    

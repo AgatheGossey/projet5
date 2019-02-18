@@ -17,7 +17,7 @@ const FilterByCategory = (props) => {
                 <OutlinedInput
                   name="category"
                   id="category"
-                  labelWidth={0}
+                  labelWidth={ 0 }
                 />
               }
               value={ props.selectedCategory }

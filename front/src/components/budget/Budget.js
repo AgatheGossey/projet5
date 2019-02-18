@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
 import intersection from 'lodash/intersection';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import { Button, Switch } from '@material-ui/core';
+import { Button, Switch, Grid } from '@material-ui/core';
 
 // COMPONENTS
 import BudgetTable from './components/budget-table/BudgetTable';
@@ -15,8 +14,8 @@ import Snackbar from './components/snackbar/UsersWaitingNotification';
 import styles from './budget.module.css';
 
 class Budget extends Component {
-  
   componentDidMount = () => { // after all the elements of the page is rendered correctly, this method is called
+    // If user is admin, get users waiting to show the snackbar
     if (this.props.userIsAdmin) {
       this.props.getUsersWaiting();
     }
@@ -25,6 +24,7 @@ class Budget extends Component {
   }
 
   getOperationsList = () => {
+    // If we filter both by date and by category, return the intersection between both filtered list
     if (this.props.isFilterByCategory && this.props.isFilterByDate) {
       return intersection(this.props.operationsFilteredByCategory, this.props.operationsFilteredByDate);
     }
@@ -47,7 +47,6 @@ class Budget extends Component {
         balance={this.calculateBalance()} 
         deleteOperations={this.props.deleteOperations} 
         showModal={this.props.showModal} 
-        hideModal={this.props.hideModal} 
       />
     } else {
       return <BudgetCards 
@@ -55,7 +54,6 @@ class Budget extends Component {
         balance={this.calculateBalance()} 
         deleteOperation={this.props.deleteOperation} 
         showModal={this.props.showModal} 
-        hideModal={this.props.hideModal} 
       />
     }   
   }
@@ -98,7 +96,6 @@ class Budget extends Component {
             />
 
           <Switch
-            className={ styles.switchCategory }
             value={ this.props.isFilterByCategory }
             color="secondary"
             onChange={ this.props.toggleFilterByCategory }
@@ -118,10 +115,7 @@ class Budget extends Component {
           className={ styles.buttonManageCategory }
           variant="outlined" 
           color="secondary"
-          onClick={() => {
-            return this.props.showModal('MANAGE_CATEGORIES')
-            }
-          }
+          onClick={() => this.props.showModal('MANAGE_CATEGORIES')}
         >
           Gérer les catégories
         </Button>
@@ -135,7 +129,7 @@ class Budget extends Component {
           direction="row"
           justify="center"
           alignItems="center"
-          className={ styles.button }
+          className={ styles.buttonAddOperation }
           >
 
         <Button 

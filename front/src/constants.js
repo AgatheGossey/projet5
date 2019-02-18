@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const API_HOST = 'http://localhost/my_manager/api/public';
+export const API_HOST = 'https://projet5.agathegossey.fr/api/public';
 
 export const API_ROUTES = {
   login: '/login',
@@ -13,6 +13,10 @@ export const API_ROUTES = {
 export const MODAL_ACTIONS = {
   showModal: 'SHOW_MODAL',
   hideModal: 'HIDE_MODAL',
+}
+
+export const THEME_ACTIONS = {
+  toggleDarkTheme: 'TOGGLE_DARK_THEME',
 }
 
 export const BUDGET_ACTIONS = {

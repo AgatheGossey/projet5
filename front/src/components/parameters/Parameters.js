@@ -8,16 +8,17 @@ import { FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 
 const Parameters = (props) => {
   return (
-    <div className={styles.container}>
-      <FormGroup row>
+    <div className={ styles.container }>
+      <FormGroup>
         <FormControlLabel
           control={
             <Switch
-              checked={props.isDarkThemeEnable}
-              onChange={props.toggleDarkTheme}
+              className={ styles.switch }
+              checked={ props.isDarkThemeEnable }
+              onChange={ props.toggleDarkTheme }
             />
           }
-          label="Theme sombre"
+          label="Thème sombre"
         />
       </FormGroup>
     </div>

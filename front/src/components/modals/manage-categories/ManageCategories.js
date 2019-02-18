@@ -47,7 +47,7 @@ const ManageCategories = (props) => {
         Gérer les catégories :
       </DialogTitle>
 
-      <DialogContent>
+      <DialogContent className={ styles.dialogContent }>
         { displayCategory() }
         <Fab 
           className={ styles.addButton }

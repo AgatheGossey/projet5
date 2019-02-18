@@ -4,7 +4,7 @@ import { Card, CardContent, IconButton, Typography } from '@material-ui/core';
 import Clear from '@material-ui/icons/Clear';
 
 // STYLES
-import styles from './budgetcard.module.css';
+import styles from './budgetTable.module.css';
 
 const BudgetCard = (props) => {
   const { id, date_budget, name, mode, name_category, reason, type, amount } = props.operation;
@@ -13,7 +13,11 @@ const BudgetCard = (props) => {
     <Fragment key={ id }>
       <Card className={ styles.card }>
         <CardContent className={ styles.cardContent } >
-          <IconButton aria-label='Clear' className={ styles.clearButton } onClick={ () => props.showModal('CONFIRMATION', { action: () => props.deleteOperation(id) }) } >  
+          <IconButton 
+            aria-label='Clear'
+            className={ styles.clearButton }
+            onClick={ () => props.showModal('CONFIRMATION', { action: () => props.deleteOperation(id) }) }
+          >  
             <Clear />
           </IconButton>
           <Typography>Date : { moment(date_budget).format('DD/MM/YYYY') }</Typography> 

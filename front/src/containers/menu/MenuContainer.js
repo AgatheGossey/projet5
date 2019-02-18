@@ -6,26 +6,27 @@ import Menu from 'components/menu/Menu';
 // ACTION 
 import { toggleSideBar } from 'actions/menu-actions';
 import { logout } from 'actions/login-actions';
-import { showModal, hideModal } from 'actions/modal-actions';
+import { showModal } from 'actions/modal-actions';
 
 const mapStateToProps = (state) => {
   return {
     isSideBarOpen: state.menu.open, 
+    // If user status equal to 1, he's admin -> Used to show (or not) the users page link
     userIsAdmin: parseInt(state.login.user.status, 10) === 1, 
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // modal
     showModal: (modalType, modalProps) => {
       dispatch(showModal(modalType, modalProps));
     },
-    hideModal: (modalType) => {
-      dispatch(hideModal(modalType));
-    },
+    // sidebar
     toggleSideBar: () => {
       dispatch(toggleSideBar());
     },
+    // logout
     logout: () => {
       dispatch(logout());
     },

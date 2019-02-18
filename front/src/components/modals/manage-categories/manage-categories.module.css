@@ -2,3 +2,7 @@
   position: absolute;
   margin-left: 10em!important;
 }
+
+.dialogContent {
+  width: 350px;
+}

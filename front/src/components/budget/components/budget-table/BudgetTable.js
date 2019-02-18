@@ -43,8 +43,10 @@ const BudgetTable = (props) => {
         pagination: {
           labelDisplayedRows: '{from}-{to} sur {count}',
           labelRowsPerPage: 'Lignes par page',
+        },
+        body: {
+          emptyDataSourceMessage: 'Aucune opération n\'a été ajouté pour le moment.',
         }
-        
       }}
       options={ { selection: true } }
     />

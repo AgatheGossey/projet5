@@ -25,7 +25,7 @@ import {
 
 import { getUsersWaiting } from 'actions/user-actions';
 
-import { showModal, hideModal } from 'actions/modal-actions';
+import { showModal } from 'actions/modal-actions';
 
 const mapStateToProps = (state) => { // this function tells your component what props will be added
   return {
@@ -56,9 +56,6 @@ const mapDispatchToProps = (dispatch) => { // a props object that contains actio
     // modal
     showModal: (modalType, modalProps) => {
       dispatch(showModal(modalType, modalProps));
-    },
-    hideModal: (modalType) => {
-      dispatch(hideModal(modalType));
     },
     // operations
     getOperations: () => {

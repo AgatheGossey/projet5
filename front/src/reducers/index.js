@@ -6,6 +6,7 @@ import budgetReducer from './budget-reducer';
 import userReducer from './user-reducer';
 import loginReducer from './login-reducer';
 import modalReducer from './modal-reducer';
+import themeReducer from './theme-reducer';
 
 export default combineReducers({
   menu: menuReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   user: userReducer,
   login: loginReducer,
   modal: modalReducer,
+  theme: themeReducer,
 })
 
