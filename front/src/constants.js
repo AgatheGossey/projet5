@@ -60,6 +60,7 @@ export const BUDGET_TABLE_COLUMNS = [
     type: 'numeric',
     // Sort method for Date column
     customSort: (a, b) => moment(a.date_budget) - moment(b.date_budget),
+    defaultSort: 'desc',
   },
   { title: 'Nom', field: 'nom'},
   { title: 'Mode', field: 'mode'},

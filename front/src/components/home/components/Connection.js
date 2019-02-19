@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, TextField, Button } from '@material-ui/core';
+import { Grid, TextField, Button, Card } from '@material-ui/core';
 
 // STYLE 
 import styles from '../home.module.css';
@@ -34,32 +34,34 @@ class Connection extends Component {
 
   render() {
     return (
-      <form className={ styles.formConnection }>        
-        <Grid container direction="column" justify="center" alignItems="center">
+      <Card>
+        <form className={ styles.formConnection }>        
+          <Grid container direction="column" justify="center" alignItems="center">
 
-          <TextField 
-            label="Pseudo :"
-            value={ this.state.username }
-            onChange={e => this.handleUsernameConnectionChange(e.target.value)}
-          />
+            <TextField 
+              label="Pseudo :"
+              value={ this.state.username }
+              onChange={e => this.handleUsernameConnectionChange(e.target.value)}
+            />
 
-          <TextField 
-            label="Mot de passe :"
-            type="password"
-            value={ this.state.password }
-            onChange={e => this.handlePasswordConnectionChange(e.target.value)}
-          />
-          <div className={ styles.connectionError }>{ this.props.connectionError }</div>
-          <Button 
-            type="submit"
-            onClick={ this.handleSubmitConnection }
-            color="secondary"
-          >
-            Se connecter
-          </Button>
+            <TextField 
+              label="Mot de passe :"
+              type="password"
+              value={ this.state.password }
+              onChange={e => this.handlePasswordConnectionChange(e.target.value)}
+            />
+            <div className={ styles.connectionError }>{ this.props.connectionError }</div>
+            <Button 
+              type="submit"
+              onClick={ this.handleSubmitConnection }
+              color="secondary"
+            >
+              Se connecter
+            </Button>
 
-        </Grid> 
-      </form>
+          </Grid> 
+        </form>
+      </Card>
     )
   }
 }

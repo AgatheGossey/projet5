@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Typography } from '@material-ui/core';
 
 
 // COMPONENTS
@@ -24,14 +24,14 @@ class User extends Component {
         justify="center"
       >
         <div className={ styles.container }>
-          <p>Inscriptions en attente :</p>
+          <Typography>Inscriptions en attente :</Typography>
           <UsersWaiting usersWaiting={ this.props.usersWaiting }
                         checkUser={ this.props.checkUser }
                         deleteUser={ this.props.deleteUser }
                         showModal={ this.props.showModal }
                         hideModal={ this.props.hideModal }
           />
-          <p>Utilisateurs :</p>
+          <Typography>Utilisateurs :</Typography>
           <Users users={ this.props.users } 
                 deleteUser={ this.props.deleteUser }
                 showModal={ this.props.showModal }
