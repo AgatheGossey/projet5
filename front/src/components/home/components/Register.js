@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
-import { Grid, TextField, Button, FormHelperText } from '@material-ui/core';
+import { Grid, TextField, Button, FormHelperText, Card } from '@material-ui/core';
 
 // STYLE 
 import styles from '../home.module.css';
@@ -118,62 +118,64 @@ class Register extends Component {
 
   render() {
     return (
-      <form className={ styles.formRegister }>
-        <Grid container direction="column" justify="center" alignItems="center">
+      <Card>
+        <form className={ styles.formRegister }>
+          <Grid container direction="column" justify="center" alignItems="center">
 
-          <TextField
-            label="Pseudo :"
-            value={ this.state.username }
-            onChange={e => this.handleUsernameRegisterChange(e.target.value)}      
-          />
-          {this.validator.message('pseudo', this.state.username, 'required|between:1,10')}
+            <TextField
+              label="Pseudo :"
+              value={ this.state.username }
+              onChange={e => this.handleUsernameRegisterChange(e.target.value)}      
+            />
+            {this.validator.message('pseudo', this.state.username, 'required|between:1,10')}
 
-          <TextField
-            label="Prénom :"
-            value={ this.state.first_name }
-            onChange={e => this.handleFirstNameRegisterChange(e.target.value)}
-          />
-          {this.validator.message('prénom', this.state.first_name, 'required|between:1,30')}
+            <TextField
+              label="Prénom :"
+              value={ this.state.first_name }
+              onChange={e => this.handleFirstNameRegisterChange(e.target.value)}
+            />
+            {this.validator.message('prénom', this.state.first_name, 'required|between:1,30')}
 
-          <TextField
-            label="Nom :"
-            value={ this.state.last_name }
-            onChange={e => this.handleLastNameRegisterChange(e.target.value)}
-          />
-          {this.validator.message('nom', this.state.last_name, 'required|between:1,30')}
+            <TextField
+              label="Nom :"
+              value={ this.state.last_name }
+              onChange={e => this.handleLastNameRegisterChange(e.target.value)}
+            />
+            {this.validator.message('nom', this.state.last_name, 'required|between:1,30')}
 
-          <TextField
-            label="Mot de passe :"
-            type="password"
-            value={ this.state.password }
-            onChange={e => this.handlePasswordRegisterChange(e.target.value)}
-          />
-          {this.validator.message('mot de passe', this.state.password, 'required|between:6,30')}
+            <TextField
+              label="Mot de passe :"
+              type="password"
+              value={ this.state.password }
+              onChange={e => this.handlePasswordRegisterChange(e.target.value)}
+            />
+            {this.validator.message('mot de passe', this.state.password, 'required|between:6,30')}
 
-          <TextField
-            label="Répétez le mot de passe :"
-            type="password"
-            value={ this.state.password_register_repeat }
-            onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}
-          />
-          {this.validator.message('mot de passe', this.state.password_register_repeat, 'required|repeatPassword')}
+            <TextField
+              label="Répétez le mot de passe :"
+              type="password"
+              value={ this.state.password_register_repeat }
+              onChange={e => this.handlePasswordRegisterRepeatChange(e.target.value)}
+            />
+            {this.validator.message('mot de passe', this.state.password_register_repeat, 'required|repeatPassword')}
 
-          <TextField
-            label="Email :" 
-            value={this.state.email}
-            onChange={e => this.handleEmailRegisterChange(e.target.value)}
-          />
-          {this.validator.message('email', this.state.email, 'required|email')}
+            <TextField
+              label="Email :" 
+              value={this.state.email}
+              onChange={e => this.handleEmailRegisterChange(e.target.value)}
+            />
+            {this.validator.message('email', this.state.email, 'required|email')}
 
-          <div>{ this.props.registerUsernameError }</div>
-          <Button
-            color="secondary"
-            onClick={ this.handleSubmitRegister }
-          >
-          S'inscrire
-          </Button>
-        </Grid>
-      </form>
+            <div>{ this.props.registerUsernameError }</div>
+            <Button
+              color="secondary"
+              onClick={ this.handleSubmitRegister }
+            >
+            S'inscrire
+            </Button>
+          </Grid>
+        </form>
+      </Card>
     )
   }
 }

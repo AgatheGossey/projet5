@@ -69,7 +69,7 @@ class UsersWaiting extends Component {
                 <IconButton aria-label="Check" onClick={() => this.props.checkUser(id)}>
                   <Check />
                 </IconButton>
-                <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
+                <IconButton aria-label="Clear" onClick={() =>  this.props.showModal('CONFIRMATION', { action: () => this.props.deleteUser(id) }) }>
                   <Clear />
                 </IconButton>
               </CardContent>

@@ -60,7 +60,7 @@ class Users extends Component {
                 <Typography>Pseudo : { username }</Typography>
                 <Typography>Prénom : { first_name }</Typography>
                 <Typography>Nom : { last_name }</Typography> 
-                <IconButton aria-label="Clear" onClick={() => this.props.deleteUser(id) }>
+                <IconButton aria-label="Clear" onClick={() => this.props.showModal('CONFIRMATION', { action: () => this.props.deleteUser(id) }) }>
                   <Clear />
                 </IconButton>
               </CardContent>

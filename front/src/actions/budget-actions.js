@@ -107,7 +107,8 @@ export const toggleFilterByDate = () => {
 export const handleChangeDate = (operations, date_budget_start, date_budget_end) => {
   const list = [];
   operations.forEach(operation => {
-    if (moment(operation.date_budget).isBetween(date_budget_start, date_budget_end)) {
+    const operationDate = moment(operation.date_budget).add(moment().utcOffset(), 'm');
+    if (operationDate.isBetween(date_budget_start, date_budget_end, null, '[]')) {
       list.push(operation);
     }
   })
